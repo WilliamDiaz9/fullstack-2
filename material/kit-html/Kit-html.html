@@ -1,0 +1,695 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>KIT HTML - Etiquetas Básicas</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Courier New', Courier, monospace;
+            background: #f5f0eb;
+            color: #2c2c2c;
+            line-height: 1.6;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        h1 {
+            font-size: 32px;
+            font-weight: bold;
+            letter-spacing: -1px;
+            border-bottom: 4px solid #3d3d3d;
+            padding-bottom: 15px;
+            margin-bottom: 30px;
+            text-transform: uppercase;
+        }
+        
+        .card {
+            background: #ffffff;
+            border: 2px solid #3d3d3d;
+            margin-bottom: 30px;
+            box-shadow: 6px 6px 0 #3d3d3d;
+        }
+        
+        .card-header {
+            background: #f0ece6;
+            padding: 12px 20px;
+            border-bottom: 2px solid #3d3d3d;
+            font-weight: bold;
+            font-size: 18px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .card-header .badge {
+            background: #3d3d3d;
+            color: #ffffff;
+            padding: 2px 12px;
+            font-size: 12px;
+            font-weight: normal;
+        }
+        
+        .card-body {
+            padding: 20px;
+        }
+        
+        .split {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+        
+        .split .code-section {
+            border-right: 2px solid #ddd;
+            padding-right: 20px;
+        }
+        
+        .split .preview-section {
+            padding-left: 20px;
+        }
+        
+        .code-block {
+            background: #f0ece6;
+            padding: 15px;
+            font-family: 'Courier New', Courier, monospace;
+            font-size: 13px;
+            overflow-x: auto;
+            white-space: pre-wrap;
+            word-break: break-all;
+            border: 1px solid #ddd;
+            margin-bottom: 10px;
+        }
+        
+        .code-block .tag {
+            color: #b22222;
+        }
+        
+        .code-block .attr {
+            color: #2c5f2c;
+        }
+        
+        .code-block .value {
+            color: #a0522d;
+        }
+        
+        .code-block .comment {
+            color: #006b3c;
+            font-style: italic;
+        }
+        
+        .preview-box {
+            background: #ffffff;
+            border: 1px solid #ddd;
+            padding: 20px;
+            min-height: 100px;
+        }
+        
+        .preview-box h1, .preview-box h2, .preview-box h3,
+        .preview-box h4, .preview-box h5, .preview-box h6 {
+            border: none;
+            margin: 10px 0;
+            padding: 0;
+        }
+        
+        .preview-box h1 { font-size: 28px; }
+        .preview-box h2 { font-size: 24px; border-left: none; padding-left: 0; }
+        .preview-box h3 { font-size: 20px; }
+        .preview-box h4 { font-size: 18px; }
+        .preview-box h5 { font-size: 16px; }
+        .preview-box h6 { font-size: 14px; }
+        
+        .preview-box ul, .preview-box ol {
+            margin: 10px 0 10px 25px;
+        }
+        
+        .preview-box table {
+            border-collapse: collapse;
+            width: 100%;
+            margin: 10px 0;
+        }
+        
+        .preview-box table th,
+        .preview-box table td {
+            border: 1px solid #3d3d3d;
+            padding: 8px 12px;
+            text-align: left;
+        }
+        
+        .preview-box table th {
+            background: #f0ece6;
+        }
+        
+        .preview-box a {
+            color: #b22222;
+        }
+        
+        .preview-box img {
+            max-width: 100%;
+            height: auto;
+        }
+        
+        .preview-box .box-demo {
+            background: #f5f0eb;
+            border: 1px solid #3d3d3d;
+            padding: 10px 15px;
+            margin: 10px 0;
+        }
+        
+        .preview-box .box-demo.blue {
+            background: #d0e0f0;
+        }
+        
+        .preview-box .box-demo.green {
+            background: #d0f0d0;
+        }
+        
+        .preview-box .box-demo.red {
+            background: #f0d0d0;
+        }
+        
+        .tag-desc {
+            font-size: 14px;
+            color: #555;
+            margin-bottom: 10px;
+        }
+        
+        .tag-desc strong {
+            color: #2c2c2c;
+        }
+        
+        hr {
+            border: 0;
+            border-top: 2px solid #3d3d3d;
+            margin: 20px 0;
+        }
+        
+        .footer {
+            text-align: center;
+            padding: 20px;
+            color: #555;
+            font-size: 14px;
+        }
+        
+        .inline-code {
+            background: #f0ece6;
+            padding: 2px 6px;
+            font-family: 'Courier New', Courier, monospace;
+            font-size: 13px;
+        }
+        
+        @media (max-width: 800px) {
+            .split {
+                grid-template-columns: 1fr;
+            }
+            .split .code-section {
+                border-right: none;
+                padding-right: 0;
+            }
+            .split .preview-section {
+                padding-left: 0;
+                border-top: 2px solid #ddd;
+                padding-top: 20px;
+            }
+        }
+        
+        @media print {
+            body {
+                padding: 10px;
+                background: #fff;
+            }
+            .card {
+                box-shadow: none;
+                border: 1px solid #000;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>KIT HTML - Etiquetas basicas</h1>
+        
+        <!-- ============================================ -->
+        <!-- ESTRUCTURA BASICA -->
+        <!-- ============================================ -->
+        <div class="card">
+            <div class="card-header">
+                <span>Estructura basica</span>
+                <span class="badge">DOCTYPE + HTML + HEAD + BODY</span>
+            </div>
+            <div class="card-body">
+                <div class="tag-desc">
+                    <strong>Descripcion:</strong> La estructura fundamental de cualquier documento HTML.
+                </div>
+                <div class="split">
+                    <div class="code-section">
+                        <div class="code-block">
+&lt;!DOCTYPE html&gt;
+&lt;<span class="tag">html</span> <span class="attr">lang</span>=<span class="value">"es"</span>&gt;
+&lt;<span class="tag">head</span>&gt;
+    &lt;<span class="tag">meta</span> <span class="attr">charset</span>=<span class="value">"UTF-8"</span>&gt;
+    &lt;<span class="tag">title</span>&gt;Mi Pagina&lt;/<span class="tag">title</span>&gt;
+&lt;/<span class="tag">head</span>&gt;
+&lt;<span class="tag">body</span>&gt;
+    &lt;<span class="tag">h1</span>&gt;Hola Mundo!&lt;/<span class="tag">h1</span>&gt;
+    &lt;<span class="tag">p</span>&gt;Mi primera pagina web&lt;/<span class="tag">p</span>&gt;
+&lt;/<span class="tag">body</span>&gt;
+&lt;/<span class="tag">html</span>&gt;
+                        </div>
+                    </div>
+                    <div class="preview-section">
+                        <div class="preview-box">
+                            <h1>Hola Mundo!</h1>
+                            <p>Mi primera pagina web</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- ============================================ -->
+        <!-- TITULOS -->
+        <!-- ============================================ -->
+        <div class="card">
+            <div class="card-header">
+                <span>Titulos (H1 - H6)</span>
+                <span class="badge">h1 · h2 · h3 · h4 · h5 · h6</span>
+            </div>
+            <div class="card-body">
+                <div class="tag-desc">
+                    <strong>Descripcion:</strong> Los titulos definen la jerarquia de contenido. 
+                    <span class="inline-code">&lt;h1&gt;</span> es el mas importante, 
+                    <span class="inline-code">&lt;h6&gt;</span> el menos.
+                </div>
+                <div class="split">
+                    <div class="code-section">
+                        <div class="code-block">
+&lt;<span class="tag">h1</span>&gt;Titulo nivel 1&lt;/<span class="tag">h1</span>&gt;
+&lt;<span class="tag">h2</span>&gt;Titulo nivel 2&lt;/<span class="tag">h2</span>&gt;
+&lt;<span class="tag">h3</span>&gt;Titulo nivel 3&lt;/<span class="tag">h3</span>&gt;
+&lt;<span class="tag">h4</span>&gt;Titulo nivel 4&lt;/<span class="tag">h4</span>&gt;
+&lt;<span class="tag">h5</span>&gt;Titulo nivel 5&lt;/<span class="tag">h5</span>&gt;
+&lt;<span class="tag">h6</span>&gt;Titulo nivel 6&lt;/<span class="tag">h6</span>&gt;
+                        </div>
+                    </div>
+                    <div class="preview-section">
+                        <div class="preview-box">
+                            <h1>Titulo nivel 1</h1>
+                            <h2>Titulo nivel 2</h2>
+                            <h3>Titulo nivel 3</h3>
+                            <h4>Titulo nivel 4</h4>
+                            <h5>Titulo nivel 5</h5>
+                            <h6>Titulo nivel 6</h6>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- ============================================ -->
+        <!-- PARRAFOS Y TEXTO -->
+        <!-- ============================================ -->
+        <div class="card">
+            <div class="card-header">
+                <span>Parrafos y formato de texto</span>
+                <span class="badge">p · br · strong · em · u · mark</span>
+            </div>
+            <div class="card-body">
+                <div class="tag-desc">
+                    <strong>Descripcion:</strong> Elementos para estructurar y dar formato al texto.
+                </div>
+                <div class="split">
+                    <div class="code-section">
+                        <div class="code-block">
+&lt;<span class="tag">p</span>&gt;Este es un parrafo normal.&lt;/<span class="tag">p</span>&gt;
+&lt;<span class="tag">p</span>&gt;Este es otro parrafo con &lt;<span class="tag">br</span>&gt;
+salto de linea.&lt;/<span class="tag">p</span>&gt;
+&lt;<span class="tag">p</span>&gt;Texto &lt;<span class="tag">strong</span>&gt;negrita&lt;/<span class="tag">strong</span>&gt;, 
+&lt;<span class="tag">em</span>&gt;cursiva&lt;/<span class="tag">em</span>&gt;, 
+&lt;<span class="tag">u</span>&gt;subrayado&lt;/<span class="tag">u</span>&gt;,
+&lt;<span class="tag">mark</span>&gt;resaltado&lt;/<span class="tag">mark</span>&gt;&lt;/<span class="tag">p</span>&gt;
+                        </div>
+                    </div>
+                    <div class="preview-section">
+                        <div class="preview-box">
+                            <p>Este es un parrafo normal.</p>
+                            <p>Este es otro parrafo con <br> salto de linea.</p>
+                            <p>Texto <strong>negrita</strong>, <em>cursiva</em>, <u>subrayado</u>, <mark>resaltado</mark></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- ============================================ -->
+        <!-- LISTAS -->
+        <!-- ============================================ -->
+        <div class="card">
+            <div class="card-header">
+                <span>Listas</span>
+                <span class="badge">ul · ol · li</span>
+            </div>
+            <div class="card-body">
+                <div class="tag-desc">
+                    <strong>Descripcion:</strong> Listas ordenadas (numeradas) y no ordenadas (con viñetas).
+                </div>
+                <div class="split">
+                    <div class="code-section">
+                        <div class="code-block">
+&lt;<span class="tag">ul</span>&gt;
+    &lt;<span class="tag">li</span>&gt;Elemento 1&lt;/<span class="tag">li</span>&gt;
+    &lt;<span class="tag">li</span>&gt;Elemento 2&lt;/<span class="tag">li</span>&gt;
+    &lt;<span class="tag">li</span>&gt;Elemento 3&lt;/<span class="tag">li</span>&gt;
+&lt;/<span class="tag">ul</span>&gt;
+
+&lt;<span class="tag">ol</span>&gt;
+    &lt;<span class="tag">li</span>&gt;Primero&lt;/<span class="tag">li</span>&gt;
+    &lt;<span class="tag">li</span>&gt;Segundo&lt;/<span class="tag">li</span>&gt;
+    &lt;<span class="tag">li</span>&gt;Tercero&lt;/<span class="tag">li</span>&gt;
+&lt;/<span class="tag">ol</span>&gt;
+                        </div>
+                    </div>
+                    <div class="preview-section">
+                        <div class="preview-box">
+                            <ul>
+                                <li>Elemento 1</li>
+                                <li>Elemento 2</li>
+                                <li>Elemento 3</li>
+                            </ul>
+                            <ol>
+                                <li>Primero</li>
+                                <li>Segundo</li>
+                                <li>Tercero</li>
+                            </ol>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- ============================================ -->
+        <!-- ENLACES -->
+        <!-- ============================================ -->
+        <div class="card">
+            <div class="card-header">
+                <span>Enlaces (Links)</span>
+                <span class="badge">a · href · target</span>
+            </div>
+            <div class="card-body">
+                <div class="tag-desc">
+                    <strong>Descripcion:</strong> El elemento <span class="inline-code">&lt;a&gt;</span> crea hipervinculos a otras paginas o secciones.
+                </div>
+                <div class="split">
+                    <div class="code-section">
+                        <div class="code-block">
+<span class="comment">&lt;!-- Enlace a pagina externa --&gt;</span>
+&lt;<span class="tag">a</span> <span class="attr">href</span>=<span class="value">"https://www.ejemplo.com"</span>&gt;
+    Visitar Ejemplo
+&lt;/<span class="tag">a</span>&gt;
+
+<span class="comment">&lt;!-- Enlace que abre en nueva pestaña --&gt;</span>
+&lt;<span class="tag">a</span> <span class="attr">href</span>=<span class="value">"https://www.google.com"</span> 
+   <span class="attr">target</span>=<span class="value">"_blank"</span>&gt;
+    Google (nueva pestaña)
+&lt;/<span class="tag">a</span>&gt;
+
+<span class="comment">&lt;!-- Enlace a seccion interna --&gt;</span>
+&lt;<span class="tag">a</span> <span class="attr">href</span>=<span class="value">"#seccion"</span>&gt;Ir a seccion&lt;/<span class="tag">a</span>&gt;
+                        </div>
+                    </div>
+                    <div class="preview-section">
+                        <div class="preview-box">
+                            <p><a href="#">Visitar Ejemplo</a></p>
+                            <p><a href="#" target="_blank">Google (nueva pestaña)</a></p>
+                            <p><a href="#">Ir a seccion</a></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- ============================================ -->
+        <!-- IMAGENES -->
+        <!-- ============================================ -->
+        <div class="card">
+            <div class="card-header">
+                <span>Imagenes</span>
+                <span class="badge">img · src · alt · width · height</span>
+            </div>
+            <div class="card-body">
+                <div class="tag-desc">
+                    <strong>Descripcion:</strong> La etiqueta <span class="inline-code">&lt;img&gt;</span> inserta imagenes en la pagina. 
+                    <span class="inline-code">alt</span> es importante para accesibilidad.
+                </div>
+                <div class="split">
+                    <div class="code-section">
+                        <div class="code-block">
+<span class="comment">&lt;!-- Imagen con texto alternativo --&gt;</span>
+&lt;<span class="tag">img</span> <span class="attr">src</span>=<span class="value">"https://picsum.photos/200/150"</span>
+     <span class="attr">alt</span>=<span class="value">"Imagen de ejemplo"</span>&gt;
+
+<span class="comment">&lt;!-- Imagen con tamano definido --&gt;</span>
+&lt;<span class="tag">img</span> <span class="attr">src</span>=<span class="value">"https://picsum.photos/200/150"</span>
+     <span class="attr">alt</span>=<span class="value">"Imagen pequena"</span>
+     <span class="attr">width</span>=<span class="value">"150"</span> <span class="attr">height</span>=<span class="value">"100"</span>&gt;
+                        </div>
+                    </div>
+                    <div class="preview-section">
+                        <div class="preview-box">
+                            <p><img src="https://picsum.photos/200/150" alt="Imagen de ejemplo"></p>
+                            <p><img src="https://picsum.photos/200/150" alt="Imagen pequena" width="150" height="100"></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- ============================================ -->
+        <!-- TABLAS -->
+        <!-- ============================================ -->
+        <div class="card">
+            <div class="card-header">
+                <span>Tablas</span>
+                <span class="badge">table · tr · th · td · thead · tbody</span>
+            </div>
+            <div class="card-body">
+                <div class="tag-desc">
+                    <strong>Descripcion:</strong> Las tablas organizan datos en filas y columnas.
+                </div>
+                <div class="split">
+                    <div class="code-section">
+                        <div class="code-block">
+&lt;<span class="tag">table</span>&gt;
+    &lt;<span class="tag">thead</span>&gt;
+        &lt;<span class="tag">tr</span>&gt;
+            &lt;<span class="tag">th</span>&gt;Nombre&lt;/<span class="tag">th</span>&gt;
+            &lt;<span class="tag">th</span>&gt;Edad&lt;/<span class="tag">th</span>&gt;
+            &lt;<span class="tag">th</span>&gt;Ciudad&lt;/<span class="tag">th</span>&gt;
+        &lt;/<span class="tag">tr</span>&gt;
+    &lt;/<span class="tag">thead</span>&gt;
+    &lt;<span class="tag">tbody</span>&gt;
+        &lt;<span class="tag">tr</span>&gt;
+            &lt;<span class="tag">td</span>&gt;Ana&lt;/<span class="tag">td</span>&gt;
+            &lt;<span class="tag">td</span>&gt;25&lt;/<span class="tag">td</span>&gt;
+            &lt;<span class="tag">td</span>&gt;Madrid&lt;/<span class="tag">td</span>&gt;
+        &lt;/<span class="tag">tr</span>&gt;
+        &lt;<span class="tag">tr</span>&gt;
+            &lt;<span class="tag">td</span>&gt;Luis&lt;/<span class="tag">td</span>&gt;
+            &lt;<span class="tag">td</span>&gt;30&lt;/<span class="tag">td</span>&gt;
+            &lt;<span class="tag">td</span>&gt;Barcelona&lt;/<span class="tag">td</span>&gt;
+        &lt;/<span class="tag">tr</span>&gt;
+    &lt;/<span class="tag">tbody</span>&gt;
+&lt;/<span class="tag">table</span>&gt;
+                        </div>
+                    </div>
+                    <div class="preview-section">
+                        <div class="preview-box">
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th>Nombre</th>
+                                        <th>Edad</th>
+                                        <th>Ciudad</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>Ana</td>
+                                        <td>25</td>
+                                        <td>Madrid</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Luis</td>
+                                        <td>30</td>
+                                        <td>Barcelona</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- ============================================ -->
+        <!-- DIV Y SPAN -->
+        <!-- ============================================ -->
+        <div class="card">
+            <div class="card-header">
+                <span>Contenedores: DIV y SPAN</span>
+                <span class="badge">div · span</span>
+            </div>
+            <div class="card-body">
+                <div class="tag-desc">
+                    <strong>Descripcion:</strong> <span class="inline-code">&lt;div&gt;</span> es un contenedor de bloque, 
+                    <span class="inline-code">&lt;span&gt;</span> es un contenedor en linea. Se usan para agrupar y estilizar.
+                </div>
+                <div class="split">
+                    <div class="code-section">
+                        <div class="code-block">
+<span class="comment">&lt;!-- DIV (bloque) --&gt;</span>
+&lt;<span class="tag">div</span> <span class="attr">class</span>=<span class="value">"box-demo"</span>&gt;
+    Esto es un DIV - elemento de bloque
+&lt;/<span class="tag">div</span>&gt;
+
+<span class="comment">&lt;!-- SPAN (en linea) --&gt;</span>
+&lt;<span class="tag">p</span>&gt;Texto con &lt;<span class="tag">span</span> <span class="attr">style</span>=<span class="value">"color: red;"</span>&gt;
+    texto en rojo&lt;/<span class="tag">span</span>&gt; dentro del parrafo.
+&lt;/<span class="tag">p</span>&gt;
+
+<span class="comment">&lt;!-- Varios DIV --&gt;</span>
+&lt;<span class="tag">div</span> <span class="attr">class</span>=<span class="value">"box-demo blue"</span>&gt;Azul&lt;/<span class="tag">div</span>&gt;
+&lt;<span class="tag">div</span> <span class="attr">class</span>=<span class="value">"box-demo green"</span>&gt;Verde&lt;/<span class="tag">div</span>&gt;
+                        </div>
+                    </div>
+                    <div class="preview-section">
+                        <div class="preview-box">
+                            <div class="box-demo">Esto es un DIV - elemento de bloque</div>
+                            <p>Texto con <span style="color: red;">texto en rojo</span> dentro del parrafo.</p>
+                            <div class="box-demo blue">Azul</div>
+                            <div class="box-demo green">Verde</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- ============================================ -->
+        <!-- FORMULARIOS -->
+        <!-- ============================================ -->
+        <div class="card">
+            <div class="card-header">
+                <span>Formularios basicos</span>
+                <span class="badge">form · input · label · button</span>
+            </div>
+            <div class="card-body">
+                <div class="tag-desc">
+                    <strong>Descripcion:</strong> Los formularios permiten recoger datos del usuario.
+                </div>
+                <div class="split">
+                    <div class="code-section">
+                        <div class="code-block">
+&lt;<span class="tag">form</span>&gt;
+    &lt;<span class="tag">label</span> <span class="attr">for</span>=<span class="value">"nombre"</span>&gt;Nombre:&lt;/<span class="tag">label</span>&gt;
+    &lt;<span class="tag">input</span> <span class="attr">type</span>=<span class="value">"text"</span> 
+           <span class="attr">id</span>=<span class="value">"nombre"</span> 
+           <span class="attr">placeholder</span>=<span class="value">"Ingresa tu nombre"</span>&gt;
+    &lt;<span class="tag">br</span>&gt;&lt;<span class="tag">br</span>&gt;
+    
+    &lt;<span class="tag">label</span> <span class="attr">for</span>=<span class="value">"email"</span>&gt;Email:&lt;/<span class="tag">label</span>&gt;
+    &lt;<span class="tag">input</span> <span class="attr">type</span>=<span class="value">"email"</span> 
+           <span class="attr">id</span>=<span class="value">"email"</span>
+           <span class="attr">placeholder</span>=<span class="value">"ejemplo@mail.com"</span>&gt;
+    &lt;<span class="tag">br</span>&gt;&lt;<span class="tag">br</span>&gt;
+    
+    &lt;<span class="tag">label</span> <span class="attr">for</span>=<span class="value">"password"</span>&gt;Password:&lt;/<span class="tag">label</span>&gt;
+    &lt;<span class="tag">input</span> <span class="attr">type</span>=<span class="value">"password"</span> 
+           <span class="attr">id</span>=<span class="value">"password"</span>&gt;
+    &lt;<span class="tag">br</span>&gt;&lt;<span class="tag">br</span>&gt;
+    
+    &lt;<span class="tag">button</span> <span class="attr">type</span>=<span class="value">"submit"</span>&gt;Enviar&lt;/<span class="tag">button</span>&gt;
+&lt;/<span class="tag">form</span>&gt;
+                        </div>
+                    </div>
+                    <div class="preview-section">
+                        <div class="preview-box">
+                            <form>
+                                <label for="nombre">Nombre:</label>
+                                <input type="text" id="nombre" placeholder="Ingresa tu nombre">
+                                <br><br>
+                                <label for="email">Email:</label>
+                                <input type="email" id="email" placeholder="ejemplo@mail.com">
+                                <br><br>
+                                <label for="password">Password:</label>
+                                <input type="password" id="password">
+                                <br><br>
+                                <button type="submit">Enviar</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- ============================================ -->
+        <!-- BOTONES -->
+        <!-- ============================================ -->
+        <div class="card">
+            <div class="card-header">
+                <span>Botones</span>
+                <span class="badge">button</span>
+            </div>
+            <div class="card-body">
+                <div class="tag-desc">
+                    <strong>Descripcion:</strong> El elemento <span class="inline-code">&lt;button&gt;</span> crea botones interactivos.
+                </div>
+                <div class="split">
+                    <div class="code-section">
+                        <div class="code-block">
+<span class="comment">&lt;!-- Boton normal --&gt;</span>
+&lt;<span class="tag">button</span>&gt;Click aqui&lt;/<span class="tag">button</span>&gt;
+
+<span class="comment">&lt;!-- Botones con estilos basicos --&gt;</span>
+&lt;<span class="tag">button</span> <span class="attr">style</span>=<span class="value">"background: #2c5f2c; color: white; padding: 8px 16px; border: none;"</span>&gt;
+    Verde
+&lt;/<span class="tag">button</span>&gt;
+
+&lt;<span class="tag">button</span> <span class="attr">style</span>=<span class="value">"background: #b22222; color: white; padding: 8px 16px; border: none;"</span>&gt;
+    Rojo
+&lt;/<span class="tag">button</span>&gt;
+
+&lt;<span class="tag">button</span> <span class="attr">style</span>=<span class="value">"background: #3d3d3d; color: white; padding: 8px 16px; border: none;"</span>&gt;
+    Negro
+&lt;/<span class="tag">button</span>&gt;
+                        </div>
+                    </div>
+                    <div class="preview-section">
+                        <div class="preview-box">
+                            <p><button>Click aqui</button></p>
+                            <p>
+                                <button style="background: #2c5f2c; color: white; padding: 8px 16px; border: none;">Verde</button>
+                                <button style="background: #b22222; color: white; padding: 8px 16px; border: none;">Rojo</button>
+                                <button style="background: #3d3d3d; color: white; padding: 8px 16px; border: none;">Negro</button>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="footer">
+            KIT HTML - Etiquetas basicas
+        </div>
+    </div>
+</body>
+</html>

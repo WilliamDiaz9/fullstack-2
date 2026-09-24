@@ -1,0 +1,36 @@
+# Compilados y dependencias
+target/
+build/
+out/
+bin/
+node_modules/
+.gradle/
+.kotlin/
+*.class
+*.jar
+!gradle/wrapper/gradle-wrapper.jar
+!.mvn/wrapper/maven-wrapper.jar
+
+# IDE
+.idea/
+*.iml
+.vscode/
+local.properties
+
+# Comprimidos e imágenes Docker (duplican carpetas o pesan demasiado)
+*.zip
+*.rar
+*.7z
+*.tar
+
+# Sistema / Office temporales
+desktop.ini
+Thumbs.db
+.DS_Store
+~$*
+*.log
+
+# Credenciales
+*.pem
+*.ppk
+.env

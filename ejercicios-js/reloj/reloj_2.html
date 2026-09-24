@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Reloj</title>
+    <style>
+        body {
+            background-color: #1e1e2f;
+            text-align: center;
+            padding-top: 60px;
+        }
+
+        p {
+            font-size: 60px;
+            color: #00ffcc;
+            font-family: monospace;
+        }
+
+        .reloj-analogico {
+            width: 220px;
+            height: 220px;
+            border: 8px solid #00ffcc;
+            border-radius: 50%;
+            margin: 0 auto;
+            position: relative;
+        }
+
+        .aguja {
+            position: absolute;
+            bottom: 50%;
+            left: 50%;
+            transform-origin: bottom;
+            background-color: #00ffcc;
+        }
+
+        .hora {
+            width: 6px;
+            height: 60px;
+            margin-left: -3px;
+        }
+
+        .minuto {
+            width: 4px;
+            height: 85px;
+            margin-left: -2px;
+        }
+
+        .segundo {
+            width: 2px;
+            height: 95px;
+            margin-left: -1px;
+            background-color: #ff4d6d;
+        }
+    </style>
+</head>
+<body>
+
+    <p id="hora">00:00:00</p>
+
+    <div class="reloj-analogico">
+        <div class="aguja hora" id="agujaHora"></div>
+        <div class="aguja minuto" id="agujaMinuto"></div>
+        <div class="aguja segundo" id="agujaSegundo"></div>
+    </div>
+
+    <script>
+        setInterval(function () {
+            let ahora = new Date();
+
+            // reloj digital
+            document.getElementById("hora").innerHTML = ahora.toLocaleTimeString();
+
+            // reloj analogico
+            let horas = ahora.getHours();
+            let minutos = ahora.getMinutes();
+            let segundos = ahora.getSeconds();
+
+            let gradosHora = (horas % 12) * 30 + minutos * 0.5;
+            let gradosMinuto = minutos * 6;
+            let gradosSegundo = segundos * 6;
+
+            document.getElementById("agujaHora").style.transform = "rotate(" + gradosHora + "deg)";
+            document.getElementById("agujaMinuto").style.transform = "rotate(" + gradosMinuto + "deg)";
+            document.getElementById("agujaSegundo").style.transform = "rotate(" + gradosSegundo + "deg)";
+        }, 1000);
+    </script>
+
+</body>
+</html>

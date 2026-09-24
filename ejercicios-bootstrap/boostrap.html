@@ -1,0 +1,745 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Introduccion a Bootstrap</title>
+    <!-- Bootstrap 5 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous" />
+    <style>
+        /* ===== ESTILOS GLOBALES ===== */
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: #f5f7fa;
+            color: #1e293b;
+            padding: 20px;
+        }
+
+        .slides {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            flex-direction: column;
+            gap: 30px;
+        }
+
+        .slide {
+            background: white;
+            border-radius: 24px;
+            padding: 30px 35px 40px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+            border: 1px solid #e9edf2;
+        }
+
+        .slide h2 {
+            font-size: 1.8rem;
+            margin-bottom: 20px;
+            border-bottom: 3px solid #3b82f6;
+            padding-bottom: 12px;
+            display: inline-block;
+        }
+
+        .slide h2 small {
+            font-size: 1rem;
+            font-weight: 400;
+            color: #64748b;
+            margin-left: 12px;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 24px;
+            margin-top: 12px;
+        }
+
+        .card {
+            background: #f8fafc;
+            padding: 16px 18px 18px;
+            border-radius: 16px;
+            transition: 0.2s;
+        }
+        .card:hover {
+            background: #f1f5f9;
+        }
+
+        .card .label {
+            font-weight: 600;
+            font-size: 0.9rem;
+            color: #475569;
+            letter-spacing: 0.3px;
+            margin-bottom: 6px;
+        }
+
+        .example-container {
+            display: flex;
+            gap: 20px;
+            margin-top: 12px;
+            background: #f1f5f9;
+            border-radius: 12px;
+            padding: 16px;
+            align-items: flex-start;
+        }
+
+        .code-side {
+            flex: 1;
+            background: #0f172a;
+            color: #e2e8f0;
+            padding: 12px 16px;
+            border-radius: 10px;
+            font-family: 'Courier New', monospace;
+            font-size: 0.85rem;
+            overflow-x: auto;
+            min-width: 0;
+        }
+
+        .code-side .tag {
+            color: #fcd34d;
+        }
+        .code-side .attr {
+            color: #7dd3fc;
+        }
+        .code-side .value {
+            color: #a7f3d0;
+        }
+        .code-side .comment {
+            color: #94a3b8;
+            font-style: italic;
+        }
+        .code-side .b-class {
+            color: #6ee7b7;
+            font-weight: 600;
+        }
+
+        .render-side {
+            flex: 1;
+            background: white;
+            padding: 12px 16px;
+            border-radius: 10px;
+            border: 1px solid #e2e8f0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 80px;
+            min-width: 0;
+        }
+
+        .render-side .label-render {
+            font-size: 0.75rem;
+            color: #94a3b8;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 8px;
+            align-self: flex-start;
+        }
+
+        .footnote {
+            margin-top: 20px;
+            font-size: 0.9rem;
+            color: #64748b;
+            background: #f1f5f9;
+            padding: 12px 18px;
+            border-radius: 12px;
+        }
+        .footnote strong {
+            color: #0f172a;
+        }
+
+        .exercise {
+            background: #f0fdf4;
+            border: 1px solid #bbf7d0;
+            border-radius: 12px;
+            padding: 16px 20px;
+            margin-top: 16px;
+        }
+        .exercise h4 {
+            color: #166534;
+            font-size: 1.1rem;
+            margin-bottom: 8px;
+        }
+        .exercise .solution {
+            background: white;
+            padding: 12px 16px;
+            border-radius: 8px;
+            margin-top: 8px;
+            border: 1px dashed #86efac;
+        }
+        .exercise .solution summary {
+            cursor: pointer;
+            font-weight: 600;
+            color: #15803d;
+        }
+        .exercise .solution .code-block {
+            background: #0f172a;
+            color: #e2e8f0;
+            padding: 12px 16px;
+            border-radius: 8px;
+            font-family: 'Courier New', monospace;
+            font-size: 0.85rem;
+            margin-top: 8px;
+            overflow-x: auto;
+        }
+        .exercise .solution .code-block .tag {
+            color: #fcd34d;
+        }
+        .exercise .solution .code-block .attr {
+            color: #7dd3fc;
+        }
+        .exercise .solution .code-block .value {
+            color: #a7f3d0;
+        }
+        .exercise .solution .code-block .comment {
+            color: #94a3b8;
+            font-style: italic;
+        }
+        .exercise .solution .code-block .b-class {
+            color: #6ee7b7;
+            font-weight: 600;
+        }
+
+        .note-box {
+            background: #fefce8;
+            border: 1px solid #fde68a;
+            border-radius: 10px;
+            padding: 12px 16px;
+            margin: 10px 0;
+            font-size: 0.9rem;
+        }
+        .note-box strong {
+            color: #92400e;
+        }
+
+        .comparacion {
+            display: flex;
+            gap: 20px;
+            margin: 10px 0;
+        }
+        .comparacion > div {
+            flex: 1;
+            padding: 12px 16px;
+            border-radius: 10px;
+            background: #f8fafc;
+            border: 1px solid #e2e8f0;
+        }
+        .comparacion h5 {
+            color: #475569;
+            font-size: 0.9rem;
+            margin-bottom: 8px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .instalacion-box {
+            background: #f8fafc;
+            border: 1px solid #e2e8f0;
+            border-radius: 12px;
+            padding: 16px 20px;
+            margin: 10px 0;
+        }
+        .instalacion-box h4 {
+            color: #0369a1;
+            margin-bottom: 8px;
+        }
+        .instalacion-box code {
+            background: #0f172a;
+            color: #e2e8f0;
+            padding: 8px 12px;
+            border-radius: 6px;
+            display: block;
+            font-size: 0.85rem;
+            margin: 6px 0;
+        }
+
+        @media (max-width: 768px) {
+            .example-container {
+                flex-direction: column;
+            }
+            .comparacion {
+                flex-direction: column;
+            }
+            .slide { padding: 20px; }
+            .grid { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+
+<div class="slides">
+
+    <!-- ========================================== -->
+    <!-- SLIDE 1: QUE ES BOOTSTRAP                  -->
+    <!-- ========================================== -->
+    <div class="slide">
+        <h2>Bootstrap <small>framework CSS</small></h2>
+
+        <div style="margin-bottom: 20px;">
+            <h3 style="color: #0369a1; margin-bottom: 10px;">Que es Bootstrap</h3>
+            <p style="line-height: 1.6;">
+                <strong>Bootstrap</strong> es un framework de codigo abierto creado por Twitter en 2011. 
+                Es una coleccion de herramientas CSS y JavaScript que nos permite construir paginas web 
+                de forma <strong>rapida</strong> y <strong>consistente</strong>.
+            </p>
+            <div style="margin: 15px 0; display: flex; flex-wrap: wrap; gap: 8px;">
+                <span style="background: #dbeafe; padding: 8px 14px; border-radius: 8px; border: 1px solid #3b82f6;">Componentes listos</span>
+                <span style="background: #d1fae5; padding: 8px 14px; border-radius: 8px; border: 1px solid #10b981;">Diseño responsivo</span>
+                <span style="background: #fce7f3; padding: 8px 14px; border-radius: 8px; border: 1px solid #ec4899;">Sistema de grid</span>
+                <span style="background: #fef3c7; padding: 8px 14px; border-radius: 8px; border: 1px solid #f59e0b;">Clases predefinidas</span>
+            </div>
+            <ul style="line-height: 1.8; margin-left: 20px;">
+                <li><strong>No reinventar la rueda:</strong> Usa estilos y componentes ya creados.</li>
+                <li><strong>Mobile-first:</strong> Diseñado para funcionar en cualquier dispositivo.</li>
+                <li><strong>Basado en clases:</strong> Aplicas estilos usando clases HTML como <code>btn</code>, <code>container</code>, <code>row</code>.</li>
+                <li><strong>Se integra con CSS:</strong> Puedes combinar Bootstrap con tu propio CSS.</li>
+            </ul>
+        </div>
+
+        <div class="comparacion">
+            <div>
+                <h5>Sin Bootstrap</h5>
+                <div style="background: #f1f5f9; padding: 12px; border-radius: 6px; font-family: monospace; font-size: 0.85rem;">
+                    &lt;div style="<br />
+                    &nbsp;&nbsp;background: #3b82f6;<br />
+                    &nbsp;&nbsp;color: white;<br />
+                    &nbsp;&nbsp;padding: 10px 20px;<br />
+                    &nbsp;&nbsp;border-radius: 8px;<br />
+                    &nbsp;&nbsp;border: none;<br />
+                    &nbsp;&nbsp;cursor: pointer;"&gt;<br />
+                    &nbsp;&nbsp;Botón<br />
+                    &lt;/div&gt;
+                </div>
+                <p style="font-size: 0.85rem; color: #64748b; margin-top: 6px;">
+                    Escribes todo el CSS manualmente
+                </p>
+            </div>
+            <div>
+                <h5>Con Bootstrap</h5>
+                <div style="background: #f1f5f9; padding: 12px; border-radius: 6px; font-family: monospace; font-size: 0.85rem;">
+                    &lt;button <span style="color: #059669; font-weight: 600;">class="btn btn-primary"</span>&gt;<br />
+                    &nbsp;&nbsp;Botón<br />
+                    &lt;/button&gt;
+                </div>
+                <p style="font-size: 0.85rem; color: #64748b; margin-top: 6px;">
+                    Usas clases predefinidas
+                </p>
+            </div>
+        </div>
+
+        <div class="comparacion" style="margin-top: 16px;">
+            <div>
+                <h5>Sin Bootstrap (grid manual)</h5>
+                <div style="background: #f1f5f9; padding: 12px; border-radius: 6px; font-family: monospace; font-size: 0.85rem;">
+                    &lt;div style="display: flex;"&gt;<br />
+                    &nbsp;&nbsp;&lt;div style="flex: 1; padding: 10px; background: #dbeafe;"&gt;Col 1&lt;/div&gt;<br />
+                    &nbsp;&nbsp;&lt;div style="flex: 1; padding: 10px; background: #d1fae5;"&gt;Col 2&lt;/div&gt;<br />
+                    &nbsp;&nbsp;&lt;div style="flex: 1; padding: 10px; background: #fce7f3;"&gt;Col 3&lt;/div&gt;<br />
+                    &lt;/div&gt;
+                </div>
+                <p style="font-size: 0.85rem; color: #64748b; margin-top: 6px;">
+                    Usas Flexbox manualmente
+                </p>
+            </div>
+            <div>
+                <h5>Con Bootstrap (grid)</h5>
+                <div style="background: #f1f5f9; padding: 12px; border-radius: 6px; font-family: monospace; font-size: 0.85rem;">
+                    &lt;div <span style="color: #059669; font-weight: 600;">class="row"</span>&gt;<br />
+                    &nbsp;&nbsp;&lt;div <span style="color: #059669; font-weight: 600;">class="col-4 bg-primary"</span>&gt;Col 1&lt;/div&gt;<br />
+                    &nbsp;&nbsp;&lt;div <span style="color: #059669; font-weight: 600;">class="col-4 bg-success"</span>&gt;Col 2&lt;/div&gt;<br />
+                    &nbsp;&nbsp;&lt;div <span style="color: #059669; font-weight: 600;">class="col-4 bg-danger"</span>&gt;Col 3&lt;/div&gt;<br />
+                    &lt;/div&gt;
+                </div>
+                <p style="font-size: 0.85rem; color: #64748b; margin-top: 6px;">
+                    Usas clases predefinidas de grid
+                </p>
+            </div>
+        </div>
+
+        <div class="footnote">
+            <strong>Beneficio:</strong> Bootstrap te permite escribir menos codigo CSS y enfocarte en la estructura 
+            y funcionalidad de tu pagina.
+        </div>
+    </div>
+
+    <!-- ========================================== -->
+    <!-- SLIDE 2: COMO INSTALAR BOOTSTRAP          -->
+    <!-- ========================================== -->
+    <div class="slide">
+        <h2>Instalacion <small>como usar Bootstrap</small></h2>
+
+        <div style="margin-bottom: 20px;">
+            <h3 style="color: #0369a1; margin-bottom: 10px;">Estructura basica de una pagina con Bootstrap</h3>
+            <p style="line-height: 1.6;">
+                Para usar Bootstrap, solo necesitas agregar una linea de CSS en el <code>&lt;head&gt;</code> 
+                de tu pagina. Aqui tienes la estructura basica:
+            </p>
+        </div>
+
+        <div class="code-side" style="margin: 10px 0; background: #0f172a; color: #e2e8f0; padding: 16px; border-radius: 10px; font-family: 'Courier New', monospace; font-size: 0.85rem; overflow-x: auto;">
+            <span class="comment">&lt;!-- Estructura basica de una pagina con Bootstrap --&gt;</span><br />
+            <span class="tag">&lt;!DOCTYPE html&gt;</span><br />
+            <span class="tag">&lt;html</span> <span class="attr">lang</span>=<span class="value">"es"</span><span class="tag">&gt;</span><br />
+            <span class="tag">&lt;head&gt;</span><br />
+            &nbsp;&nbsp;<span class="tag">&lt;meta</span> <span class="attr">charset</span>=<span class="value">"UTF-8"</span> <span class="tag">/&gt;</span><br />
+            &nbsp;&nbsp;<span class="tag">&lt;meta</span> <span class="attr">name</span>=<span class="value">"viewport"</span> <span class="attr">content</span>=<span class="value">"width=device-width, initial-scale=1.0"</span> <span class="tag">/&gt;</span><br />
+            &nbsp;&nbsp;<span class="tag">&lt;title&gt;</span>Mi pagina con Bootstrap<span class="tag">&lt;/title&gt;</span><br />
+            &nbsp;&nbsp;<span style="color: #6ee7b7;">&lt;!-- Bootstrap CSS (siempre en el head) --&gt;</span><br />
+            &nbsp;&nbsp;<span class="tag">&lt;link</span> <span class="attr">href</span>=<span class="value">"https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css"</span> <span class="attr">rel</span>=<span class="value">"stylesheet"</span> <span class="attr">integrity</span>=<span class="value">"sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB"</span> <span class="attr">crossorigin</span>=<span class="value">"anonymous"</span> <span class="tag">/&gt;</span><br />
+            <span class="tag">&lt;/head&gt;</span><br />
+            <span class="tag">&lt;body&gt;</span><br />
+            &nbsp;&nbsp;<span style="color: #6ee7b7;">&lt;!-- Contenido de la pagina --&gt;</span><br />
+            &nbsp;&nbsp;<span class="tag">&lt;div</span> <span class="attr">class</span>=<span class="b-class">"container"</span><span class="tag">&gt;</span><br />
+            &nbsp;&nbsp;&nbsp;&nbsp;<span class="tag">&lt;h1&gt;</span>Hola Bootstrap<span class="tag">&lt;/h1&gt;</span><br />
+            &nbsp;&nbsp;&nbsp;&nbsp;<span class="tag">&lt;button</span> <span class="attr">class</span>=<span class="b-class">"btn btn-primary"</span><span class="tag">&gt;</span>Boton<span class="tag">&lt;/button&gt;</span><br />
+            &nbsp;&nbsp;<span class="tag">&lt;/div&gt;</span><br />
+            <span class="tag">&lt;/body&gt;</span><br />
+            <span class="tag">&lt;/html&gt;</span>
+        </div>
+
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin: 16px 0;">
+            <div class="instalacion-box">
+                <h4>CDN (Recomendado para empezar)</h4>
+                <p style="font-size: 0.95rem; line-height: 1.5;">
+                    Usa la CDN (Content Delivery Network) para cargar Bootstrap desde un servidor externo.
+                    <br /><br />
+                    <strong>CSS (siempre en el head):</strong>
+                </p>
+                <code>&lt;link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous" /&gt;</code>
+                <p style="font-size: 0.95rem; line-height: 1.5; margin-top: 8px;">
+                    <strong>JavaScript (opcional, al final del body):</strong>
+                </p>
+                <code>&lt;script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js" integrity="sha384-Zv+xi74fVgPRs3jfSkFqLAHxMqVQ5n3Fnn2r8pJQYgC1EMHh2iFeJpcCn93Yjz3Fp" crossorigin="anonymous"&gt;&lt;/script&gt;</code>
+                <p style="font-size: 0.85rem; color: #64748b; margin-top: 8px;">
+                    ✓ No necesita descargar nada<br />
+                    ✓ Siempre actualizado<br />
+                    ✓ Ideal para proyectos pequeños
+                </p>
+            </div>
+
+            <div class="instalacion-box">
+                <h4>Local (Descargar archivos)</h4>
+                <p style="font-size: 0.95rem; line-height: 1.5;">
+                    Descarga los archivos de Bootstrap y los incluyes en tu proyecto.
+                    <br /><br />
+                    <strong>1. Descarga:</strong>
+                </p>
+                <code style="font-size: 0.8rem;">getbootstrap.com/docs/5.3/download/</code>
+                <p style="font-size: 0.95rem; line-height: 1.5; margin-top: 8px;">
+                    <strong>2. Incluye en tu HTML:</strong>
+                </p>
+                <code>&lt;link href="css/bootstrap.min.css" rel="stylesheet" /&gt;</code>
+                <p style="font-size: 0.85rem; color: #64748b; margin-top: 8px;">
+                    ✓ Funciona sin internet<br />
+                    ✓ Control total sobre la version<br />
+                    ✓ Ideal para proyectos grandes
+                </p>
+            </div>
+        </div>
+
+        <div style="background: #f0f9ff; border: 1px solid #bae6fd; border-radius: 10px; padding: 16px 20px; margin: 16px 0;">
+            <h4 style="color: #0369a1; margin-bottom: 8px;">Sobre el CSS y JavaScript de Bootstrap</h4>
+            <p style="line-height: 1.6; font-size: 0.95rem;">
+                <strong>CSS (siempre obligatorio):</strong> El archivo CSS de Bootstrap contiene todos los estilos 
+                necesarios para que los componentes funcionen (botones, tarjetas, grid, etc.). 
+                <strong>Debe incluirse en el &lt;head&gt;</strong> para que los estilos se carguen antes 
+                de que el navegador renderice el contenido.
+                <br /><br />
+                <strong>JavaScript (opcional):</strong> El JavaScript de Bootstrap es necesario solo para 
+                componentes interactivos como modales, carruseles, menús desplegables, etc. 
+                <strong>Se incluye al final del &lt;body&gt;</strong> para no bloquear la carga del contenido 
+                visible. Si tu pagina solo usa botones, tarjetas y grid (componentes estaticos), 
+                <strong>no necesitas el JavaScript</strong>.
+            </p>
+        </div>
+
+        <div class="footnote" style="margin-top: 16px;">
+            <strong>Recomendacion:</strong> Para empezar, usa la version CDN. Es la manera mas rapida y sencilla 
+            de probar Bootstrap.
+        </div>
+    </div>
+
+    <!-- ========================================== -->
+    <!-- SLIDE 3: COMPONENTES BASICOS               -->
+    <!-- ========================================== -->
+    <div class="slide">
+        <h2>Componentes basicos <small>ejemplos practicos</small></h2>
+
+        <!-- Ejemplo 1: Botones -->
+        <div class="card" style="margin-bottom: 24px;">
+            <div class="label"><strong>Ejemplo 1:</strong> Botones de Bootstrap</div>
+            <div class="example-container">
+                <div class="code-side">
+                    <span class="comment">&lt;!-- Codigo HTML con Bootstrap --&gt;</span><br />
+                    <span class="tag">&lt;button</span> <span class="attr">class</span>=<span class="b-class">"btn btn-primary"</span><span class="tag">&gt;</span><br />
+                    &nbsp;&nbsp;Primario<br />
+                    <span class="tag">&lt;/button&gt;</span><br /><br />
+                    <span class="tag">&lt;button</span> <span class="attr">class</span>=<span class="b-class">"btn btn-success"</span><span class="tag">&gt;</span><br />
+                    &nbsp;&nbsp;Exito<br />
+                    <span class="tag">&lt;/button&gt;</span><br /><br />
+                    <span class="tag">&lt;button</span> <span class="attr">class</span>=<span class="b-class">"btn btn-danger"</span><span class="tag">&gt;</span><br />
+                    &nbsp;&nbsp;Peligro<br />
+                    <span class="tag">&lt;/button&gt;</span>
+                </div>
+                <div class="render-side">
+                    <div class="label-render">Renderizado</div>
+                    <div style="display: flex; gap: 10px; flex-wrap: wrap; justify-content: center;">
+                        <button class="btn btn-primary">Primario</button>
+                        <button class="btn btn-success">Exito</button>
+                        <button class="btn btn-danger">Peligro</button>
+                    </div>
+                    <div style="margin-top: 8px; font-size: 0.75rem; color: #64748b; text-align: left; width: 100%;">
+                        <strong>Clases usadas:</strong><br />
+                        - <code>btn</code> (base del boton)<br />
+                        - <code>btn-primary</code> (color azul)<br />
+                        - <code>btn-success</code> (color verde)<br />
+                        - <code>btn-danger</code> (color rojo)
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Ejemplo 2: Tarjetas -->
+        <div class="card" style="margin-bottom: 24px;">
+            <div class="label"><strong>Ejemplo 2:</strong> Tarjetas (Cards)</div>
+            <div class="example-container">
+                <div class="code-side">
+                    <span class="comment">&lt;!-- Codigo HTML con Bootstrap --&gt;</span><br />
+                    <span class="tag">&lt;div</span> <span class="attr">class</span>=<span class="b-class">"card"</span> <span class="attr">style</span>=<span class="value">"width: 200px;"</span><span class="tag">&gt;</span><br />
+                    &nbsp;&nbsp;<span class="tag">&lt;div</span> <span class="attr">class</span>=<span class="b-class">"card-body"</span><span class="tag">&gt;</span><br />
+                    &nbsp;&nbsp;&nbsp;&nbsp;<span class="tag">&lt;h5</span> <span class="attr">class</span>=<span class="b-class">"card-title"</span><span class="tag">&gt;</span>Titulo<span class="tag">&lt;/h5&gt;</span><br />
+                    &nbsp;&nbsp;&nbsp;&nbsp;<span class="tag">&lt;p</span> <span class="attr">class</span>=<span class="b-class">"card-text"</span><span class="tag">&gt;</span><br />
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Contenido de la tarjeta<br />
+                    &nbsp;&nbsp;&nbsp;&nbsp;<span class="tag">&lt;/p&gt;</span><br />
+                    &nbsp;&nbsp;&nbsp;&nbsp;<span class="tag">&lt;button</span> <span class="attr">class</span>=<span class="b-class">"btn btn-primary"</span><span class="tag">&gt;</span>Accion<span class="tag">&lt;/button&gt;</span><br />
+                    &nbsp;&nbsp;<span class="tag">&lt;/div&gt;</span><br />
+                    <span class="tag">&lt;/div&gt;</span>
+                </div>
+                <div class="render-side">
+                    <div class="label-render">Renderizado</div>
+                    <div class="card" style="width: 200px;">
+                        <div class="card-body">
+                            <h5 class="card-title">Titulo</h5>
+                            <p class="card-text">Contenido de la tarjeta</p>
+                            <button class="btn btn-primary">Accion</button>
+                        </div>
+                    </div>
+                    <div style="margin-top: 8px; font-size: 0.75rem; color: #64748b; text-align: left; width: 100%;">
+                        <strong>Clases usadas:</strong><br />
+                        - <code>card</code> (contenedor)<br />
+                        - <code>card-body</code> (cuerpo)<br />
+                        - <code>card-title</code> (titulo)<br />
+                        - <code>card-text</code> (texto)
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Ejemplo 3: Grid -->
+        <div class="card">
+            <div class="label"><strong>Ejemplo 3:</strong> Sistema de Grid</div>
+            <div class="example-container">
+                <div class="code-side">
+                    <span class="comment">&lt;!-- Codigo HTML con Bootstrap --&gt;</span><br />
+                    <span class="tag">&lt;div</span> <span class="attr">class</span>=<span class="b-class">"row"</span><span class="tag">&gt;</span><br />
+                    &nbsp;&nbsp;<span class="tag">&lt;div</span> <span class="attr">class</span>=<span class="b-class">"col-4"</span><span class="tag">&gt;</span><br />
+                    &nbsp;&nbsp;&nbsp;&nbsp;Columna 1<br />
+                    &nbsp;&nbsp;<span class="tag">&lt;/div&gt;</span><br />
+                    &nbsp;&nbsp;<span class="tag">&lt;div</span> <span class="attr">class</span>=<span class="b-class">"col-4"</span><span class="tag">&gt;</span><br />
+                    &nbsp;&nbsp;&nbsp;&nbsp;Columna 2<br />
+                    &nbsp;&nbsp;<span class="tag">&lt;/div&gt;</span><br />
+                    &nbsp;&nbsp;<span class="tag">&lt;div</span> <span class="attr">class</span>=<span class="b-class">"col-4"</span><span class="tag">&gt;</span><br />
+                    &nbsp;&nbsp;&nbsp;&nbsp;Columna 3<br />
+                    &nbsp;&nbsp;<span class="tag">&lt;/div&gt;</span><br />
+                    <span class="tag">&lt;/div&gt;</span>
+                </div>
+                <div class="render-side">
+                    <div class="label-render">Renderizado</div>
+                    <div class="row" style="width: 100%;">
+                        <div class="col-4"><div style="background: #dbeafe; padding: 15px; border-radius: 6px; text-align: center;">Columna 1</div></div>
+                        <div class="col-4"><div style="background: #d1fae5; padding: 15px; border-radius: 6px; text-align: center;">Columna 2</div></div>
+                        <div class="col-4"><div style="background: #fce7f3; padding: 15px; border-radius: 6px; text-align: center;">Columna 3</div></div>
+                    </div>
+                    <div style="margin-top: 8px; font-size: 0.75rem; color: #64748b; text-align: left; width: 100%;">
+                        <strong>Clases usadas:</strong><br />
+                        - <code>row</code> (fila)<br />
+                        - <code>col-4</code> (columna de 4/12 del ancho)<br />
+                        <strong>Total:</strong> 4 + 4 + 4 = 12 (grid completo)
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="footnote" style="margin-top: 20px;">
+            <strong>Prueba:</strong> Modifica las clases en las herramientas de desarrollo (F12) para ver como cambian 
+            los estilos. Prueba con <code>btn-warning</code>, <code>col-6</code>, etc.
+        </div>
+    </div>
+
+    <!-- ========================================== -->
+    <!-- SLIDE 4: EJERCICIOS                        -->
+    <!-- ========================================== -->
+    <div class="slide">
+        <h2>Ejercicios <small>para practicar</small></h2>
+
+        <!-- Ejercicio 1 -->
+        <div class="exercise">
+            <h4>Ejercicio 1</h4>
+            <p style="margin-bottom: 8px;">
+                <strong>Enunciado:</strong> Crea una tarjeta (card) de Bootstrap que contenga:
+                <br /><br />
+                - Un titulo que diga "Mi primera tarjeta"<br />
+                - Un texto que diga "Este es el contenido de mi tarjeta"<br />
+                - Un boton con estilo "warning" (amarillo) que diga "Haz clic"<br />
+                <br />
+                <strong>Pista:</strong> Usa <code>btn-warning</code> para el boton.
+            </p>
+            <div class="solution">
+                <details>
+                    <summary>Ver solucion</summary>
+                    <div class="code-block">
+                        <span class="comment">&lt;!-- Solucion --&gt;</span><br />
+                        <span class="tag">&lt;div</span> <span class="attr">class</span>=<span class="b-class">"card"</span> <span class="attr">style</span>=<span class="value">"width: 300px;"</span><span class="tag">&gt;</span><br />
+                        &nbsp;&nbsp;<span class="tag">&lt;div</span> <span class="attr">class</span>=<span class="b-class">"card-body"</span><span class="tag">&gt;</span><br />
+                        &nbsp;&nbsp;&nbsp;&nbsp;<span class="tag">&lt;h5</span> <span class="attr">class</span>=<span class="b-class">"card-title"</span><span class="tag">&gt;</span>Mi primera tarjeta<span class="tag">&lt;/h5&gt;</span><br />
+                        &nbsp;&nbsp;&nbsp;&nbsp;<span class="tag">&lt;p</span> <span class="attr">class</span>=<span class="b-class">"card-text"</span><span class="tag">&gt;</span>Este es el contenido de mi tarjeta<span class="tag">&lt;/p&gt;</span><br />
+                        &nbsp;&nbsp;&nbsp;&nbsp;<span class="tag">&lt;button</span> <span class="attr">class</span>=<span class="b-class">"btn btn-warning"</span><span class="tag">&gt;</span>Haz clic<span class="tag">&lt;/button&gt;</span><br />
+                        &nbsp;&nbsp;<span class="tag">&lt;/div&gt;</span><br />
+                        <span class="tag">&lt;/div&gt;</span>
+                        <br /><br />
+                        <span class="comment">/* Resultado: Una tarjeta con titulo, texto y boton amarillo */</span>
+                    </div>
+                </details>
+            </div>
+        </div>
+
+        <!-- Ejercicio 2 -->
+        <div class="exercise">
+            <h4>Ejercicio 2</h4>
+            <p style="margin-bottom: 8px;">
+                <strong>Enunciado:</strong> Crea un grid de Bootstrap con 3 columnas iguales que contengan:
+                <br /><br />
+                - Columna 1: texto "Producto 1" con fondo azul (<code>bg-primary</code>)<br />
+                - Columna 2: texto "Producto 2" con fondo verde (<code>bg-success</code>)<br />
+                - Columna 3: texto "Producto 3" con fondo rojo (<code>bg-danger</code>)<br />
+                <br />
+                <strong>Pista:</strong> Usa <code>row</code>, <code>col-4</code> y las clases <code>bg-*</code>.
+            </p>
+            <div class="solution">
+                <details>
+                    <summary>Ver solucion</summary>
+                    <div class="code-block">
+                        <span class="comment">&lt;!-- Solucion --&gt;</span><br />
+                        <span class="tag">&lt;div</span> <span class="attr">class</span>=<span class="b-class">"row"</span><span class="tag">&gt;</span><br />
+                        &nbsp;&nbsp;<span class="tag">&lt;div</span> <span class="attr">class</span>=<span class="b-class">"col-4 bg-primary text-white p-3"</span><span class="tag">&gt;</span><br />
+                        &nbsp;&nbsp;&nbsp;&nbsp;Producto 1<br />
+                        &nbsp;&nbsp;<span class="tag">&lt;/div&gt;</span><br />
+                        &nbsp;&nbsp;<span class="tag">&lt;div</span> <span class="attr">class</span>=<span class="b-class">"col-4 bg-success text-white p-3"</span><span class="tag">&gt;</span><br />
+                        &nbsp;&nbsp;&nbsp;&nbsp;Producto 2<br />
+                        &nbsp;&nbsp;<span class="tag">&lt;/div&gt;</span><br />
+                        &nbsp;&nbsp;<span class="tag">&lt;div</span> <span class="attr">class</span>=<span class="b-class">"col-4 bg-danger text-white p-3"</span><span class="tag">&gt;</span><br />
+                        &nbsp;&nbsp;&nbsp;&nbsp;Producto 3<br />
+                        &nbsp;&nbsp;<span class="tag">&lt;/div&gt;</span><br />
+                        <span class="tag">&lt;/div&gt;</span>
+                        <br /><br />
+                        <span class="comment">/* Nota: text-white hace el texto blanco, p-3 es padding de 1rem */</span>
+                    </div>
+                </details>
+            </div>
+        </div>
+
+        <!-- Ejercicio 3 -->
+        <div class="exercise">
+            <h4>Ejercicio 3</h4>
+            <p style="margin-bottom: 8px;">
+                <strong>Enunciado:</strong> Crea un conjunto de 4 botones con los siguientes estilos:
+                <br /><br />
+                - "Guardar" con estilo <code>btn-success</code><br />
+                - "Editar" con estilo <code>btn-warning</code><br />
+                - "Eliminar" con estilo <code>btn-danger</code><br />
+                - "Cancelar" con estilo <code>btn-secondary</code><br />
+                <br />
+                Los botones deben estar en una fila horizontal con separacion entre ellos.
+            </p>
+            <div class="solution">
+                <details>
+                    <summary>Ver solucion</summary>
+                    <div class="code-block">
+                        <span class="comment">&lt;!-- Solucion --&gt;</span><br />
+                        <span class="tag">&lt;div</span> <span class="attr">class</span>=<span class="b-class">"d-flex gap-2"</span><span class="tag">&gt;</span><br />
+                        &nbsp;&nbsp;<span class="tag">&lt;button</span> <span class="attr">class</span>=<span class="b-class">"btn btn-success"</span><span class="tag">&gt;</span>Guardar<span class="tag">&lt;/button&gt;</span><br />
+                        &nbsp;&nbsp;<span class="tag">&lt;button</span> <span class="attr">class</span>=<span class="b-class">"btn btn-warning"</span><span class="tag">&gt;</span>Editar<span class="tag">&lt;/button&gt;</span><br />
+                        &nbsp;&nbsp;<span class="tag">&lt;button</span> <span class="attr">class</span>=<span class="b-class">"btn btn-danger"</span><span class="tag">&gt;</span>Eliminar<span class="tag">&lt;/button&gt;</span><br />
+                        &nbsp;&nbsp;<span class="tag">&lt;button</span> <span class="attr">class</span>=<span class="b-class">"btn btn-secondary"</span><span class="tag">&gt;</span>Cancelar<span class="tag">&lt;/button&gt;</span><br />
+                        <span class="tag">&lt;/div&gt;</span>
+                        <br /><br />
+                        <span class="comment">/* Nota: d-flex gap-2 hace que los botones esten en fila con separacion */</span>
+                    </div>
+                </details>
+            </div>
+        </div>
+
+        <div class="footnote" style="margin-top: 20px;">
+            <strong>Consejo:</strong> La documentacion oficial de Bootstrap es tu mejor amiga. 
+            Visita <code>getbootstrap.com</code> para ver todos los componentes disponibles.
+        </div>
+    </div>
+
+    <!-- ========================================== -->
+    <!-- SLIDE 5: RECURSOS Y SIGUIENTES PASOS      -->
+    <!-- ========================================== -->
+    <div class="slide">
+        <h2>Recursos <small>y siguientes pasos</small></h2>
+
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 20px;">
+            <div style="background: #f8fafc; padding: 20px; border-radius: 12px; border: 1px solid #e2e8f0;">
+                <h4 style="color: #0369a1; margin-bottom: 10px;">Documentacion</h4>
+                <p style="line-height: 1.6; font-size: 0.95rem;">
+                    La <strong>documentacion oficial</strong> de Bootstrap es el mejor recurso:
+                    <br /><br />
+                    <code style="background: #f1f5f9; padding: 4px 8px; border-radius: 4px;">getbootstrap.com</code>
+                    <br /><br />
+                    Alli encontraras ejemplos, componentes y guias.
+                </p>
+            </div>
+
+            <div style="background: #f8fafc; padding: 20px; border-radius: 12px; border: 1px solid #e2e8f0;">
+                <h4 style="color: #0369a1; margin-bottom: 10px;">Componentes utiles</h4>
+                <ul style="line-height: 2; font-size: 0.95rem; list-style: none; padding: 0;">
+                    <li>✓ <strong>Navbar</strong> (barra de navegacion)</li>
+                    <li>✓ <strong>Modal</strong> (ventanas emergentes)</li>
+                    <li>✓ <strong>Formularios</strong> (inputs, selects, etc.)</li>
+                    <li>✓ <strong>Alertas</strong> (mensajes informativos)</li>
+                    <li>✓ <strong>Badges</strong> (etiquetas)</li>
+                </ul>
+            </div>
+
+            <div style="background: #f8fafc; padding: 20px; border-radius: 12px; border: 1px solid #e2e8f0;">
+                <h4 style="color: #0369a1; margin-bottom: 10px;">Alternativas</h4>
+                <p style="line-height: 1.6; font-size: 0.95rem;">
+                    Otros frameworks populares:
+                    <br /><br />
+                    <strong>Tailwind CSS</strong> - Framework utilitario<br />
+                    <strong>Bulma</strong> - Framework basado en Flexbox<br />
+                    <strong>Foundation</strong> - Framework completo<br />
+                    <br />
+                    <span style="font-size: 0.85rem; color: #64748b;">
+                        Pero Bootstrap sigue siendo el mas utilizado para empezar.
+                    </span>
+                </p>
+            </div>
+        </div>
+
+        <div style="background: #fefce8; border: 1px solid #fde68a; border-radius: 10px; padding: 16px 20px; margin-top: 20px;">
+            <strong style="color: #92400e;">Recuerda:</strong>
+            Bootstrap es una herramienta que <strong>acelera</strong> el desarrollo, pero no reemplaza 
+            el conocimiento de CSS. Sigue practicando CSS para poder personalizar y entender 
+            como funcionan los estilos por dentro.
+        </div>
+    </div>
+
+</div>
+
+<!-- Bootstrap 5 JS (opcional, para componentes interactivos) -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js" integrity="sha384-Zv+xi74fVgPRs3jfSkFqLAHxMqVQ5n3Fnn2r8pJQYgC1EMHh2iFeJpcCn93Yjz3Fp" crossorigin="anonymous"></script>
+</body>
+</html>

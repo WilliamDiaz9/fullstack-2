@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<title>Ejercicio 20 - line-height</title>
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        max-width: 700px;
+        margin: 40px auto;
+        padding: 0 20px;
+        color: #222;
+    }
+    .explicacion {
+        background: #eef2ff;
+        border-left: 4px solid #4338ca;
+        padding: 12px 16px;
+        margin-bottom: 25px;
+        font-size: 15px;
+    }
+    .demo {
+        border: 2px dashed #999;
+        padding: 20px;
+        margin-top: 10px;
+    }
+    h1 {
+        font-size: 22px;
+        color: #4338ca;
+    }
+    .pequeno { line-height: 1.2; background: #fefcbf; padding: 10px; margin-bottom: 10px; }
+    .grande { line-height: 2.5; background: #fefcbf; padding: 10px; }
+</style>
+</head>
+<body>
+
+<h1>Ejercicio 20: line-height</h1>
+<div class="explicacion">La propiedad line-height controla el espacio ENTRE lineas de texto. 1.2 es compacto; 2.5 da mucho espacio.</div>
+
+<div class="demo">
+<p class="pequeno">Linea 1<br>Linea 2 (1.2)</p>
+<p class="grande">Linea 1<br>Linea 2 (2.5)</p>
+</div>
+
+</body>
+</html>

@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang='en'>
+<head>
+    <meta charset='utf-8'>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+    <title>Page Title</title>
+    <link rel='stylesheet' href='main.css'>
+</head>
+<body>
+    <style>
+  .contenedor {
+    border: 2px solid #4a5568;
+    width: 100%;
+    height: 80px;
+    margin: 5px 0;
+    padding: 10px;
+  }
+  .overflow-visible {
+    overflow: visible;
+  }
+  .overflow-hidden {
+    overflow: hidden;
+  }
+  .overflow-scroll {
+    overflow: scroll;
+  }
+</style>
+
+<div class="contenedor overflow-visible">
+  Este texto es muy largo y no cabe en la caja. Como tiene overflow visible, se sale fuera del contenedor.
+</div>
+<div class="contenedor overflow-hidden">
+  Este texto es muy largo y no cabe en la caja. Como tiene overflow hidden, se oculta lo que no cabe.
+</div>
+<div class="contenedor overflow-scroll">
+  Este texto es muy largo y no cabe en la caja. Como tiene overflow scroll, aparece una barra para desplazarse.
+</div>
+</body>
+</html>>

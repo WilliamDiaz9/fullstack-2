@@ -1,0 +1,612 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>JavaScript · Temario</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background: #f5f5f5;
+            font-family: 'Segoe UI', Roboto, system-ui, -apple-system, sans-serif;
+            color: #1e1e1e;
+            padding: 2rem 1rem;
+            line-height: 1.5;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        h1 {
+            font-weight: 400;
+            font-size: 2rem;
+            letter-spacing: -0.01em;
+            border-bottom: 2px solid #2c2c2c;
+            padding-bottom: 0.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .modulo {
+            margin-bottom: 3rem;
+            background: #ffffff;
+            border: 1px solid #d0d0d0;
+            padding: 1.5rem 1.5rem 0.25rem 1.5rem;
+        }
+
+        .modulo-header {
+            font-weight: 500;
+            font-size: 1.3rem;
+            letter-spacing: 0.02em;
+            margin-bottom: 1.25rem;
+            border-bottom: 1px solid #d0d0d0;
+            padding-bottom: 0.5rem;
+        }
+
+        .modulo-header small {
+            font-weight: 400;
+            font-size: 0.9rem;
+            color: #4a4a4a;
+            margin-left: 0.75rem;
+        }
+
+        .slides-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1.25rem;
+        }
+
+        .slide {
+            background: #fafafa;
+            border: 1px solid #d8d8d8;
+            padding: 1rem 1.25rem 1.25rem 1.25rem;
+        }
+
+        .slide-title {
+            font-weight: 500;
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            letter-spacing: 0.04em;
+            color: #3a3a3a;
+            border-bottom: 1px solid #d8d8d8;
+            padding-bottom: 0.4rem;
+            margin-bottom: 0.75rem;
+        }
+
+        .slide ul,
+        .slide p {
+            font-size: 0.95rem;
+        }
+
+        .slide ul {
+            list-style: none;
+            padding-left: 0;
+        }
+
+        .slide li {
+            padding: 0.2rem 0 0.2rem 1.2rem;
+            position: relative;
+        }
+
+        .slide li::before {
+            content: "—";
+            position: absolute;
+            left: 0;
+            color: #4a4a4a;
+        }
+
+        .slide code {
+            background: #eaeaea;
+            padding: 0.1rem 0.4rem;
+            font-size: 0.9rem;
+            border-radius: 2px;
+            font-family: 'JetBrains Mono', 'Fira Code', monospace;
+        }
+
+        .slide pre {
+            background: #2c2c2c;
+            color: #eaeaea;
+            padding: 0.75rem 1rem;
+            overflow-x: auto;
+            font-size: 0.85rem;
+            border-radius: 2px;
+            margin: 0.6rem 0;
+            font-family: 'JetBrains Mono', 'Fira Code', monospace;
+            border: none;
+        }
+
+        .slide pre code {
+            background: transparent;
+            padding: 0;
+            color: inherit;
+            font-size: 0.85rem;
+        }
+
+        .solucion {
+            background: #f0f0f0;
+            border-left: 3px solid #2c2c2c;
+        }
+
+        .solucion .slide-title {
+            color: #1e1e1e;
+        }
+
+        .nota {
+            font-size: 0.85rem;
+            color: #4a4a4a;
+            margin-top: 0.4rem;
+        }
+
+        @media (max-width: 760px) {
+            .slides-grid {
+                grid-template-columns: 1fr;
+                gap: 0.75rem;
+            }
+
+            .modulo {
+                padding: 1rem 1rem 0.25rem 1rem;
+            }
+
+            h1 {
+                font-size: 1.6rem;
+            }
+        }
+
+        .footer {
+            margin-top: 3rem;
+            border-top: 1px solid #d0d0d0;
+            padding-top: 1.5rem;
+            font-size: 0.9rem;
+            color: #4a4a4a;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>JavaScript</h1>
+
+        <!-- ========== SLIDES DE ACLARACIONES ========== -->
+        <section class="modulo">
+            <div class="modulo-header">Introducción al entorno<small></small></div>
+            <div class="slides-grid">
+                <div class="slide">
+                    <div class="slide-title">Conceptos</div>
+                    <ul>
+                        <li><strong>JavaScript</strong>: lenguaje interpretado, orientado a objetos, multiplataforma. Nació en 1995.</li>
+                        <li><strong>Frontend</strong>: se ejecuta en el navegador. Manipula DOM, eventos, peticiones HTTP, animaciones.</li>
+                        <li><strong>Backend</strong>: con Node.js, se ejecuta en servidor. APIs, bases de datos, autenticación.</li>
+                        <li><strong>Mobile</strong>: con React Native, Ionic, NativeScript (apps híbridas/nativas).</li>
+                        <li><strong>Motor JS</strong>: programa que lee y ejecuta el código. Cada navegador tiene el suyo: V8 (Chrome), SpiderMonkey (Firefox), JavaScriptCore (Safari).</li>
+                    </ul>
+                </div>
+                <div class="slide">
+                    <div class="slide-title">Ejemplos</div>
+                    <ul>
+                        <li><strong>DevTools</strong>: F12 → Consola. Ejecutar <code>console.log("Hola")</code> en vivo.</li>
+                        <li><strong>VS Code</strong>: editor con extensiones (ESLint, Prettier, Live Server).</li>
+                        <li><strong>Etiqueta &lt;script&gt;</strong>:
+                            <ul>
+                                <li>Interno: <code>&lt;script&gt; console.log("Hola"); &lt;/script&gt;</code></li>
+                                <li>Externo: <code>&lt;script src="app.js"&gt;&lt;/script&gt;</code></li>
+                            </ul>
+                        </li>
+                    </ul>
+                    <pre><code>&lt;!-- Ejemplo completo --&gt;
+&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+&lt;head&gt;
+  &lt;script src="analytics.js"&gt;&lt;/script&gt;
+&lt;/head&gt;
+&lt;body&gt;
+  &lt;h1&gt;Mi página&lt;/h1&gt;
+  &lt;script src="app.js"&gt;&lt;/script&gt;
+&lt;/body&gt;
+&lt;/html&gt;</code></pre>
+                </div>
+                <div class="slide">
+                    <div class="slide-title">Ejercicios</div>
+                    <ul>
+                        <li>Abrir la consola del navegador y escribir <code>console.log("Mi primer script")</code>.</li>
+                        <li>Crear un archivo HTML con un script interno que muestre un mensaje en la consola.</li>
+                        <li>Crear un archivo JS externo y enlazarlo con <code>&lt;script src="..."&gt;</code>.</li>
+                    </ul>
+                </div>
+                <div class="slide solucion">
+                    <div class="slide-title">Soluciones</div>
+                    <pre><code>&lt;!-- archivo: index.html --&gt;
+&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+&lt;body&gt;
+  &lt;script&gt;
+    console.log("Mi primer script");
+  &lt;/script&gt;
+  &lt;script src="mi-script.js"&gt;&lt;/script&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+
+// archivo: mi-script.js
+console.log("Desde archivo externo");</code></pre>
+                </div>
+            </div>
+        </section>
+
+        <!-- ========== MÓDULO 1 ========== -->
+        <section class="modulo">
+            <div class="modulo-header">Módulo 1 <small>Variables y tipos de datos</small></div>
+            <div class="slides-grid">
+                <div class="slide">
+                    <div class="slide-title">Conceptos</div>
+                    <ul>
+                        <li><code>let</code>, <code>const</code>, <code>var</code></li>
+                        <li>Tipos: <code>string</code>, <code>number</code>, <code>boolean</code></li>
+                        <li><code>undefined</code> y <code>null</code></li>
+                        <li>Operador <code>typeof</code></li>
+                    </ul>
+                </div>
+                <div class="slide">
+                    <div class="slide-title">Ejemplos</div>
+                    <pre><code>let nombre = "Ana";
+const edad = 28;
+let esProfesor = false;
+console.log(typeof nombre); // "string"</code></pre>
+                </div>
+                <div class="slide">
+                    <div class="slide-title">Ejercicios</div>
+                    <ul>
+                        <li>Declarar variables: tu nombre, edad, y si eres estudiante.</li>
+                        <li>Mostrar el tipo de cada una con <code>typeof</code>.</li>
+                        <li>Convertir la edad a string y mostrarla.</li>
+                    </ul>
+                </div>
+                <div class="slide solucion">
+                    <div class="slide-title">Soluciones</div>
+                    <pre><code>let nombre = "Carlos";
+let edad = 32;
+let esEstudiante = true;
+console.log(typeof nombre);
+console.log(typeof edad);
+console.log(typeof esEstudiante);
+console.log(String(edad));</code></pre>
+                </div>
+            </div>
+        </section>
+
+        <!-- ========== MÓDULO 2 ========== -->
+        <section class="modulo">
+            <div class="modulo-header">Módulo 2 <small>Operadores y expresiones</small></div>
+            <div class="slides-grid">
+                <div class="slide">
+                    <div class="slide-title">Conceptos</div>
+                    <ul>
+                        <li>Aritméticos: <code>+ - * / % **</code></li>
+                        <li>Asignación: <code>= += -= *= /=</code></li>
+                        <li>Comparación: <code>===</code> vs <code>==</code></li>
+                        <li>Lógicos: <code>&amp;&amp;  ||  !</code></li>
+                        <li>Ternario: <code>cond ? val1 : val2</code></li>
+                    </ul>
+                </div>
+                <div class="slide">
+                    <div class="slide-title">Ejemplos</div>
+                    <pre><code>let a = 10, b = 3;
+console.log(a % b); // 1
+console.log(a === "10"); // false
+let mensaje = (a > 5) ? "Mayor" : "Menor";</code></pre>
+                </div>
+                <div class="slide">
+                    <div class="slide-title">Ejercicios</div>
+                    <ul>
+                        <li>Dado un número, determinar si es par o impar con operador ternario.</li>
+                        <li>Verificar si un número es positivo y mayor que 100.</li>
+                    </ul>
+                </div>
+                <div class="slide solucion">
+                    <div class="slide-title">Soluciones</div>
+                    <pre><code>let num = 7;
+let resultado = (num % 2 === 0) ? "Par" : "Impar";
+console.log(resultado);
+
+let x = 150;
+console.log(x > 0 && x > 100); // true</code></pre>
+                </div>
+            </div>
+        </section>
+
+        <!-- ========== MÓDULO 3 ========== -->
+        <section class="modulo">
+            <div class="modulo-header">Módulo 3 <small>Condicionales (if, else, switch)</small></div>
+            <div class="slides-grid">
+                <div class="slide">
+                    <div class="slide-title">Conceptos</div>
+                    <ul>
+                        <li><code>if</code> / <code>else if</code> / <code>else</code></li>
+                        <li><code>switch</code> (casos múltiples)</li>
+                        <li>Evitar anidaciones excesivas</li>
+                    </ul>
+                </div>
+                <div class="slide">
+                    <div class="slide-title">Ejemplos</div>
+                    <pre><code>let nota = 85;
+if (nota >= 90) console.log("A");
+else if (nota >= 80) console.log("B");
+else console.log("C");</code></pre>
+                </div>
+                <div class="slide">
+                    <div class="slide-title">Ejercicios</div>
+                    <ul>
+                        <li>Calificación: nota ≥90 → A, ≥80 → B, ≥70 → C, else → D.</li>
+                        <li>Simular semáforo: "rojo" → "Alto", "verde" → "Siga", etc.</li>
+                    </ul>
+                </div>
+                <div class="slide solucion">
+                    <div class="slide-title">Soluciones</div>
+                    <pre><code>let nota = 75;
+if (nota >= 90) console.log("A");
+else if (nota >= 80) console.log("B");
+else if (nota >= 70) console.log("C");
+else console.log("D");
+
+let color = "verde";
+switch(color) {
+  case "rojo": console.log("Alto"); break;
+  case "verde": console.log("Siga"); break;
+  default: console.log("Precaución");
+}</code></pre>
+                </div>
+            </div>
+        </section>
+
+        <!-- ========== MÓDULO 4 ========== -->
+        <section class="modulo">
+            <div class="modulo-header">Módulo 4 <small>Bucles (while, do…while, for)</small></div>
+            <div class="slides-grid">
+                <div class="slide">
+                    <div class="slide-title">Conceptos</div>
+                    <ul>
+                        <li><code>while</code> y <code>do...while</code></li>
+                        <li><code>for</code> (inicio; condición; incremento)</li>
+                        <li><code>for...of</code> (arrays/strings)</li>
+                        <li><code>break</code> y <code>continue</code></li>
+                    </ul>
+                </div>
+                <div class="slide">
+                    <div class="slide-title">Ejemplos</div>
+                    <pre><code>for (let i = 1; i <= 5; i++) {
+  console.log(i);
+}
+// 1 2 3 4 5</code></pre>
+                </div>
+                <div class="slide">
+                    <div class="slide-title">Ejercicios</div>
+                    <ul>
+                        <li>FizzBuzz: del 1 al 100, múltiplos de 3 → "Fizz", de 5 → "Buzz".</li>
+                        <li>Tabla de multiplicar del 7 (del 1 al 10).</li>
+                    </ul>
+                </div>
+                <div class="slide solucion">
+                    <div class="slide-title">Soluciones</div>
+                    <pre><code>for (let i = 1; i <= 100; i++) {
+  if (i % 3 === 0 && i % 5 === 0) console.log("FizzBuzz");
+  else if (i % 3 === 0) console.log("Fizz");
+  else if (i % 5 === 0) console.log("Buzz");
+  else console.log(i);
+}
+
+for (let i = 1; i <= 10; i++) {
+  console.log(7 * i);
+}</code></pre>
+                </div>
+            </div>
+        </section>
+
+        <!-- ========== MÓDULO 5 ========== -->
+        <section class="modulo">
+            <div class="modulo-header">Módulo 5 <small>Funciones (parte 1)</small></div>
+            <div class="slides-grid">
+                <div class="slide">
+                    <div class="slide-title">Conceptos</div>
+                    <ul>
+                        <li>Declaración <code>function nombre() { }</code></li>
+                        <li>Parámetros y argumentos</li>
+                        <li><code>return</code> (valor de retorno)</li>
+                        <li>Ámbito local vs global</li>
+                    </ul>
+                </div>
+                <div class="slide">
+                    <div class="slide-title">Ejemplos</div>
+                    <pre><code>function sumar(a, b) {
+  return a + b;
+}
+console.log(sumar(5, 3)); // 8</code></pre>
+                </div>
+                <div class="slide">
+                    <div class="slide-title">Ejercicios</div>
+                    <ul>
+                        <li>Función que calcule el área de un rectángulo (base × altura).</li>
+                        <li>Función que convierta Celsius a Fahrenheit.</li>
+                    </ul>
+                </div>
+                <div class="slide solucion">
+                    <div class="slide-title">Soluciones</div>
+                    <pre><code>function areaRect(base, altura) {
+  return base * altura;
+}
+
+function celsiusAFahrenheit(c) {
+  return c * 9/5 + 32;
+}
+console.log(celsiusAFahrenheit(25)); // 77</code></pre>
+                </div>
+            </div>
+        </section>
+
+        <!-- ========== MÓDULO 6 ========== -->
+        <section class="modulo">
+            <div class="modulo-header">Módulo 6 <small>Arrays (vectores)</small></div>
+            <div class="slides-grid">
+                <div class="slide">
+                    <div class="slide-title">Conceptos</div>
+                    <ul>
+                        <li>Creación: <code>let arr = [1,2,3]</code></li>
+                        <li>Propiedad <code>length</code></li>
+                        <li>Métodos: <code>push/pop</code>, <code>unshift/shift</code></li>
+                        <li><code>indexOf</code>, <code>includes</code>, <code>join</code></li>
+                    </ul>
+                </div>
+                <div class="slide">
+                    <div class="slide-title">Ejemplos</div>
+                    <pre><code>let frutas = ["manzana", "pera"];
+frutas.push("naranja");
+console.log(frutas.length); // 3
+console.log(frutas.join(" - "));</code></pre>
+                </div>
+                <div class="slide">
+                    <div class="slide-title">Ejercicios</div>
+                    <ul>
+                        <li>Dado un array de nombres, mostrar solo los que empiezan con "A".</li>
+                        <li>Eliminar el último elemento y mostrar el array.</li>
+                    </ul>
+                </div>
+                <div class="slide solucion">
+                    <div class="slide-title">Soluciones</div>
+                    <pre><code>let nombres = ["Ana", "Luis", "Andrés", "Marta"];
+for (let n of nombres) {
+  if (n[0] === "A") console.log(n);
+}
+
+nombres.pop();
+console.log(nombres);</code></pre>
+                </div>
+            </div>
+        </section>
+
+        <!-- ========== MÓDULO 7 ========== -->
+        <section class="modulo">
+            <div class="modulo-header">Módulo 7 <small>Objetos literales</small></div>
+            <div class="slides-grid">
+                <div class="slide">
+                    <div class="slide-title">Conceptos</div>
+                    <ul>
+                        <li>Sintaxis <code>{ clave: valor }</code></li>
+                        <li>Acceso: <code>obj.prop</code> o <code>obj["prop"]</code></li>
+                        <li>Añadir / modificar / eliminar</li>
+                        <li>Métodos (funciones dentro del objeto)</li>
+                    </ul>
+                </div>
+                <div class="slide">
+                    <div class="slide-title">Ejemplos</div>
+                    <pre><code>let coche = {
+  marca: "Toyota",
+  modelo: "Corolla",
+  descripcion() {
+    return this.marca + " " + this.modelo;
+  }
+};
+console.log(coche.descripcion());</code></pre>
+                </div>
+                <div class="slide">
+                    <div class="slide-title">Ejercicios</div>
+                    <ul>
+                        <li>Crear objeto "cuenta" con saldo, y métodos depositar/retirar.</li>
+                        <li>Recorrer el objeto con <code>for...in</code>.</li>
+                    </ul>
+                </div>
+                <div class="slide solucion">
+                    <div class="slide-title">Soluciones</div>
+                    <pre><code>let cuenta = {
+  saldo: 100,
+  depositar(cant) { this.saldo += cant; },
+  retirar(cant) { if (cant <= this.saldo) this.saldo -= cant; }
+};
+cuenta.depositar(50);
+console.log(cuenta.saldo); // 150</code></pre>
+                </div>
+            </div>
+        </section>
+
+        <!-- ========== MÓDULO 8 ========== -->
+        <section class="modulo">
+            <div class="modulo-header">Módulo 8 <small>Strings y métodos útiles</small></div>
+            <div class="slides-grid">
+                <div class="slide">
+                    <div class="slide-title">Conceptos</div>
+                    <ul>
+                        <li><code>length</code>, <code>toUpperCase()</code>, <code>toLowerCase()</code></li>
+                        <li><code>trim()</code>, <code>slice()</code>, <code>substring()</code></li>
+                        <li><code>replace()</code>, <code>replaceAll()</code></li>
+                        <li>Template literals: <code>${variable}</code></li>
+                    </ul>
+                </div>
+                <div class="slide">
+                    <div class="slide-title">Ejemplos</div>
+                    <pre><code>let saludo = "  Hola Mundo  ";
+console.log(saludo.trim()); // "Hola Mundo"
+console.log(saludo.slice(0, 4)); // "Hol"</code></pre>
+                </div>
+                <div class="slide">
+                    <div class="slide-title">Ejercicios</div>
+                    <ul>
+                        <li>Validar que un email contenga "@" y termine en ".com".</li>
+                        <li>Mostrar nombre en mayúsculas con template literal.</li>
+                    </ul>
+                </div>
+                <div class="slide solucion">
+                    <div class="slide-title">Soluciones</div>
+                    <pre><code>let email = "usuario@correo.com";
+let esValido = email.includes("@") && email.endsWith(".com");
+console.log(esValido);
+
+let nombre = "Laura";
+console.log(`Hola ${nombre.toUpperCase()}`);</code></pre>
+                </div>
+            </div>
+        </section>
+
+        <!-- ========== MÓDULO 9 ========== -->
+        <section class="modulo">
+            <div class="modulo-header">Módulo 9 <small>Funciones (parte 2) · arrow, callbacks</small></div>
+            <div class="slides-grid">
+                <div class="slide">
+                    <div class="slide-title">Conceptos</div>
+                    <ul>
+                        <li>Funciones flecha: <code>() => { }</code></li>
+                        <li>Callbacks (funciones como argumentos)</li>
+                        <li><code>setTimeout</code> y <code>setInterval</code></li>
+                    </ul>
+                </div>
+                <div class="slide">
+                    <div class="slide-title">Ejemplos</div>
+                    <pre><code>const saludar = (nombre) => console.log("Hola " + nombre);
+setTimeout(() => console.log("Pasó 1s"), 1000);</code></pre>
+                </div>
+                <div class="slide">
+                    <div class="slide-title">Ejercicios</div>
+                    <ul>
+                        <li>Crear un reloj digital que se actualice cada segundo con <code>setInterval</code>.</li>
+                        <li>Usar una arrow function para sumar dos números.</li>
+                    </ul>
+                </div>
+                <div class="slide solucion">
+                    <div class="slide-title">Soluciones</div>
+                    <pre><code>setInterval(() => {
+  console.log(new Date().toLocaleTimeString());
+}, 1000);
+
+const sumar = (a, b) => a + b;
+console.log(sumar(4, 6)); // 10</code></pre>
+                </div>
+            </div>
+        </section>
+
+        <div class="footer">
+            <p></p>
+        </div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Reloj</title>
+</head>
+<body>
+
+    <h1>Mi Reloj</h1>
+
+    <p id="hora">00:00:00</p>
+
+    <script>
+        let miReloj;
+
+        function iniciar() {
+            miReloj = setInterval(function () {
+                let ahora = new Date();
+                document.getElementById("hora").innerHTML = ahora.toLocaleTimeString();
+            }, 1000);
+        }
+    </script>
+
+</body>
+</html>

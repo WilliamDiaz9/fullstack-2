@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Reloj DuocUC Neon</title>
+    <style>
+
+        body {
+            margin: 0;
+            background-color: #0a0a0f;
+            text-align: center;
+            padding-top: 40px;
+            font-family: Arial, sans-serif;
+            overflow: hidden;
+            position: relative;
+        }
+
+        /* ====== fondo animado con circulos flotando ====== */
+        .circulo {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(15px);
+            opacity: 0.5;
+            z-index: 0;
+        }
+
+        .c1 {
+            width: 200px;
+            height: 200px;
+            background-color: #f8b31c;
+            top: 10%;
+            left: 5%;
+            animation: flotar1 6s ease-in-out infinite;
+        }
+
+        .c2 {
+            width: 150px;
+            height: 150px;
+            background-color: #ff2ec4;
+            top: 60%;
+            left: 80%;
+            animation: flotar2 8s ease-in-out infinite;
+        }
+
+        .c3 {
+            width: 120px;
+            height: 120px;
+            background-color: #00eaff;
+            top: 70%;
+            left: 10%;
+            animation: flotar3 7s ease-in-out infinite;
+        }
+
+        @keyframes flotar1 {
+            0%, 100% { transform: translate(0, 0); }
+            50% { transform: translate(60px, 40px); }
+        }
+
+        @keyframes flotar2 {
+            0%, 100% { transform: translate(0, 0); }
+            50% { transform: translate(-50px, -60px); }
+        }
+
+        @keyframes flotar3 {
+            0%, 100% { transform: translate(0, 0); }
+            50% { transform: translate(40px, -50px); }
+        }
+
+        /* ====== titulo neon parpadeante ====== */
+        h1 {
+            position: relative;
+            z-index: 1;
+            font-size: 50px;
+            color: #fff;
+            text-shadow:
+                0 0 5px #f8b31c,
+                0 0 15px #f8b31c,
+                0 0 30px #f8b31c,
+                0 0 60px #ff2ec4;
+            animation: parpadeo 2.5s infinite alternate;
+        }
+
+        @keyframes parpadeo {
+            0%, 18%, 22%, 25%, 53%, 57%, 100% {
+                text-shadow:
+                    0 0 5px #f8b31c,
+                    0 0 15px #f8b31c,
+                    0 0 30px #f8b31c,
+                    0 0 60px #ff2ec4;
+            }
+            20%, 24%, 55% {
+                text-shadow: none;
+            }
+        }
+
+        /* ====== reloj digital neon ====== */
+        p#hora {
+            position: relative;
+            z-index: 1;
+            font-size: 70px;
+            font-family: monospace;
+            color: #00eaff;
+            text-shadow:
+                0 0 10px #00eaff,
+                0 0 25px #00eaff,
+                0 0 50px #00eaff;
+            animation: pulso 1.5s ease-in-out infinite;
+        }
+
+        @keyframes pulso {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+
+        /* ====== reloj analogico neon ====== */
+        .reloj-analogico {
+            position: relative;
+            z-index: 1;
+            width: 240px;
+            height: 240px;
+            border: 6px solid #f8b31c;
+            border-radius: 50%;
+            margin: 30px auto;
+            background-color: #111;
+            box-shadow:
+                0 0 20px #f8b31c,
+                0 0 40px #f8b31c,
+                inset 0 0 20px #f8b31c;
+            animation: girarBorde 10s linear infinite;
+        }
+
+        @keyframes girarBorde {
+            0% { box-shadow: 0 0 20px #f8b31c, 0 0 40px #f8b31c, inset 0 0 20px #f8b31c; }
+            33% { box-shadow: 0 0 20px #ff2ec4, 0 0 40px #ff2ec4, inset 0 0 20px #ff2ec4; }
+            66% { box-shadow: 0 0 20px #00eaff, 0 0 40px #00eaff, inset 0 0 20px #00eaff; }
+            100% { box-shadow: 0 0 20px #f8b31c, 0 0 40px #f8b31c, inset 0 0 20px #f8b31c; }
+        }
+
+        .aguja {
+            position: absolute;
+            bottom: 50%;
+            left: 50%;
+            transform-origin: bottom;
+            border-radius: 5px;
+        }
+
+        .hora {
+            width: 6px;
+            height: 65px;
+            margin-left: -3px;
+            background-color: #f8b31c;
+            box-shadow: 0 0 10px #f8b31c;
+        }
+
+        .minuto {
+            width: 4px;
+            height: 90px;
+            margin-left: -2px;
+            background-color: #00eaff;
+            box-shadow: 0 0 10px #00eaff;
+        }
+
+        .segundo {
+            width: 2px;
+            height: 100px;
+            margin-left: -1px;
+            background-color: #ff2ec4;
+            box-shadow: 0 0 10px #ff2ec4;
+        }
+
+        .numero {
+            position: absolute;
+            color: #ffffff;
+            font-weight: bold;
+            font-size: 18px;
+            text-shadow: 0 0 8px #ffffff;
+            transform: translate(-50%, -50%);
+        }
+
+        /* ====== texto en movimiento (marquee) ====== */
+        .marquee {
+            position: relative;
+            z-index: 1;
+            margin-top: 30px;
+            overflow: hidden;
+            white-space: nowrap;
+            border-top: 2px solid #f8b31c;
+            border-bottom: 2px solid #f8b31c;
+            padding: 10px 0;
+        }
+
+        .marquee span {
+            display: inline-block;
+            padding-left: 100%;
+            color: #f8b31c;
+            font-size: 20px;
+            letter-spacing: 3px;
+            text-shadow: 0 0 10px #f8b31c;
+            animation: mover 12s linear infinite;
+        }
+
+        @keyframes mover {
+            0% { transform: translateX(0); }
+            100% { transform: translateX(-100%); }
+        }
+
+    </style>
+</head>
+<body>
+
+    <div class="circulo c1"></div>
+    <div class="circulo c2"></div>
+    <div class="circulo c3"></div>
+
+    <h1>DuocUC</h1>
+
+    <p id="hora">00:00:00</p>
+
+    <div class="reloj-analogico">
+        <div class="numero" style="left: 152.5px; top: 40px;">1</div>
+        <div class="numero" style="left: 200px; top: 73.5px;">2</div>
+        <div class="numero" style="left: 213px; top: 120px;">3</div>
+        <div class="numero" style="left: 200px; top: 166.5px;">4</div>
+        <div class="numero" style="left: 152.5px; top: 200px;">5</div>
+        <div class="numero" style="left: 120px; top: 213px;">6</div>
+        <div class="numero" style="left: 73.5px; top: 200px;">7</div>
+        <div class="numero" style="left: 40px; top: 166.5px;">8</div>
+        <div class="numero" style="left: 27px; top: 120px;">9</div>
+        <div class="numero" style="left: 40px; top: 73.5px;">10</div>
+        <div class="numero" style="left: 73.5px; top: 40px;">11</div>
+        <div class="numero" style="left: 120px; top: 27px;">12</div>
+
+        <div class="aguja hora" id="agujaHora"></div>
+        <div class="aguja minuto" id="agujaMinuto"></div>
+        <div class="aguja segundo" id="agujaSegundo"></div>
+    </div>
+
+    <div class="marquee">
+        <span>★ DUOCUC ★ INGENIERIA EN INFORMATICA ★ DUOCUC ★ INGENIERIA EN INFORMATICA ★</span>
+    </div>
+
+    <script>
+        setInterval(function () {
+            let ahora = new Date();
+
+            // reloj digital
+            document.getElementById("hora").innerHTML = ahora.toLocaleTimeString();
+
+            // reloj analogico
+            let horas = ahora.getHours();
+            let minutos = ahora.getMinutes();
+            let segundos = ahora.getSeconds();
+
+            let gradosHora = (horas % 12) * 30 + minutos * 0.5;
+            let gradosMinuto = minutos * 6;
+            let gradosSegundo = segundos * 6;
+
+            document.getElementById("agujaHora").style.transform = "rotate(" + gradosHora + "deg)";
+            document.getElementById("agujaMinuto").style.transform = "rotate(" + gradosMinuto + "deg)";
+            document.getElementById("agujaSegundo").style.transform = "rotate(" + gradosSegundo + "deg)";
+        }, 1000);
+    </script>
+
+</body>
+</html>

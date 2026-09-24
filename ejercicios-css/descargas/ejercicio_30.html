@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<title>Ejercicio 30 - min-height</title>
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        max-width: 700px;
+        margin: 40px auto;
+        padding: 0 20px;
+        color: #222;
+    }
+    .explicacion {
+        background: #eef2ff;
+        border-left: 4px solid #4338ca;
+        padding: 12px 16px;
+        margin-bottom: 25px;
+        font-size: 15px;
+    }
+    .demo {
+        border: 2px dashed #999;
+        padding: 20px;
+        margin-top: 10px;
+    }
+    h1 {
+        font-size: 22px;
+        color: #4338ca;
+    }
+    .minheight { min-height: 120px; background: #fbd38d; padding: 15px; width: 100%; }
+</style>
+</head>
+<body>
+
+<h1>Ejercicio 30: min-height</h1>
+<div class="explicacion">La propiedad min-height establece la altura MINIMA de un elemento. La caja siempre tendra al menos esa altura, pero puede crecer si el contenido lo requiere.</div>
+
+<div class="demo">
+<div class="minheight">Esta caja tiene min-height: 120px. Siempre mide al menos 120px de alto, pero si anado mas texto, crece automaticamente.</div>
+</div>
+
+</body>
+</html>

@@ -1,0 +1,569 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>DuocUC · Reloj</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700;900&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+
+    /* =========================================================
+       TOKENS DE DISEÑO
+       ========================================================= */
+    :root {
+        --duoc-amarillo: #f8b31c;
+        --duoc-negro: #16181d;
+        --panel: #1d2027;
+        --panel-borde: rgba(248, 179, 28, 0.35);
+        --neon-cian: #26e9ff;
+        --neon-magenta: #ff2ec4;
+        --neon-verde: #39ff14;
+        --texto: #f3f3f3;
+        --texto-tenue: #8b8f9a;
+
+        --font-display: 'Orbitron', sans-serif;
+        --font-mono: 'Space Mono', monospace;
+    }
+
+    * { box-sizing: border-box; }
+
+    html, body {
+        margin: 0;
+        height: 100%;
+        overflow: hidden;
+        background: radial-gradient(circle at 50% 20%, #1d2130 0%, var(--duoc-negro) 70%);
+        color: var(--texto);
+        font-family: var(--font-mono);
+    }
+
+    /* =========================================================
+       FONDO — blobs ambientales
+       ========================================================= */
+    .blob {
+        position: fixed;
+        border-radius: 50%;
+        filter: blur(60px);
+        opacity: 0.35;
+        z-index: 0;
+    }
+    .blob--1 { width: 380px; height: 380px; background: var(--duoc-amarillo); top: -8%; left: -6%; animation: flotar 9s ease-in-out infinite; }
+    .blob--2 { width: 300px; height: 300px; background: var(--neon-magenta); bottom: -10%; right: -6%; animation: flotar 11s ease-in-out infinite reverse; }
+    .blob--3 { width: 260px; height: 260px; background: var(--neon-cian); top: 40%; left: 65%; animation: flotar 7.5s ease-in-out infinite; }
+
+    @keyframes flotar {
+        0%, 100% { transform: translate(0, 0); }
+        50%      { transform: translate(50px, 35px); }
+    }
+
+    /* =========================================================
+       LAYOUT PRINCIPAL
+       ========================================================= */
+    .app {
+        position: relative;
+        z-index: 1;
+        min-height: 100%;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: 28px;
+        padding: 40px 20px 70px;
+    }
+
+    .marca {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        font-family: var(--font-display);
+        letter-spacing: 4px;
+    }
+
+    .marca__punto {
+        width: 12px;
+        height: 12px;
+        border-radius: 50%;
+        background: var(--duoc-amarillo);
+        box-shadow: 0 0 12px var(--duoc-amarillo);
+        animation: pulso-punto 1.4s ease-in-out infinite;
+    }
+
+    @keyframes pulso-punto {
+        0%, 100% { opacity: 1; transform: scale(1); }
+        50%      { opacity: 0.4; transform: scale(0.7); }
+    }
+
+    h1.marca__texto {
+        margin: 0;
+        font-size: clamp(28px, 5vw, 46px);
+        font-weight: 900;
+        color: #fff;
+        text-shadow:
+            0 0 6px var(--duoc-amarillo),
+            0 0 20px var(--duoc-amarillo),
+            0 0 46px var(--neon-magenta);
+        animation: parpadeo 3s infinite;
+    }
+
+    @keyframes parpadeo {
+        0%, 17%, 22%, 26%, 55%, 60%, 100% { opacity: 1; }
+        19%, 24%, 57%                     { opacity: 0.25; }
+    }
+
+    body.glitch h1.marca__texto { animation: glitch 0.25s linear; }
+    @keyframes glitch {
+        0%   { transform: translate(0); }
+        20%  { transform: translate(-4px, 2px); color: var(--neon-magenta); }
+        40%  { transform: translate(4px, -2px); color: var(--neon-cian); }
+        60%  { transform: translate(-3px, -2px); color: var(--neon-verde); }
+        80%  { transform: translate(3px, 2px); color: #fff; }
+        100% { transform: translate(0); }
+    }
+
+    /* =========================================================
+       PANEL — tarjeta principal (glassmorphism)
+       ========================================================= */
+    .panel {
+        position: relative;
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        justify-content: center;
+        gap: 40px;
+        padding: 36px 44px;
+        background: rgba(29, 32, 39, 0.55);
+        border: 1px solid var(--panel-borde);
+        border-radius: 24px;
+        backdrop-filter: blur(14px);
+        box-shadow:
+            0 0 0 1px rgba(248, 179, 28, 0.08),
+            0 20px 60px rgba(0, 0, 0, 0.55),
+            0 0 40px rgba(248, 179, 28, 0.15);
+    }
+
+    .digital {
+        text-align: center;
+    }
+
+    .digital__eyebrow {
+        font-family: var(--font-display);
+        font-size: 12px;
+        letter-spacing: 3px;
+        color: var(--texto-tenue);
+        margin-bottom: 6px;
+    }
+
+    #hora {
+        margin: 0;
+        font-family: var(--font-mono);
+        font-weight: 700;
+        font-size: clamp(42px, 7vw, 68px);
+        color: var(--neon-cian);
+        text-shadow: 0 0 12px var(--neon-cian), 0 0 30px var(--neon-cian);
+        animation: respirar 1.6s ease-in-out infinite;
+    }
+
+    @keyframes respirar {
+        0%, 100% { transform: scale(1); }
+        50%      { transform: scale(1.03); }
+    }
+
+    /* =========================================================
+       RELOJ ANALOGICO
+       ========================================================= */
+    .analogico {
+        position: relative;
+        width: 210px;
+        height: 210px;
+        border-radius: 50%;
+        background: radial-gradient(circle at 35% 30%, #23262f, #101216 75%);
+        border: 5px solid var(--duoc-amarillo);
+        box-shadow:
+            0 0 18px var(--duoc-amarillo),
+            inset 0 0 18px rgba(248, 179, 28, 0.5);
+        animation: aro-color 9s linear infinite;
+    }
+
+    @keyframes aro-color {
+        0%   { box-shadow: 0 0 18px var(--duoc-amarillo), inset 0 0 18px rgba(248,179,28,0.5); }
+        33%  { box-shadow: 0 0 18px var(--neon-magenta), inset 0 0 18px rgba(255,46,196,0.5); }
+        66%  { box-shadow: 0 0 18px var(--neon-cian), inset 0 0 18px rgba(38,233,255,0.5); }
+        100% { box-shadow: 0 0 18px var(--duoc-amarillo), inset 0 0 18px rgba(248,179,28,0.5); }
+    }
+
+    .analogico__numero {
+        position: absolute;
+        transform: translate(-50%, -50%);
+        font-family: var(--font-display);
+        font-size: 15px;
+        font-weight: 700;
+        color: #fff;
+        text-shadow: 0 0 6px #fff;
+    }
+
+    .aguja {
+        position: absolute;
+        bottom: 50%;
+        left: 50%;
+        transform-origin: bottom;
+        border-radius: 6px;
+    }
+    .aguja--hora   { width: 6px;  height: 55px; margin-left: -3px; background: var(--duoc-amarillo); box-shadow: 0 0 8px var(--duoc-amarillo); }
+    .aguja--minuto { width: 4px;  height: 78px; margin-left: -2px; background: var(--neon-cian);      box-shadow: 0 0 8px var(--neon-cian); }
+    .aguja--segundo{ width: 2px;  height: 88px; margin-left: -1px; background: var(--neon-magenta);   box-shadow: 0 0 8px var(--neon-magenta); }
+
+    .analogico__centro {
+        position: absolute;
+        top: 50%; left: 50%;
+        width: 12px; height: 12px;
+        background: #fff;
+        border-radius: 50%;
+        transform: translate(-50%, -50%);
+        box-shadow: 0 0 8px #fff;
+        z-index: 2;
+    }
+
+    /* =========================================================
+       MARQUEE
+       ========================================================= */
+    .marquee {
+        position: relative;
+        z-index: 1;
+        width: min(720px, 90vw);
+        overflow: hidden;
+        white-space: nowrap;
+        border-top: 1px solid var(--panel-borde);
+        border-bottom: 1px solid var(--panel-borde);
+        padding: 8px 0;
+    }
+    .marquee span {
+        display: inline-block;
+        padding-left: 100%;
+        font-family: var(--font-display);
+        font-size: 14px;
+        letter-spacing: 3px;
+        color: var(--duoc-amarillo);
+        text-shadow: 0 0 8px var(--duoc-amarillo);
+        animation: mover 14s linear infinite;
+    }
+    @keyframes mover {
+        0%   { transform: translateX(0); }
+        100% { transform: translateX(-100%); }
+    }
+
+    /* =========================================================
+       BARRA INFERIOR + DINO DESLIZANDOSE
+       ========================================================= */
+    .suelo {
+        position: fixed;
+        left: 0; bottom: 0;
+        width: 100%; height: 3px;
+        background: linear-gradient(90deg, var(--duoc-amarillo), var(--neon-magenta), var(--neon-cian));
+        box-shadow: 0 0 12px var(--duoc-amarillo);
+        z-index: 3;
+    }
+    #dino {
+        position: fixed;
+        bottom: 3px;
+        left: -70px;
+        width: 64px;
+        z-index: 4;
+        filter: drop-shadow(0 0 8px rgba(248, 179, 28, 0.6));
+        animation: correr 6s linear infinite;
+    }
+    @keyframes correr {
+        0%   { left: -70px; }
+        100% { left: 100%; }
+    }
+
+    /* =========================================================
+       EXPLOSION PERIODICA
+       ========================================================= */
+    @keyframes sacudir {
+        0%, 100% { transform: translate(0, 0); }
+        20% { transform: translate(-8px, 4px); }
+        40% { transform: translate(8px, -6px); }
+        60% { transform: translate(-6px, 6px); }
+        80% { transform: translate(6px, -4px); }
+    }
+    body.explotando { animation: sacudir 0.45s; }
+
+    #explosion {
+        position: fixed;
+        top: 50%; left: 50%;
+        transform: translate(-50%, -50%) scale(0);
+        font-size: 110px;
+        opacity: 0;
+        z-index: 10;
+        pointer-events: none;
+    }
+    #explosion.activo { animation: boom 0.45s ease-out; }
+    @keyframes boom {
+        0%   { transform: translate(-50%, -50%) scale(0.2); opacity: 1; }
+        60%  { transform: translate(-50%, -50%) scale(2);   opacity: 1; }
+        100% { transform: translate(-50%, -50%) scale(2.6); opacity: 0; }
+    }
+
+    /* =========================================================
+       "67" ALEATORIO
+       ========================================================= */
+    #sesentaysiete {
+        position: fixed;
+        font-family: var(--font-display);
+        font-size: 42px;
+        font-weight: 900;
+        color: var(--neon-verde);
+        text-shadow: 0 0 14px var(--neon-verde);
+        z-index: 8;
+        opacity: 0;
+        pointer-events: none;
+    }
+    #sesentaysiete.mostrar { animation: aparecer67 1.1s ease-in-out; }
+    @keyframes aparecer67 {
+        0%   { opacity: 0; transform: scale(0) rotate(-25deg); }
+        30%  { opacity: 1; transform: scale(1.3) rotate(8deg); }
+        65%  { opacity: 1; transform: scale(1) rotate(0deg); }
+        100% { opacity: 0; transform: scale(0.5) rotate(18deg); }
+    }
+
+    /* =========================================================
+       POKEMON DESTELLANDO
+       ========================================================= */
+    .poke {
+        position: fixed;
+        width: 64px; height: 64px;
+        z-index: 6;
+        opacity: 0;
+        pointer-events: none;
+        filter: drop-shadow(0 0 8px rgba(255,255,255,0.5));
+    }
+    .poke.flash { animation: destello 0.9s ease-in-out; }
+    @keyframes destello {
+        0%   { opacity: 0; transform: scale(0.3); }
+        22%  { opacity: 1; transform: scale(1.2); }
+        78%  { opacity: 1; transform: scale(1); }
+        100% { opacity: 0; transform: scale(0.3); }
+    }
+
+    /* =========================================================
+       CONFETI
+       ========================================================= */
+    .confeti {
+        position: fixed;
+        top: -24px;
+        font-size: 22px;
+        z-index: 9;
+        animation: caer linear forwards;
+    }
+    @keyframes caer {
+        0%   { transform: translateY(0) rotate(0deg); opacity: 1; }
+        100% { transform: translateY(112vh) rotate(650deg); opacity: 0.25; }
+    }
+
+</style>
+</head>
+<body>
+
+    <!-- fondo ambiental -->
+    <div class="blob blob--1"></div>
+    <div class="blob blob--2"></div>
+    <div class="blob blob--3"></div>
+
+    <div class="app">
+
+        <div class="marca">
+            <span class="marca__punto"></span>
+            <h1 class="marca__texto">DuocUC</h1>
+        </div>
+
+        <div class="panel">
+
+            <div class="digital">
+                <p class="digital__eyebrow">HORA ACTUAL</p>
+                <p id="hora">00:00:00</p>
+            </div>
+
+            <div class="analogico" id="analogico">
+                <div class="analogico__centro"></div>
+                <div class="aguja aguja--hora" id="agujaHora"></div>
+                <div class="aguja aguja--minuto" id="agujaMinuto"></div>
+                <div class="aguja aguja--segundo" id="agujaSegundo"></div>
+                <!-- los numeros se generan por JS -->
+            </div>
+
+        </div>
+
+        <div class="marquee">
+            <span>★ DUOCUC ★ INGENIERÍA EN INFORMÁTICA ★ DUOCUC ★ INGENIERÍA EN INFORMÁTICA ★</span>
+        </div>
+
+    </div>
+
+    <!-- barra inferior + dino -->
+    <div class="suelo"></div>
+    <img id="dino" src="https://gifgifs.com/animations/animals/dinosaurs/t-rex.gif" alt="dino">
+
+    <!-- efectos aleatorios -->
+    <div id="explosion">💥</div>
+    <div id="sesentaysiete">67</div>
+    <img class="poke" id="poke1">
+    <img class="poke" id="poke2">
+    <img class="poke" id="poke3">
+    <img class="poke" id="poke4">
+
+    <script>
+    /* =============================================================
+       APP.RELOJ — reloj digital + analogico
+       ============================================================= */
+    const RelojApp = (function () {
+
+        const numerosEl = document.getElementById("analogico");
+        const CENTRO = 105;   // mitad de 210px
+        const RADIO = 80;
+
+        function pintarNumeros() {
+            for (let hora = 1; hora <= 12; hora++) {
+                const angulo = (hora * 30) * (Math.PI / 180);
+                const x = CENTRO + RADIO * Math.sin(angulo);
+                const y = CENTRO - RADIO * Math.cos(angulo);
+
+                const numero = document.createElement("div");
+                numero.className = "analogico__numero";
+                numero.style.left = x + "px";
+                numero.style.top = y + "px";
+                numero.textContent = hora;
+                numerosEl.appendChild(numero);
+            }
+        }
+
+        function actualizar() {
+            const ahora = new Date();
+
+            document.getElementById("hora").textContent = ahora.toLocaleTimeString();
+
+            const horas = ahora.getHours();
+            const minutos = ahora.getMinutes();
+            const segundos = ahora.getSeconds();
+
+            const gHora = (horas % 12) * 30 + minutos * 0.5;
+            const gMinuto = minutos * 6;
+            const gSegundo = segundos * 6;
+
+            document.getElementById("agujaHora").style.transform = `rotate(${gHora}deg)`;
+            document.getElementById("agujaMinuto").style.transform = `rotate(${gMinuto}deg)`;
+            document.getElementById("agujaSegundo").style.transform = `rotate(${gSegundo}deg)`;
+        }
+
+        function iniciar() {
+            pintarNumeros();
+            actualizar();
+            setInterval(actualizar, 1000);
+        }
+
+        return { iniciar };
+    })();
+
+    /* =============================================================
+       APP.CAOS — todos los efectos random
+       ============================================================= */
+    const CaosApp = (function () {
+
+        function explosionPeriodica() {
+            setInterval(function () {
+                document.body.classList.add("explotando");
+                document.getElementById("explosion").classList.add("activo");
+
+                setTimeout(function () {
+                    document.body.classList.remove("explotando");
+                    document.getElementById("explosion").classList.remove("activo");
+                }, 450);
+            }, 5000);
+        }
+
+        function sesentaysieteRandom() {
+            const el = document.getElementById("sesentaysiete");
+
+            setInterval(function () {
+                const x = Math.random() * (window.innerWidth - 80);
+                const y = Math.random() * (window.innerHeight - 80);
+
+                el.style.left = x + "px";
+                el.style.top = y + "px";
+
+                el.classList.remove("mostrar");
+                void el.offsetWidth; // fuerza reinicio de la animacion
+                el.classList.add("mostrar");
+            }, 2000);
+        }
+
+        function pokemonRandom() {
+            const sprites = [
+                "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/25.png",
+                "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/1.png",
+                "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/4.png",
+                "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/7.png",
+                "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/133.png",
+                "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/39.png"
+            ];
+            const pokes = [
+                document.getElementById("poke1"),
+                document.getElementById("poke2"),
+                document.getElementById("poke3"),
+                document.getElementById("poke4")
+            ];
+
+            setInterval(function () {
+                const img = sprites[Math.floor(Math.random() * sprites.length)];
+                const poke = pokes[Math.floor(Math.random() * pokes.length)];
+
+                poke.src = img;
+                poke.style.left = Math.random() * (window.innerWidth - 70) + "px";
+                poke.style.top = Math.random() * (window.innerHeight - 150) + "px";
+
+                poke.classList.remove("flash");
+                void poke.offsetWidth;
+                poke.classList.add("flash");
+            }, 650);
+        }
+
+        function confetiConstante() {
+            const emojis = ["🎉", "⭐", "🔥", "💛", "✨", "🦖"];
+
+            setInterval(function () {
+                const pieza = document.createElement("div");
+                pieza.className = "confeti";
+                pieza.textContent = emojis[Math.floor(Math.random() * emojis.length)];
+                pieza.style.left = Math.random() * window.innerWidth + "px";
+                pieza.style.animationDuration = (2 + Math.random() * 2) + "s";
+
+                document.body.appendChild(pieza);
+                setTimeout(function () { pieza.remove(); }, 4200);
+            }, 320);
+        }
+
+        function glitchPeriodico() {
+            setInterval(function () {
+                document.body.classList.add("glitch");
+                setTimeout(function () {
+                    document.body.classList.remove("glitch");
+                }, 280);
+            }, 3000);
+        }
+
+        function iniciar() {
+            explosionPeriodica();
+            sesentaysieteRandom();
+            pokemonRandom();
+            confetiConstante();
+            glitchPeriodico();
+        }
+
+        return { iniciar };
+    })();
+
+    RelojApp.iniciar();
+    CaosApp.iniciar();
+    </script>
+
+</body>
+</html>

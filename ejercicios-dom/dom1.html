@@ -1,0 +1,1596 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>DOM · Ejemplos DOM</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background: #e8eaed;
+            font-family: 'Segoe UI', Roboto, system-ui, -apple-system, sans-serif;
+            color: #1e1e1e;
+            padding: 2rem 1rem;
+            line-height: 1.5;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .container {
+            max-width: 1100px;
+            width: 100%;
+            position: relative;
+        }
+
+        h1 {
+            font-weight: 400;
+            font-size: 2rem;
+            letter-spacing: -0.01em;
+            border-bottom: 2px solid #2c2c2c;
+            padding-bottom: 0.5rem;
+            margin-bottom: 2rem;
+            color: #1a1a1a;
+        }
+
+        /* ---------- Navegador de slides ---------- */
+        .navegador {
+            position: absolute;
+            top: 0;
+            right: 0;
+            display: flex;
+            gap: 0.3rem;
+            z-index: 10;
+        }
+
+        .navegador button {
+            padding: 0.3rem 0.8rem;
+            background: #d0d0d0;
+            border: none;
+            font-size: 1.2rem;
+            cursor: pointer;
+            transition: background 0.2s, box-shadow 0.2s;
+            font-family: inherit;
+            color: #1e1e1e;
+            border-radius: 2px;
+            font-weight: 700;
+        }
+
+        .navegador button:hover {
+            background: #b8b8b8;
+        }
+
+        .navegador button.activo {
+            background: #1a4a7a;
+            color: white;
+            box-shadow: 0 2px 6px rgba(26, 74, 122, 0.3);
+        }
+
+        .navegador button.activo:hover {
+            background: #0d2f52;
+        }
+
+        /* ---------- Slides ---------- */
+        .slide-contenedor {
+            position: relative;
+            margin-top: 3rem;
+        }
+
+        .slide {
+            display: none;
+            background: #ffffff;
+            border: 1px solid #c8c8c8;
+            padding: 2rem 2.5rem 2rem 2.5rem;
+            min-height: 420px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.06);
+            animation: fadeSlide 0.3s ease;
+        }
+
+        .slide.visible {
+            display: block;
+        }
+
+        @keyframes fadeSlide {
+            0% { opacity: 0; transform: translateY(8px); }
+            100% { opacity: 1; transform: translateY(0); }
+        }
+
+        /* ---------- Estilos de los ejemplos ---------- */
+        .ejemplo-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+            height: 100%;
+            min-height: 300px;
+        }
+
+        .columna-izquierda {
+            background: #f8fafc;
+            border: 1px solid #d8e0e8;
+            padding: 1rem;
+            border-radius: 3px;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .columna-izquierda .titulo-ejemplo {
+            font-weight: 600;
+            color: #0a2a4a;
+            font-size: 1rem;
+            margin-bottom: 0.5rem;
+            border-bottom: 1px solid #d8e0e8;
+            padding-bottom: 0.3rem;
+        }
+
+        .columna-izquierda .render {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            gap: 0.6rem;
+            justify-content: center;
+        }
+
+        .columna-izquierda .render .control {
+            display: flex;
+            align-items: center;
+            gap: 0.3rem;
+            flex-wrap: wrap;
+        }
+
+        .columna-izquierda .render .control .id-label {
+            font-family: 'JetBrains Mono', 'Fira Code', monospace;
+            font-size: 0.7rem;
+            color: #1a4a7a;
+            background: #e4ecf5;
+            padding: 0.05rem 0.4rem;
+            border-radius: 3px;
+            white-space: nowrap;
+        }
+
+        .columna-izquierda .render button {
+            padding: 0.2rem 0.8rem;
+            background: #0a2a4a;
+            color: white;
+            border: none;
+            border-radius: 3px;
+            cursor: pointer;
+            font-size: 0.85rem;
+        }
+
+        .columna-izquierda .render button:hover {
+            background: #051a2a;
+        }
+
+        .columna-izquierda .render input[type="text"],
+        .columna-izquierda .render input[type="number"] {
+            padding: 0.2rem 0.5rem;
+            border: 1px solid #b8c8d8;
+            border-radius: 3px;
+            font-size: 0.85rem;
+            max-width: 200px;
+        }
+
+        .columna-izquierda .render input[type="color"] {
+            width: 40px;
+            height: 40px;
+            border: none;
+            padding: 0;
+            cursor: pointer;
+        }
+
+        .columna-izquierda .render textarea {
+            padding: 0.2rem 0.5rem;
+            border: 1px solid #b8c8d8;
+            border-radius: 3px;
+            font-size: 0.85rem;
+            width: 100%;
+            max-width: 250px;
+            height: 60px;
+            resize: vertical;
+        }
+
+        .columna-izquierda .render .contador-numero {
+            font-size: 2rem;
+            font-weight: 700;
+            color: #0a2a4a;
+        }
+
+        .columna-izquierda .render .texto-ejemplo {
+            font-size: 1.1rem;
+            padding: 0.2rem 0;
+        }
+
+        .columna-izquierda .render .texto-grande {
+            font-size: 1.8rem;
+        }
+        .columna-izquierda .render .texto-mediano {
+            font-size: 1.2rem;
+        }
+        .columna-izquierda .render .texto-pequeno {
+            font-size: 0.8rem;
+        }
+
+        .columna-izquierda .render .caja-borde {
+            padding: 0.5rem;
+            border: 2px solid #c8d4e0;
+            border-radius: 3px;
+            text-align: center;
+        }
+
+        .columna-izquierda .render .caja-borde.borde-rojo {
+            border-color: #b00020;
+        }
+        .columna-izquierda .render .caja-borde.borde-azul {
+            border-color: #0a2a4a;
+        }
+        .columna-izquierda .render .caja-borde.borde-verde {
+            border-color: #1a6a2a;
+        }
+
+        .columna-izquierda .render .imagen-ejemplo {
+            max-width: 150px;
+            height: auto;
+            border: 1px solid #d8e0e8;
+            border-radius: 3px;
+        }
+
+        .columna-derecha {
+            background: #2c2c2c;
+            border: 1px solid #2c2c2c;
+            padding: 1rem;
+            border-radius: 3px;
+            overflow-x: auto;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .columna-derecha .titulo-codigo {
+            font-weight: 600;
+            color: #eaeaea;
+            font-size: 1rem;
+            margin-bottom: 0.5rem;
+            border-bottom: 1px solid #4a4a4a;
+            padding-bottom: 0.3rem;
+        }
+
+        .columna-derecha .codigo-completo {
+            font-family: 'JetBrains Mono', 'Fira Code', monospace;
+            font-size: 0.75rem;
+            color: #eaeaea;
+            white-space: pre-wrap;
+            line-height: 1.5;
+            flex: 1;
+            overflow-x: auto;
+        }
+
+        .columna-derecha .codigo-completo .comentario { color: #6a8a6a; }
+        .columna-derecha .codigo-completo .etiqueta { color: #e0b060; }
+        .columna-derecha .codigo-completo .atributo { color: #80b0d0; }
+        .columna-derecha .codigo-completo .valor { color: #b0d080; }
+        .columna-derecha .codigo-completo .script-tag { color: #e0b060; }
+        .columna-derecha .codigo-completo .js { color: #eaeaea; }
+
+        /* ---------- Responsive ---------- */
+        @media (max-width: 800px) {
+            .ejemplo-container {
+                grid-template-columns: 1fr;
+                gap: 1rem;
+            }
+
+            .slide {
+                padding: 1rem 1.2rem 1rem 1.2rem;
+                min-height: auto;
+                margin-top: 2.5rem;
+            }
+
+            .slide-contenedor {
+                margin-top: 2.5rem;
+            }
+
+            .navegador {
+                position: static;
+                justify-content: flex-end;
+                margin-bottom: 0.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h1>Ejemplos DOM</h1>
+
+        <div class="slide-contenedor">
+
+            <!-- ========================================================== -->
+            <!-- SLIDE 1: Cambiar texto                                      -->
+            <!-- ========================================================== -->
+            <div class="slide visible" data-slide="0">
+                <div class="navegador">
+                    <button class="activo" data-slide="0">‹</button>
+                    <button data-slide="1">›</button>
+                </div>
+                <div class="ejemplo-container">
+                    <div class="columna-izquierda">
+                        <div class="titulo-ejemplo">1. Cambiar texto con un botón</div>
+                        <div class="render">
+                            <div class="control">
+                                <p id="mensaje" class="texto-ejemplo">Texto original</p>
+                                <span class="id-label">(id="mensaje")</span>
+                            </div>
+                            <div class="control">
+                                <button id="btnCambiar">Cambiar texto</button>
+                                <span class="id-label">(id="btnCambiar")</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="columna-derecha">
+                        <div class="titulo-codigo">HTML completo (copia y pega)</div>
+                        <div class="codigo-completo">
+<span class="comentario">&lt;!-- Ejemplo 1: Cambiar texto --&gt;</span>
+<span class="etiqueta">&lt;!DOCTYPE html&gt;</span>
+<span class="etiqueta">&lt;html</span> <span class="atributo">lang</span>=<span class="valor">"es"</span><span class="etiqueta">&gt;</span>
+<span class="etiqueta">&lt;head&gt;</span>
+  <span class="etiqueta">&lt;meta</span> <span class="atributo">charset</span>=<span class="valor">"UTF-8"</span> <span class="etiqueta">/&gt;</span>
+  <span class="etiqueta">&lt;meta</span> <span class="atributo">name</span>=<span class="valor">"viewport"</span> <span class="atributo">content</span>=<span class="valor">"width=device-width, initial-scale=1.0"</span> <span class="etiqueta">/&gt;</span>
+  <span class="etiqueta">&lt;title&gt;</span>Ejemplo 1<span class="etiqueta">&lt;/title&gt;</span>
+<span class="etiqueta">&lt;/head&gt;</span>
+<span class="etiqueta">&lt;body&gt;</span>
+  <span class="etiqueta">&lt;p</span> <span class="atributo">id</span>=<span class="valor">"mensaje"</span><span class="etiqueta">&gt;</span>Texto original<span class="etiqueta">&lt;/p&gt;</span>
+  <span class="etiqueta">&lt;button</span> <span class="atributo">id</span>=<span class="valor">"btnCambiar"</span><span class="etiqueta">&gt;</span>Cambiar texto<span class="etiqueta">&lt;/button&gt;</span>
+  <span class="script-tag">&lt;script&gt;</span>
+    <span class="js">document.getElementById('btnCambiar').addEventListener('click', function() {
+      document.getElementById('mensaje').textContent = '¡Texto cambiado!';
+    });</span>
+  <span class="script-tag">&lt;/script&gt;</span>
+<span class="etiqueta">&lt;/body&gt;</span>
+<span class="etiqueta">&lt;/html&gt;</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ========================================================== -->
+            <!-- SLIDE 2: Mostrar / Ocultar                                  -->
+            <!-- ========================================================== -->
+            <div class="slide" data-slide="1">
+                <div class="navegador">
+                    <button data-slide="0">‹</button>
+                    <button class="activo" data-slide="1">›</button>
+                </div>
+                <div class="ejemplo-container">
+                    <div class="columna-izquierda">
+                        <div class="titulo-ejemplo">2. Mostrar / Ocultar un elemento</div>
+                        <div class="render">
+                            <div class="control">
+                                <div id="elementoOculto" style="padding:0.5rem; background:#f0f5fb; border:1px solid #c8d4e0; border-radius:3px;">
+                                    Este elemento se puede ocultar.
+                                </div>
+                                <span class="id-label">(id="elementoOculto")</span>
+                            </div>
+                            <div class="control">
+                                <button id="btnToggle">Ocultar</button>
+                                <span class="id-label">(id="btnToggle")</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="columna-derecha">
+                        <div class="titulo-codigo">HTML completo (copia y pega)</div>
+                        <div class="codigo-completo">
+<span class="comentario">&lt;!-- Ejemplo 2: Mostrar / Ocultar --&gt;</span>
+<span class="etiqueta">&lt;!DOCTYPE html&gt;</span>
+<span class="etiqueta">&lt;html</span> <span class="atributo">lang</span>=<span class="valor">"es"</span><span class="etiqueta">&gt;</span>
+<span class="etiqueta">&lt;head&gt;</span>
+  <span class="etiqueta">&lt;meta</span> <span class="atributo">charset</span>=<span class="valor">"UTF-8"</span> <span class="etiqueta">/&gt;</span>
+  <span class="etiqueta">&lt;meta</span> <span class="atributo">name</span>=<span class="valor">"viewport"</span> <span class="atributo">content</span>=<span class="valor">"width=device-width, initial-scale=1.0"</span> <span class="etiqueta">/&gt;</span>
+  <span class="etiqueta">&lt;title&gt;</span>Ejemplo 2<span class="etiqueta">&lt;/title&gt;</span>
+<span class="etiqueta">&lt;/head&gt;</span>
+<span class="etiqueta">&lt;body&gt;</span>
+  <span class="etiqueta">&lt;div</span> <span class="atributo">id</span>=<span class="valor">"elementoOculto"</span> <span class="atributo">style</span>=<span class="valor">"padding:0.5rem; background:#f0f5fb; border:1px solid #c8d4e0; border-radius:3px;"</span><span class="etiqueta">&gt;</span>
+    Este elemento se puede ocultar.
+  <span class="etiqueta">&lt;/div&gt;</span>
+  <span class="etiqueta">&lt;button</span> <span class="atributo">id</span>=<span class="valor">"btnToggle"</span><span class="etiqueta">&gt;</span>Ocultar<span class="etiqueta">&lt;/button&gt;</span>
+  <span class="script-tag">&lt;script&gt;</span>
+    <span class="js">let elemento = document.getElementById('elementoOculto');
+    let boton = document.getElementById('btnToggle');
+    boton.addEventListener('click', function() {
+      if (elemento.style.display === 'none') {
+        elemento.style.display = 'block';
+        boton.textContent = 'Ocultar';
+      } else {
+        elemento.style.display = 'none';
+        boton.textContent = 'Mostrar';
+      }
+    });</span>
+  <span class="script-tag">&lt;/script&gt;</span>
+<span class="etiqueta">&lt;/body&gt;</span>
+<span class="etiqueta">&lt;/html&gt;</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ========================================================== -->
+            <!-- SLIDE 3: Contador +1                                        -->
+            <!-- ========================================================== -->
+            <div class="slide" data-slide="2">
+                <div class="navegador">
+                    <button data-slide="1">‹</button>
+                    <button class="activo" data-slide="2">›</button>
+                </div>
+                <div class="ejemplo-container">
+                    <div class="columna-izquierda">
+                        <div class="titulo-ejemplo">3. Contador de clics (+1)</div>
+                        <div class="render">
+                            <div class="control">
+                                <div class="contador-numero" id="contadorNum">0</div>
+                                <span class="id-label">(id="contadorNum")</span>
+                            </div>
+                            <div class="control">
+                                <button id="btnSumar">+1</button>
+                                <span class="id-label">(id="btnSumar")</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="columna-derecha">
+                        <div class="titulo-codigo">HTML completo (copia y pega)</div>
+                        <div class="codigo-completo">
+<span class="comentario">&lt;!-- Ejemplo 3: Contador +1 --&gt;</span>
+<span class="etiqueta">&lt;!DOCTYPE html&gt;</span>
+<span class="etiqueta">&lt;html</span> <span class="atributo">lang</span>=<span class="valor">"es"</span><span class="etiqueta">&gt;</span>
+<span class="etiqueta">&lt;head&gt;</span>
+  <span class="etiqueta">&lt;meta</span> <span class="atributo">charset</span>=<span class="valor">"UTF-8"</span> <span class="etiqueta">/&gt;</span>
+  <span class="etiqueta">&lt;meta</span> <span class="atributo">name</span>=<span class="valor">"viewport"</span> <span class="atributo">content</span>=<span class="valor">"width=device-width, initial-scale=1.0"</span> <span class="etiqueta">/&gt;</span>
+  <span class="etiqueta">&lt;title&gt;</span>Ejemplo 3<span class="etiqueta">&lt;/title&gt;</span>
+  <span class="etiqueta">&lt;style&gt;</span>
+    <span class="js">.contador { font-size: 2rem; font-weight: 700; color: #0a2a4a; }</span>
+  <span class="etiqueta">&lt;/style&gt;</span>
+<span class="etiqueta">&lt;/head&gt;</span>
+<span class="etiqueta">&lt;body&gt;</span>
+  <span class="etiqueta">&lt;div</span> <span class="atributo">class</span>=<span class="valor">"contador"</span> <span class="atributo">id</span>=<span class="valor">"contadorNum"</span><span class="etiqueta">&gt;</span>0<span class="etiqueta">&lt;/div&gt;</span>
+  <span class="etiqueta">&lt;button</span> <span class="atributo">id</span>=<span class="valor">"btnSumar"</span><span class="etiqueta">&gt;</span>+1<span class="etiqueta">&lt;/button&gt;</span>
+  <span class="script-tag">&lt;script&gt;</span>
+    <span class="js">let contador = 0;
+    let display = document.getElementById('contadorNum');
+    document.getElementById('btnSumar').addEventListener('click', function() {
+      contador++;
+      display.textContent = contador;
+    });</span>
+  <span class="script-tag">&lt;/script&gt;</span>
+<span class="etiqueta">&lt;/body&gt;</span>
+<span class="etiqueta">&lt;/html&gt;</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ========================================================== -->
+            <!-- SLIDE 4: Contador con + y -                                  -->
+            <!-- ========================================================== -->
+            <div class="slide" data-slide="3">
+                <div class="navegador">
+                    <button data-slide="2">‹</button>
+                    <button class="activo" data-slide="3">›</button>
+                </div>
+                <div class="ejemplo-container">
+                    <div class="columna-izquierda">
+                        <div class="titulo-ejemplo">4. Contador con + y -</div>
+                        <div class="render">
+                            <div class="control">
+                                <div class="contador-numero" id="contadorNum2">0</div>
+                                <span class="id-label">(id="contadorNum2")</span>
+                            </div>
+                            <div class="control" style="display:flex; gap:0.3rem; flex-wrap:wrap;">
+                                <button id="btnIncrementar">+1</button>
+                                <span class="id-label">(id="btnIncrementar")</span>
+                                <button id="btnDecrementar">-1</button>
+                                <span class="id-label">(id="btnDecrementar")</span>
+                                <button id="btnReiniciar">Reiniciar</button>
+                                <span class="id-label">(id="btnReiniciar")</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="columna-derecha">
+                        <div class="titulo-codigo">HTML completo (copia y pega)</div>
+                        <div class="codigo-completo">
+<span class="comentario">&lt;!-- Ejemplo 4: Contador con + y - --&gt;</span>
+<span class="etiqueta">&lt;!DOCTYPE html&gt;</span>
+<span class="etiqueta">&lt;html</span> <span class="atributo">lang</span>=<span class="valor">"es"</span><span class="etiqueta">&gt;</span>
+<span class="etiqueta">&lt;head&gt;</span>
+  <span class="etiqueta">&lt;meta</span> <span class="atributo">charset</span>=<span class="valor">"UTF-8"</span> <span class="etiqueta">/&gt;</span>
+  <span class="etiqueta">&lt;meta</span> <span class="atributo">name</span>=<span class="valor">"viewport"</span> <span class="atributo">content</span>=<span class="valor">"width=device-width, initial-scale=1.0"</span> <span class="etiqueta">/&gt;</span>
+  <span class="etiqueta">&lt;title&gt;</span>Ejemplo 4<span class="etiqueta">&lt;/title&gt;</span>
+  <span class="etiqueta">&lt;style&gt;</span>
+    <span class="js">.contador { font-size: 2rem; font-weight: 700; color: #0a2a4a; }</span>
+  <span class="etiqueta">&lt;/style&gt;</span>
+<span class="etiqueta">&lt;/head&gt;</span>
+<span class="etiqueta">&lt;body&gt;</span>
+  <span class="etiqueta">&lt;div</span> <span class="atributo">class</span>=<span class="valor">"contador"</span> <span class="atributo">id</span>=<span class="valor">"contadorNum2"</span><span class="etiqueta">&gt;</span>0<span class="etiqueta">&lt;/div&gt;</span>
+  <span class="etiqueta">&lt;button</span> <span class="atributo">id</span>=<span class="valor">"btnIncrementar"</span><span class="etiqueta">&gt;</span>+1<span class="etiqueta">&lt;/button&gt;</span>
+  <span class="etiqueta">&lt;button</span> <span class="atributo">id</span>=<span class="valor">"btnDecrementar"</span><span class="etiqueta">&gt;</span>-1<span class="etiqueta">&lt;/button&gt;</span>
+  <span class="etiqueta">&lt;button</span> <span class="atributo">id</span>=<span class="valor">"btnReiniciar"</span><span class="etiqueta">&gt;</span>Reiniciar<span class="etiqueta">&lt;/button&gt;</span>
+  <span class="script-tag">&lt;script&gt;</span>
+    <span class="js">let contador = 0;
+    let display = document.getElementById('contadorNum2');
+    document.getElementById('btnIncrementar').addEventListener('click', function() {
+      contador++;
+      display.textContent = contador;
+    });
+    document.getElementById('btnDecrementar').addEventListener('click', function() {
+      contador--;
+      display.textContent = contador;
+    });
+    document.getElementById('btnReiniciar').addEventListener('click', function() {
+      contador = 0;
+      display.textContent = contador;
+    });</span>
+  <span class="script-tag">&lt;/script&gt;</span>
+<span class="etiqueta">&lt;/body&gt;</span>
+<span class="etiqueta">&lt;/html&gt;</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ========================================================== -->
+            <!-- SLIDE 5: Escribir y ver reflejado                           -->
+            <!-- ========================================================== -->
+            <div class="slide" data-slide="4">
+                <div class="navegador">
+                    <button data-slide="3">‹</button>
+                    <button class="activo" data-slide="4">›</button>
+                </div>
+                <div class="ejemplo-container">
+                    <div class="columna-izquierda">
+                        <div class="titulo-ejemplo">5. Escribir y ver reflejado</div>
+                        <div class="render">
+                            <div class="control">
+                                <input type="text" id="inputTextoSimple" placeholder="Escribe algo..." />
+                                <span class="id-label">(id="inputTextoSimple")</span>
+                            </div>
+                            <div class="control">
+                                <p id="resultadoTexto">Aparecerá aquí</p>
+                                <span class="id-label">(id="resultadoTexto")</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="columna-derecha">
+                        <div class="titulo-codigo">HTML completo (copia y pega)</div>
+                        <div class="codigo-completo">
+<span class="comentario">&lt;!-- Ejemplo 5: Escribir y ver reflejado --&gt;</span>
+<span class="etiqueta">&lt;!DOCTYPE html&gt;</span>
+<span class="etiqueta">&lt;html</span> <span class="atributo">lang</span>=<span class="valor">"es"</span><span class="etiqueta">&gt;</span>
+<span class="etiqueta">&lt;head&gt;</span>
+  <span class="etiqueta">&lt;meta</span> <span class="atributo">charset</span>=<span class="valor">"UTF-8"</span> <span class="etiqueta">/&gt;</span>
+  <span class="etiqueta">&lt;meta</span> <span class="atributo">name</span>=<span class="valor">"viewport"</span> <span class="atributo">content</span>=<span class="valor">"width=device-width, initial-scale=1.0"</span> <span class="etiqueta">/&gt;</span>
+  <span class="etiqueta">&lt;title&gt;</span>Ejemplo 5<span class="etiqueta">&lt;/title&gt;</span>
+<span class="etiqueta">&lt;/head&gt;</span>
+<span class="etiqueta">&lt;body&gt;</span>
+  <span class="etiqueta">&lt;input</span> <span class="atributo">type</span>=<span class="valor">"text"</span> <span class="atributo">id</span>=<span class="valor">"inputTextoSimple"</span> <span class="atributo">placeholder</span>=<span class="valor">"Escribe algo..."</span> <span class="etiqueta">/&gt;</span>
+  <span class="etiqueta">&lt;p</span> <span class="atributo">id</span>=<span class="valor">"resultadoTexto"</span><span class="etiqueta">&gt;</span>Aparecerá aquí<span class="etiqueta">&lt;/p&gt;</span>
+  <span class="script-tag">&lt;script&gt;</span>
+    <span class="js">let input = document.getElementById('inputTextoSimple');
+    let resultado = document.getElementById('resultadoTexto');
+    input.addEventListener('input', function() {
+      let texto = input.value;
+      if (texto === '') {
+        resultado.textContent = 'Aparecerá aquí';
+      } else {
+        resultado.textContent = 'Has escrito: ' + texto;
+      }
+    });</span>
+  <span class="script-tag">&lt;/script&gt;</span>
+<span class="etiqueta">&lt;/body&gt;</span>
+<span class="etiqueta">&lt;/html&gt;</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ========================================================== -->
+            <!-- SLIDE 6: Cambiar tamaño de fuente                           -->
+            <!-- ========================================================== -->
+            <div class="slide" data-slide="5">
+                <div class="navegador">
+                    <button data-slide="4">‹</button>
+                    <button class="activo" data-slide="5">›</button>
+                </div>
+                <div class="ejemplo-container">
+                    <div class="columna-izquierda">
+                        <div class="titulo-ejemplo">6. Cambiar tamaño de fuente</div>
+                        <div class="render">
+                            <div class="control">
+                                <p id="textoTamano">Texto para cambiar tamaño</p>
+                                <span class="id-label">(id="textoTamano")</span>
+                            </div>
+                            <div class="control" style="display:flex; gap:0.3rem; flex-wrap:wrap;">
+                                <button id="btnGrande">Grande</button>
+                                <span class="id-label">(id="btnGrande")</span>
+                                <button id="btnMediano">Mediano</button>
+                                <span class="id-label">(id="btnMediano")</span>
+                                <button id="btnPequeño">Pequeño</button>
+                                <span class="id-label">(id="btnPequeño")</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="columna-derecha">
+                        <div class="titulo-codigo">HTML completo (copia y pega)</div>
+                        <div class="codigo-completo">
+<span class="comentario">&lt;!-- Ejemplo 6: Cambiar tamaño de fuente --&gt;</span>
+<span class="etiqueta">&lt;!DOCTYPE html&gt;</span>
+<span class="etiqueta">&lt;html</span> <span class="atributo">lang</span>=<span class="valor">"es"</span><span class="etiqueta">&gt;</span>
+<span class="etiqueta">&lt;head&gt;</span>
+  <span class="etiqueta">&lt;meta</span> <span class="atributo">charset</span>=<span class="valor">"UTF-8"</span> <span class="etiqueta">/&gt;</span>
+  <span class="etiqueta">&lt;meta</span> <span class="atributo">name</span>=<span class="valor">"viewport"</span> <span class="atributo">content</span>=<span class="valor">"width=device-width, initial-scale=1.0"</span> <span class="etiqueta">/&gt;</span>
+  <span class="etiqueta">&lt;title&gt;</span>Ejemplo 6<span class="etiqueta">&lt;/title&gt;</span>
+<span class="etiqueta">&lt;/head&gt;</span>
+<span class="etiqueta">&lt;body&gt;</span>
+  <span class="etiqueta">&lt;p</span> <span class="atributo">id</span>=<span class="valor">"textoTamano"</span><span class="etiqueta">&gt;</span>Texto para cambiar tamaño<span class="etiqueta">&lt;/p&gt;</span>
+  <span class="etiqueta">&lt;button</span> <span class="atributo">id</span>=<span class="valor">"btnGrande"</span><span class="etiqueta">&gt;</span>Grande<span class="etiqueta">&lt;/button&gt;</span>
+  <span class="etiqueta">&lt;button</span> <span class="atributo">id</span>=<span class="valor">"btnMediano"</span><span class="etiqueta">&gt;</span>Mediano<span class="etiqueta">&lt;/button&gt;</span>
+  <span class="etiqueta">&lt;button</span> <span class="atributo">id</span>=<span class="valor">"btnPequeño"</span><span class="etiqueta">&gt;</span>Pequeño<span class="etiqueta">&lt;/button&gt;</span>
+  <span class="script-tag">&lt;script&gt;</span>
+    <span class="js">let texto = document.getElementById('textoTamano');
+    document.getElementById('btnGrande').addEventListener('click', function() {
+      texto.style.fontSize = '1.8rem';
+    });
+    document.getElementById('btnMediano').addEventListener('click', function() {
+      texto.style.fontSize = '1.2rem';
+    });
+    document.getElementById('btnPequeño').addEventListener('click', function() {
+      texto.style.fontSize = '0.8rem';
+    });</span>
+  <span class="script-tag">&lt;/script&gt;</span>
+<span class="etiqueta">&lt;/body&gt;</span>
+<span class="etiqueta">&lt;/html&gt;</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ========================================================== -->
+            <!-- SLIDE 7: Sumar dos números                                  -->
+            <!-- ========================================================== -->
+            <div class="slide" data-slide="6">
+                <div class="navegador">
+                    <button data-slide="5">‹</button>
+                    <button class="activo" data-slide="6">›</button>
+                </div>
+                <div class="ejemplo-container">
+                    <div class="columna-izquierda">
+                        <div class="titulo-ejemplo">7. Sumar dos números</div>
+                        <div class="render">
+                            <div class="control">
+                                <input type="number" id="num1" placeholder="Número 1" style="width:80px;" />
+                                <span class="id-label">(id="num1")</span>
+                            </div>
+                            <div class="control">
+                                <input type="number" id="num2" placeholder="Número 2" style="width:80px;" />
+                                <span class="id-label">(id="num2")</span>
+                            </div>
+                            <div class="control">
+                                <button id="btnSumarNumeros">Sumar</button>
+                                <span class="id-label">(id="btnSumarNumeros")</span>
+                            </div>
+                            <div class="control">
+                                <p id="resultadoSuma">Resultado: </p>
+                                <span class="id-label">(id="resultadoSuma")</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="columna-derecha">
+                        <div class="titulo-codigo">HTML completo (copia y pega)</div>
+                        <div class="codigo-completo">
+<span class="comentario">&lt;!-- Ejemplo 7: Sumar dos números --&gt;</span>
+<span class="etiqueta">&lt;!DOCTYPE html&gt;</span>
+<span class="etiqueta">&lt;html</span> <span class="atributo">lang</span>=<span class="valor">"es"</span><span class="etiqueta">&gt;</span>
+<span class="etiqueta">&lt;head&gt;</span>
+  <span class="etiqueta">&lt;meta</span> <span class="atributo">charset</span>=<span class="valor">"UTF-8"</span> <span class="etiqueta">/&gt;</span>
+  <span class="etiqueta">&lt;meta</span> <span class="atributo">name</span>=<span class="valor">"viewport"</span> <span class="atributo">content</span>=<span class="valor">"width=device-width, initial-scale=1.0"</span> <span class="etiqueta">/&gt;</span>
+  <span class="etiqueta">&lt;title&gt;</span>Ejemplo 7<span class="etiqueta">&lt;/title&gt;</span>
+<span class="etiqueta">&lt;/head&gt;</span>
+<span class="etiqueta">&lt;body&gt;</span>
+  <span class="etiqueta">&lt;input</span> <span class="atributo">type</span>=<span class="valor">"number"</span> <span class="atributo">id</span>=<span class="valor">"num1"</span> <span class="atributo">placeholder</span>=<span class="valor">"Número 1"</span> <span class="etiqueta">/&gt;</span>
+  <span class="etiqueta">&lt;input</span> <span class="atributo">type</span>=<span class="valor">"number"</span> <span class="atributo">id</span>=<span class="valor">"num2"</span> <span class="atributo">placeholder</span>=<span class="valor">"Número 2"</span> <span class="etiqueta">/&gt;</span>
+  <span class="etiqueta">&lt;button</span> <span class="atributo">id</span>=<span class="valor">"btnSumarNumeros"</span><span class="etiqueta">&gt;</span>Sumar<span class="etiqueta">&lt;/button&gt;</span>
+  <span class="etiqueta">&lt;p</span> <span class="atributo">id</span>=<span class="valor">"resultadoSuma"</span><span class="etiqueta">&gt;</span>Resultado: <span class="etiqueta">&lt;/p&gt;</span>
+  <span class="script-tag">&lt;script&gt;</span>
+    <span class="js">document.getElementById('btnSumarNumeros').addEventListener('click', function() {
+      let a = parseFloat(document.getElementById('num1').value) || 0;
+      let b = parseFloat(document.getElementById('num2').value) || 0;
+      document.getElementById('resultadoSuma').textContent = 'Resultado: ' + (a + b);
+    });</span>
+  <span class="script-tag">&lt;/script&gt;</span>
+<span class="etiqueta">&lt;/body&gt;</span>
+<span class="etiqueta">&lt;/html&gt;</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ========================================================== -->
+            <!-- SLIDE 8: Mostrar fecha actual                               -->
+            <!-- ========================================================== -->
+            <div class="slide" data-slide="7">
+                <div class="navegador">
+                    <button data-slide="6">‹</button>
+                    <button class="activo" data-slide="7">›</button>
+                </div>
+                <div class="ejemplo-container">
+                    <div class="columna-izquierda">
+                        <div class="titulo-ejemplo">8. Mostrar fecha actual</div>
+                        <div class="render">
+                            <div class="control">
+                                <p id="fechaDisplay">Haz clic para ver la fecha</p>
+                                <span class="id-label">(id="fechaDisplay")</span>
+                            </div>
+                            <div class="control">
+                                <button id="btnFecha">Mostrar fecha</button>
+                                <span class="id-label">(id="btnFecha")</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="columna-derecha">
+                        <div class="titulo-codigo">HTML completo (copia y pega)</div>
+                        <div class="codigo-completo">
+<span class="comentario">&lt;!-- Ejemplo 8: Mostrar fecha actual --&gt;</span>
+<span class="etiqueta">&lt;!DOCTYPE html&gt;</span>
+<span class="etiqueta">&lt;html</span> <span class="atributo">lang</span>=<span class="valor">"es"</span><span class="etiqueta">&gt;</span>
+<span class="etiqueta">&lt;head&gt;</span>
+  <span class="etiqueta">&lt;meta</span> <span class="atributo">charset</span>=<span class="valor">"UTF-8"</span> <span class="etiqueta">/&gt;</span>
+  <span class="etiqueta">&lt;meta</span> <span class="atributo">name</span>=<span class="valor">"viewport"</span> <span class="atributo">content</span>=<span class="valor">"width=device-width, initial-scale=1.0"</span> <span class="etiqueta">/&gt;</span>
+  <span class="etiqueta">&lt;title&gt;</span>Ejemplo 8<span class="etiqueta">&lt;/title&gt;</span>
+<span class="etiqueta">&lt;/head&gt;</span>
+<span class="etiqueta">&lt;body&gt;</span>
+  <span class="etiqueta">&lt;p</span> <span class="atributo">id</span>=<span class="valor">"fechaDisplay"</span><span class="etiqueta">&gt;</span>Haz clic para ver la fecha<span class="etiqueta">&lt;/p&gt;</span>
+  <span class="etiqueta">&lt;button</span> <span class="atributo">id</span>=<span class="valor">"btnFecha"</span><span class="etiqueta">&gt;</span>Mostrar fecha<span class="etiqueta">&lt;/button&gt;</span>
+  <span class="script-tag">&lt;script&gt;</span>
+    <span class="js">document.getElementById('btnFecha').addEventListener('click', function() {
+      let ahora = new Date();
+      let fecha = ahora.getDate() + '/' + (ahora.getMonth()+1) + '/' + ahora.getFullYear();
+      document.getElementById('fechaDisplay').textContent = 'Fecha: ' + fecha;
+    });</span>
+  <span class="script-tag">&lt;/script&gt;</span>
+<span class="etiqueta">&lt;/body&gt;</span>
+<span class="etiqueta">&lt;/html&gt;</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ========================================================== -->
+            <!-- SLIDE 9: Cambiar color de fondo de la página               -->
+            <!-- ========================================================== -->
+            <div class="slide" data-slide="8">
+                <div class="navegador">
+                    <button data-slide="7">‹</button>
+                    <button class="activo" data-slide="8">›</button>
+                </div>
+                <div class="ejemplo-container">
+                    <div class="columna-izquierda">
+                        <div class="titulo-ejemplo">9. Cambiar color de fondo de la página</div>
+                        <div class="render">
+                            <div class="control">
+                                <button id="btnFondoRojo">Rojo</button>
+                                <span class="id-label">(id="btnFondoRojo")</span>
+                                <button id="btnFondoAzul">Azul</button>
+                                <span class="id-label">(id="btnFondoAzul")</span>
+                                <button id="btnFondoVerde">Verde</button>
+                                <span class="id-label">(id="btnFondoVerde")</span>
+                                <button id="btnFondoReset">Reset</button>
+                                <span class="id-label">(id="btnFondoReset")</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="columna-derecha">
+                        <div class="titulo-codigo">HTML completo (copia y pega)</div>
+                        <div class="codigo-completo">
+<span class="comentario">&lt;!-- Ejemplo 9: Cambiar color de fondo de la página --&gt;</span>
+<span class="etiqueta">&lt;!DOCTYPE html&gt;</span>
+<span class="etiqueta">&lt;html</span> <span class="atributo">lang</span>=<span class="valor">"es"</span><span class="etiqueta">&gt;</span>
+<span class="etiqueta">&lt;head&gt;</span>
+  <span class="etiqueta">&lt;meta</span> <span class="atributo">charset</span>=<span class="valor">"UTF-8"</span> <span class="etiqueta">/&gt;</span>
+  <span class="etiqueta">&lt;meta</span> <span class="atributo">name</span>=<span class="valor">"viewport"</span> <span class="atributo">content</span>=<span class="valor">"width=device-width, initial-scale=1.0"</span> <span class="etiqueta">/&gt;</span>
+  <span class="etiqueta">&lt;title&gt;</span>Ejemplo 9<span class="etiqueta">&lt;/title&gt;</span>
+<span class="etiqueta">&lt;/head&gt;</span>
+<span class="etiqueta">&lt;body&gt;</span>
+  <span class="etiqueta">&lt;button</span> <span class="atributo">id</span>=<span class="valor">"btnFondoRojo"</span><span class="etiqueta">&gt;</span>Rojo<span class="etiqueta">&lt;/button&gt;</span>
+  <span class="etiqueta">&lt;button</span> <span class="atributo">id</span>=<span class="valor">"btnFondoAzul"</span><span class="etiqueta">&gt;</span>Azul<span class="etiqueta">&lt;/button&gt;</span>
+  <span class="etiqueta">&lt;button</span> <span class="atributo">id</span>=<span class="valor">"btnFondoVerde"</span><span class="etiqueta">&gt;</span>Verde<span class="etiqueta">&lt;/button&gt;</span>
+  <span class="etiqueta">&lt;button</span> <span class="atributo">id</span>=<span class="valor">"btnFondoReset"</span><span class="etiqueta">&gt;</span>Reset<span class="etiqueta">&lt;/button&gt;</span>
+  <span class="script-tag">&lt;script&gt;</span>
+    <span class="js">document.getElementById('btnFondoRojo').addEventListener('click', function() {
+      document.body.style.backgroundColor = '#fce4e4';
+    });
+    document.getElementById('btnFondoAzul').addEventListener('click', function() {
+      document.body.style.backgroundColor = '#d4e4f7';
+    });
+    document.getElementById('btnFondoVerde').addEventListener('click', function() {
+      document.body.style.backgroundColor = '#ddf0dd';
+    });
+    document.getElementById('btnFondoReset').addEventListener('click', function() {
+      document.body.style.backgroundColor = '#e8eaed';
+    });</span>
+  <span class="script-tag">&lt;/script&gt;</span>
+<span class="etiqueta">&lt;/body&gt;</span>
+<span class="etiqueta">&lt;/html&gt;</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ========================================================== -->
+            <!-- SLIDE 10: Mostrar/ocultar con checkbox                     -->
+            <!-- ========================================================== -->
+            <div class="slide" data-slide="9">
+                <div class="navegador">
+                    <button data-slide="8">‹</button>
+                    <button class="activo" data-slide="9">›</button>
+                </div>
+                <div class="ejemplo-container">
+                    <div class="columna-izquierda">
+                        <div class="titulo-ejemplo">10. Mostrar/ocultar con checkbox</div>
+                        <div class="render">
+                            <div class="control">
+                                <input type="checkbox" id="chkMostrar" checked />
+                                <label for="chkMostrar">Mostrar texto</label>
+                                <span class="id-label">(id="chkMostrar")</span>
+                            </div>
+                            <div class="control">
+                                <p id="textoCheckbox">Este texto aparece cuando el checkbox está marcado.</p>
+                                <span class="id-label">(id="textoCheckbox")</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="columna-derecha">
+                        <div class="titulo-codigo">HTML completo (copia y pega)</div>
+                        <div class="codigo-completo">
+<span class="comentario">&lt;!-- Ejemplo 10: Mostrar/ocultar con checkbox --&gt;</span>
+<span class="etiqueta">&lt;!DOCTYPE html&gt;</span>
+<span class="etiqueta">&lt;html</span> <span class="atributo">lang</span>=<span class="valor">"es"</span><span class="etiqueta">&gt;</span>
+<span class="etiqueta">&lt;head&gt;</span>
+  <span class="etiqueta">&lt;meta</span> <span class="atributo">charset</span>=<span class="valor">"UTF-8"</span> <span class="etiqueta">/&gt;</span>
+  <span class="etiqueta">&lt;meta</span> <span class="atributo">name</span>=<span class="valor">"viewport"</span> <span class="atributo">content</span>=<span class="valor">"width=device-width, initial-scale=1.0"</span> <span class="etiqueta">/&gt;</span>
+  <span class="etiqueta">&lt;title&gt;</span>Ejemplo 10<span class="etiqueta">&lt;/title&gt;</span>
+<span class="etiqueta">&lt;/head&gt;</span>
+<span class="etiqueta">&lt;body&gt;</span>
+  <span class="etiqueta">&lt;input</span> <span class="atributo">type</span>=<span class="valor">"checkbox"</span> <span class="atributo">id</span>=<span class="valor">"chkMostrar"</span> <span class="atributo">checked</span> <span class="etiqueta">/&gt;</span>
+  <span class="etiqueta">&lt;label</span> <span class="atributo">for</span>=<span class="valor">"chkMostrar"</span><span class="etiqueta">&gt;</span>Mostrar texto<span class="etiqueta">&lt;/label&gt;</span>
+  <span class="etiqueta">&lt;p</span> <span class="atributo">id</span>=<span class="valor">"textoCheckbox"</span><span class="etiqueta">&gt;</span>Este texto aparece cuando el checkbox está marcado.<span class="etiqueta">&lt;/p&gt;</span>
+  <span class="script-tag">&lt;script&gt;</span>
+    <span class="js">let checkbox = document.getElementById('chkMostrar');
+    let texto = document.getElementById('textoCheckbox');
+    checkbox.addEventListener('change', function() {
+      if (checkbox.checked) {
+        texto.style.display = 'block';
+      } else {
+        texto.style.display = 'none';
+      }
+    });</span>
+  <span class="script-tag">&lt;/script&gt;</span>
+<span class="etiqueta">&lt;/body&gt;</span>
+<span class="etiqueta">&lt;/html&gt;</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ========================================================== -->
+            <!-- SLIDE 11: Cambiar imagen                                    -->
+            <!-- ========================================================== -->
+            <div class="slide" data-slide="10">
+                <div class="navegador">
+                    <button data-slide="9">‹</button>
+                    <button class="activo" data-slide="10">›</button>
+                </div>
+                <div class="ejemplo-container">
+                    <div class="columna-izquierda">
+                        <div class="titulo-ejemplo">11. Cambiar imagen</div>
+                        <div class="render">
+                            <div class="control">
+                                <img id="imagenEjemplo" class="imagen-ejemplo" src="https://via.placeholder.com/150/cccccc/000000?text=Imagen" alt="Imagen de ejemplo" />
+                                <span class="id-label">(id="imagenEjemplo")</span>
+                            </div>
+                            <div class="control" style="display:flex; gap:0.3rem; flex-wrap:wrap;">
+                                <button id="btnImagen1">Imagen 1</button>
+                                <span class="id-label">(id="btnImagen1")</span>
+                                <button id="btnImagen2">Imagen 2</button>
+                                <span class="id-label">(id="btnImagen2")</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="columna-derecha">
+                        <div class="titulo-codigo">HTML completo (copia y pega)</div>
+                        <div class="codigo-completo">
+<span class="comentario">&lt;!-- Ejemplo 11: Cambiar imagen --&gt;</span>
+<span class="etiqueta">&lt;!DOCTYPE html&gt;</span>
+<span class="etiqueta">&lt;html</span> <span class="atributo">lang</span>=<span class="valor">"es"</span><span class="etiqueta">&gt;</span>
+<span class="etiqueta">&lt;head&gt;</span>
+  <span class="etiqueta">&lt;meta</span> <span class="atributo">charset</span>=<span class="valor">"UTF-8"</span> <span class="etiqueta">/&gt;</span>
+  <span class="etiqueta">&lt;meta</span> <span class="atributo">name</span>=<span class="valor">"viewport"</span> <span class="atributo">content</span>=<span class="valor">"width=device-width, initial-scale=1.0"</span> <span class="etiqueta">/&gt;</span>
+  <span class="etiqueta">&lt;title&gt;</span>Ejemplo 11<span class="etiqueta">&lt;/title&gt;</span>
+<span class="etiqueta">&lt;/head&gt;</span>
+<span class="etiqueta">&lt;body&gt;</span>
+  <span class="etiqueta">&lt;img</span> <span class="atributo">id</span>=<span class="valor">"imagenEjemplo"</span> <span class="atributo">src</span>=<span class="valor">"https://via.placeholder.com/150/cccccc/000000?text=Imagen"</span> <span class="atributo">alt</span>=<span class="valor">"Imagen de ejemplo"</span> <span class="atributo">style</span>=<span class="valor">"max-width:150px; height:auto; border:1px solid #d8e0e8; border-radius:3px;"</span> <span class="etiqueta">/&gt;</span>
+  <span class="etiqueta">&lt;button</span> <span class="atributo">id</span>=<span class="valor">"btnImagen1"</span><span class="etiqueta">&gt;</span>Imagen 1<span class="etiqueta">&lt;/button&gt;</span>
+  <span class="etiqueta">&lt;button</span> <span class="atributo">id</span>=<span class="valor">"btnImagen2"</span><span class="etiqueta">&gt;</span>Imagen 2<span class="etiqueta">&lt;/button&gt;</span>
+  <span class="script-tag">&lt;script&gt;</span>
+    <span class="js">let img = document.getElementById('imagenEjemplo');
+    document.getElementById('btnImagen1').addEventListener('click', function() {
+      img.src = 'https://via.placeholder.com/150/ff9999/000000?text=Imagen+1';
+    });
+    document.getElementById('btnImagen2').addEventListener('click', function() {
+      img.src = 'https://via.placeholder.com/150/99ccff/000000?text=Imagen+2';
+    });</span>
+  <span class="script-tag">&lt;/script&gt;</span>
+<span class="etiqueta">&lt;/body&gt;</span>
+<span class="etiqueta">&lt;/html&gt;</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ========================================================== -->
+            <!-- SLIDE 12: Contar caracteres en textarea                    -->
+            <!-- ========================================================== -->
+            <div class="slide" data-slide="11">
+                <div class="navegador">
+                    <button data-slide="10">‹</button>
+                    <button class="activo" data-slide="11">›</button>
+                </div>
+                <div class="ejemplo-container">
+                    <div class="columna-izquierda">
+                        <div class="titulo-ejemplo">12. Contar caracteres en textarea</div>
+                        <div class="render">
+                            <div class="control">
+                                <textarea id="textareaContar" placeholder="Escribe algo..."></textarea>
+                                <span class="id-label">(id="textareaContar")</span>
+                            </div>
+                            <div class="control">
+                                <p id="contadorCaracteres">Caracteres: 0</p>
+                                <span class="id-label">(id="contadorCaracteres")</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="columna-derecha">
+                        <div class="titulo-codigo">HTML completo (copia y pega)</div>
+                        <div class="codigo-completo">
+<span class="comentario">&lt;!-- Ejemplo 12: Contar caracteres en textarea --&gt;</span>
+<span class="etiqueta">&lt;!DOCTYPE html&gt;</span>
+<span class="etiqueta">&lt;html</span> <span class="atributo">lang</span>=<span class="valor">"es"</span><span class="etiqueta">&gt;</span>
+<span class="etiqueta">&lt;head&gt;</span>
+  <span class="etiqueta">&lt;meta</span> <span class="atributo">charset</span>=<span class="valor">"UTF-8"</span> <span class="etiqueta">/&gt;</span>
+  <span class="etiqueta">&lt;meta</span> <span class="atributo">name</span>=<span class="valor">"viewport"</span> <span class="atributo">content</span>=<span class="valor">"width=device-width, initial-scale=1.0"</span> <span class="etiqueta">/&gt;</span>
+  <span class="etiqueta">&lt;title&gt;</span>Ejemplo 12<span class="etiqueta">&lt;/title&gt;</span>
+<span class="etiqueta">&lt;/head&gt;</span>
+<span class="etiqueta">&lt;body&gt;</span>
+  <span class="etiqueta">&lt;textarea</span> <span class="atributo">id</span>=<span class="valor">"textareaContar"</span> <span class="atributo">placeholder</span>=<span class="valor">"Escribe algo..."</span> <span class="atributo">style</span>=<span class="valor">"width:200px; height:60px; padding:0.2rem 0.5rem; border:1px solid #b8c8d8; border-radius:3px;"</span><span class="etiqueta">&gt;&lt;/textarea&gt;</span>
+  <span class="etiqueta">&lt;p</span> <span class="atributo">id</span>=<span class="valor">"contadorCaracteres"</span><span class="etiqueta">&gt;</span>Caracteres: 0<span class="etiqueta">&lt;/p&gt;</span>
+  <span class="script-tag">&lt;script&gt;</span>
+    <span class="js">let textarea = document.getElementById('textareaContar');
+    let contador = document.getElementById('contadorCaracteres');
+    textarea.addEventListener('input', function() {
+      contador.textContent = 'Caracteres: ' + textarea.value.length;
+    });</span>
+  <span class="script-tag">&lt;/script&gt;</span>
+<span class="etiqueta">&lt;/body&gt;</span>
+<span class="etiqueta">&lt;/html&gt;</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ========================================================== -->
+            <!-- SLIDE 13: Cambiar color de texto con input color            -->
+            <!-- ========================================================== -->
+            <div class="slide" data-slide="12">
+                <div class="navegador">
+                    <button data-slide="11">‹</button>
+                    <button class="activo" data-slide="12">›</button>
+                </div>
+                <div class="ejemplo-container">
+                    <div class="columna-izquierda">
+                        <div class="titulo-ejemplo">13. Cambiar color de texto con selector de color</div>
+                        <div class="render">
+                            <div class="control">
+                                <p id="textoColor">Este texto cambia de color</p>
+                                <span class="id-label">(id="textoColor")</span>
+                            </div>
+                            <div class="control">
+                                <input type="color" id="selectorColor" value="#0a2a4a" />
+                                <span class="id-label">(id="selectorColor")</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="columna-derecha">
+                        <div class="titulo-codigo">HTML completo (copia y pega)</div>
+                        <div class="codigo-completo">
+<span class="comentario">&lt;!-- Ejemplo 13: Cambiar color de texto con input color --&gt;</span>
+<span class="etiqueta">&lt;!DOCTYPE html&gt;</span>
+<span class="etiqueta">&lt;html</span> <span class="atributo">lang</span>=<span class="valor">"es"</span><span class="etiqueta">&gt;</span>
+<span class="etiqueta">&lt;head&gt;</span>
+  <span class="etiqueta">&lt;meta</span> <span class="atributo">charset</span>=<span class="valor">"UTF-8"</span> <span class="etiqueta">/&gt;</span>
+  <span class="etiqueta">&lt;meta</span> <span class="atributo">name</span>=<span class="valor">"viewport"</span> <span class="atributo">content</span>=<span class="valor">"width=device-width, initial-scale=1.0"</span> <span class="etiqueta">/&gt;</span>
+  <span class="etiqueta">&lt;title&gt;</span>Ejemplo 13<span class="etiqueta">&lt;/title&gt;</span>
+<span class="etiqueta">&lt;/head&gt;</span>
+<span class="etiqueta">&lt;body&gt;</span>
+  <span class="etiqueta">&lt;p</span> <span class="atributo">id</span>=<span class="valor">"textoColor"</span><span class="etiqueta">&gt;</span>Este texto cambia de color<span class="etiqueta">&lt;/p&gt;</span>
+  <span class="etiqueta">&lt;input</span> <span class="atributo">type</span>=<span class="valor">"color"</span> <span class="atributo">id</span>=<span class="valor">"selectorColor"</span> <span class="atributo">value</span>=<span class="valor">"#0a2a4a"</span> <span class="etiqueta">/&gt;</span>
+  <span class="script-tag">&lt;script&gt;</span>
+    <span class="js">let texto = document.getElementById('textoColor');
+    let selector = document.getElementById('selectorColor');
+    selector.addEventListener('input', function() {
+      texto.style.color = selector.value;
+    });</span>
+  <span class="script-tag">&lt;/script&gt;</span>
+<span class="etiqueta">&lt;/body&gt;</span>
+<span class="etiqueta">&lt;/html&gt;</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ========================================================== -->
+            <!-- SLIDE 14: Agregar elementos a una lista                    -->
+            <!-- ========================================================== -->
+            <div class="slide" data-slide="13">
+                <div class="navegador">
+                    <button data-slide="12">‹</button>
+                    <button class="activo" data-slide="13">›</button>
+                </div>
+                <div class="ejemplo-container">
+                    <div class="columna-izquierda">
+                        <div class="titulo-ejemplo">14. Agregar elementos a una lista</div>
+                        <div class="render">
+                            <div class="control">
+                                <input type="text" id="inputItemLista" placeholder="Nuevo ítem..." />
+                                <span class="id-label">(id="inputItemLista")</span>
+                            </div>
+                            <div class="control">
+                                <button id="btnAgregarItemLista">Agregar</button>
+                                <span class="id-label">(id="btnAgregarItemLista")</span>
+                            </div>
+                            <div class="control">
+                                <ul id="listaItems" style="list-style:none; padding-left:0;">
+                                    <li style="display:flex; justify-content:space-between; padding:0.2rem 0.3rem; border-bottom:1px solid #e8ecf0;">Item 1</li>
+                                    <li style="display:flex; justify-content:space-between; padding:0.2rem 0.3rem; border-bottom:1px solid #e8ecf0;">Item 2</li>
+                                </ul>
+                                <span class="id-label">(id="listaItems")</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="columna-derecha">
+                        <div class="titulo-codigo">HTML completo (copia y pega)</div>
+                        <div class="codigo-completo">
+<span class="comentario">&lt;!-- Ejemplo 14: Agregar elementos a una lista --&gt;</span>
+<span class="etiqueta">&lt;!DOCTYPE html&gt;</span>
+<span class="etiqueta">&lt;html</span> <span class="atributo">lang</span>=<span class="valor">"es"</span><span class="etiqueta">&gt;</span>
+<span class="etiqueta">&lt;head&gt;</span>
+  <span class="etiqueta">&lt;meta</span> <span class="atributo">charset</span>=<span class="valor">"UTF-8"</span> <span class="etiqueta">/&gt;</span>
+  <span class="etiqueta">&lt;meta</span> <span class="atributo">name</span>=<span class="valor">"viewport"</span> <span class="atributo">content</span>=<span class="valor">"width=device-width, initial-scale=1.0"</span> <span class="etiqueta">/&gt;</span>
+  <span class="etiqueta">&lt;title&gt;</span>Ejemplo 14<span class="etiqueta">&lt;/title&gt;</span>
+<span class="etiqueta">&lt;/head&gt;</span>
+<span class="etiqueta">&lt;body&gt;</span>
+  <span class="etiqueta">&lt;input</span> <span class="atributo">type</span>=<span class="valor">"text"</span> <span class="atributo">id</span>=<span class="valor">"inputItemLista"</span> <span class="atributo">placeholder</span>=<span class="valor">"Nuevo ítem..."</span> <span class="etiqueta">/&gt;</span>
+  <span class="etiqueta">&lt;button</span> <span class="atributo">id</span>=<span class="valor">"btnAgregarItemLista"</span><span class="etiqueta">&gt;</span>Agregar<span class="etiqueta">&lt;/button&gt;</span>
+  <span class="etiqueta">&lt;ul</span> <span class="atributo">id</span>=<span class="valor">"listaItems"</span> <span class="atributo">style</span>=<span class="valor">"list-style:none; padding-left:0;"</span><span class="etiqueta">&gt;</span>
+    <span class="etiqueta">&lt;li</span> <span class="atributo">style</span>=<span class="valor">"display:flex; justify-content:space-between; padding:0.2rem 0.3rem; border-bottom:1px solid #e8ecf0;"</span><span class="etiqueta">&gt;</span>Item 1<span class="etiqueta">&lt;/li&gt;</span>
+    <span class="etiqueta">&lt;li</span> <span class="atributo">style</span>=<span class="valor">"display:flex; justify-content:space-between; padding:0.2rem 0.3rem; border-bottom:1px solid #e8ecf0;"</span><span class="etiqueta">&gt;</span>Item 2<span class="etiqueta">&lt;/li&gt;</span>
+  <span class="etiqueta">&lt;/ul&gt;</span>
+  <span class="script-tag">&lt;script&gt;</span>
+    <span class="js">document.getElementById('btnAgregarItemLista').addEventListener('click', function() {
+      let input = document.getElementById('inputItemLista');
+      let texto = input.value.trim();
+      if (texto) {
+        let li = document.createElement('li');
+        li.textContent = texto;
+        li.style.display = 'flex';
+        li.style.justifyContent = 'space-between';
+        li.style.padding = '0.2rem 0.3rem';
+        li.style.borderBottom = '1px solid #e8ecf0';
+        document.getElementById('listaItems').appendChild(li);
+        input.value = '';
+      }
+    });</span>
+  <span class="script-tag">&lt;/script&gt;</span>
+<span class="etiqueta">&lt;/body&gt;</span>
+<span class="etiqueta">&lt;/html&gt;</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ========================================================== -->
+            <!-- SLIDE 15: Eliminar el último elemento de una lista         -->
+            <!-- ========================================================== -->
+            <div class="slide" data-slide="14">
+                <div class="navegador">
+                    <button data-slide="13">‹</button>
+                    <button class="activo" data-slide="14">›</button>
+                </div>
+                <div class="ejemplo-container">
+                    <div class="columna-izquierda">
+                        <div class="titulo-ejemplo">15. Eliminar el último elemento de una lista</div>
+                        <div class="render">
+                            <div class="control">
+                                <ul id="listaEliminar" style="list-style:none; padding-left:0;">
+                                    <li style="padding:0.2rem 0.3rem; border-bottom:1px solid #e8ecf0;">Elemento 1</li>
+                                    <li style="padding:0.2rem 0.3rem; border-bottom:1px solid #e8ecf0;">Elemento 2</li>
+                                    <li style="padding:0.2rem 0.3rem; border-bottom:1px solid #e8ecf0;">Elemento 3</li>
+                                </ul>
+                                <span class="id-label">(id="listaEliminar")</span>
+                            </div>
+                            <div class="control">
+                                <button id="btnEliminarUltimo">Eliminar último</button>
+                                <span class="id-label">(id="btnEliminarUltimo")</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="columna-derecha">
+                        <div class="titulo-codigo">HTML completo (copia y pega)</div>
+                        <div class="codigo-completo">
+<span class="comentario">&lt;!-- Ejemplo 15: Eliminar el último elemento de una lista --&gt;</span>
+<span class="etiqueta">&lt;!DOCTYPE html&gt;</span>
+<span class="etiqueta">&lt;html</span> <span class="atributo">lang</span>=<span class="valor">"es"</span><span class="etiqueta">&gt;</span>
+<span class="etiqueta">&lt;head&gt;</span>
+  <span class="etiqueta">&lt;meta</span> <span class="atributo">charset</span>=<span class="valor">"UTF-8"</span> <span class="etiqueta">/&gt;</span>
+  <span class="etiqueta">&lt;meta</span> <span class="atributo">name</span>=<span class="valor">"viewport"</span> <span class="atributo">content</span>=<span class="valor">"width=device-width, initial-scale=1.0"</span> <span class="etiqueta">/&gt;</span>
+  <span class="etiqueta">&lt;title&gt;</span>Ejemplo 15<span class="etiqueta">&lt;/title&gt;</span>
+<span class="etiqueta">&lt;/head&gt;</span>
+<span class="etiqueta">&lt;body&gt;</span>
+  <span class="etiqueta">&lt;ul</span> <span class="atributo">id</span>=<span class="valor">"listaEliminar"</span> <span class="atributo">style</span>=<span class="valor">"list-style:none; padding-left:0;"</span><span class="etiqueta">&gt;</span>
+    <span class="etiqueta">&lt;li</span> <span class="atributo">style</span>=<span class="valor">"padding:0.2rem 0.3rem; border-bottom:1px solid #e8ecf0;"</span><span class="etiqueta">&gt;</span>Elemento 1<span class="etiqueta">&lt;/li&gt;</span>
+    <span class="etiqueta">&lt;li</span> <span class="atributo">style</span>=<span class="valor">"padding:0.2rem 0.3rem; border-bottom:1px solid #e8ecf0;"</span><span class="etiqueta">&gt;</span>Elemento 2<span class="etiqueta">&lt;/li&gt;</span>
+    <span class="etiqueta">&lt;li</span> <span class="atributo">style</span>=<span class="valor">"padding:0.2rem 0.3rem; border-bottom:1px solid #e8ecf0;"</span><span class="etiqueta">&gt;</span>Elemento 3<span class="etiqueta">&lt;/li&gt;</span>
+  <span class="etiqueta">&lt;/ul&gt;</span>
+  <span class="etiqueta">&lt;button</span> <span class="atributo">id</span>=<span class="valor">"btnEliminarUltimo"</span><span class="etiqueta">&gt;</span>Eliminar último<span class="etiqueta">&lt;/button&gt;</span>
+  <span class="script-tag">&lt;script&gt;</span>
+    <span class="js">document.getElementById('btnEliminarUltimo').addEventListener('click', function() {
+      let lista = document.getElementById('listaEliminar');
+      if (lista.lastElementChild) {
+        lista.removeChild(lista.lastElementChild);
+      }
+    });</span>
+  <span class="script-tag">&lt;/script&gt;</span>
+<span class="etiqueta">&lt;/body&gt;</span>
+<span class="etiqueta">&lt;/html&gt;</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ========================================================== -->
+            <!-- SLIDE 16: Cambiar placeholder de un input                  -->
+            <!-- ========================================================== -->
+            <div class="slide" data-slide="15">
+                <div class="navegador">
+                    <button data-slide="14">‹</button>
+                    <button class="activo" data-slide="15">›</button>
+                </div>
+                <div class="ejemplo-container">
+                    <div class="columna-izquierda">
+                        <div class="titulo-ejemplo">16. Cambiar placeholder de un input</div>
+                        <div class="render">
+                            <div class="control">
+                                <input type="text" id="inputPlaceholder" placeholder="Placeholder original" />
+                                <span class="id-label">(id="inputPlaceholder")</span>
+                            </div>
+                            <div class="control" style="display:flex; gap:0.3rem; flex-wrap:wrap;">
+                                <button id="btnCambiarPlaceholder1">Placeholder 1</button>
+                                <span class="id-label">(id="btnCambiarPlaceholder1")</span>
+                                <button id="btnCambiarPlaceholder2">Placeholder 2</button>
+                                <span class="id-label">(id="btnCambiarPlaceholder2")</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="columna-derecha">
+                        <div class="titulo-codigo">HTML completo (copia y pega)</div>
+                        <div class="codigo-completo">
+<span class="comentario">&lt;!-- Ejemplo 16: Cambiar placeholder de un input --&gt;</span>
+<span class="etiqueta">&lt;!DOCTYPE html&gt;</span>
+<span class="etiqueta">&lt;html</span> <span class="atributo">lang</span>=<span class="valor">"es"</span><span class="etiqueta">&gt;</span>
+<span class="etiqueta">&lt;head&gt;</span>
+  <span class="etiqueta">&lt;meta</span> <span class="atributo">charset</span>=<span class="valor">"UTF-8"</span> <span class="etiqueta">/&gt;</span>
+  <span class="etiqueta">&lt;meta</span> <span class="atributo">name</span>=<span class="valor">"viewport"</span> <span class="atributo">content</span>=<span class="valor">"width=device-width, initial-scale=1.0"</span> <span class="etiqueta">/&gt;</span>
+  <span class="etiqueta">&lt;title&gt;</span>Ejemplo 16<span class="etiqueta">&lt;/title&gt;</span>
+<span class="etiqueta">&lt;/head&gt;</span>
+<span class="etiqueta">&lt;body&gt;</span>
+  <span class="etiqueta">&lt;input</span> <span class="atributo">type</span>=<span class="valor">"text"</span> <span class="atributo">id</span>=<span class="valor">"inputPlaceholder"</span> <span class="atributo">placeholder</span>=<span class="valor">"Placeholder original"</span> <span class="etiqueta">/&gt;</span>
+  <span class="etiqueta">&lt;button</span> <span class="atributo">id</span>=<span class="valor">"btnCambiarPlaceholder1"</span><span class="etiqueta">&gt;</span>Placeholder 1<span class="etiqueta">&lt;/button&gt;</span>
+  <span class="etiqueta">&lt;button</span> <span class="atributo">id</span>=<span class="valor">"btnCambiarPlaceholder2"</span><span class="etiqueta">&gt;</span>Placeholder 2<span class="etiqueta">&lt;/button&gt;</span>
+  <span class="script-tag">&lt;script&gt;</span>
+    <span class="js">let input = document.getElementById('inputPlaceholder');
+    document.getElementById('btnCambiarPlaceholder1').addEventListener('click', function() {
+      input.placeholder = 'Nuevo placeholder 1';
+    });
+    document.getElementById('btnCambiarPlaceholder2').addEventListener('click', function() {
+      input.placeholder = 'Nuevo placeholder 2';
+    });</span>
+  <span class="script-tag">&lt;/script&gt;</span>
+<span class="etiqueta">&lt;/body&gt;</span>
+<span class="etiqueta">&lt;/html&gt;</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ========================================================== -->
+            <!-- SLIDE 17: Mostrar alerta con valor de input                -->
+            <!-- ========================================================== -->
+            <div class="slide" data-slide="16">
+                <div class="navegador">
+                    <button data-slide="15">‹</button>
+                    <button class="activo" data-slide="16">›</button>
+                </div>
+                <div class="ejemplo-container">
+                    <div class="columna-izquierda">
+                        <div class="titulo-ejemplo">17. Mostrar alerta con valor de input</div>
+                        <div class="render">
+                            <div class="control">
+                                <input type="text" id="inputAlerta" placeholder="Escribe algo..." />
+                                <span class="id-label">(id="inputAlerta")</span>
+                            </div>
+                            <div class="control">
+                                <button id="btnAlerta">Mostrar alerta</button>
+                                <span class="id-label">(id="btnAlerta")</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="columna-derecha">
+                        <div class="titulo-codigo">HTML completo (copia y pega)</div>
+                        <div class="codigo-completo">
+<span class="comentario">&lt;!-- Ejemplo 17: Mostrar alerta con valor de input --&gt;</span>
+<span class="etiqueta">&lt;!DOCTYPE html&gt;</span>
+<span class="etiqueta">&lt;html</span> <span class="atributo">lang</span>=<span class="valor">"es"</span><span class="etiqueta">&gt;</span>
+<span class="etiqueta">&lt;head&gt;</span>
+  <span class="etiqueta">&lt;meta</span> <span class="atributo">charset</span>=<span class="valor">"UTF-8"</span> <span class="etiqueta">/&gt;</span>
+  <span class="etiqueta">&lt;meta</span> <span class="atributo">name</span>=<span class="valor">"viewport"</span> <span class="atributo">content</span>=<span class="valor">"width=device-width, initial-scale=1.0"</span> <span class="etiqueta">/&gt;</span>
+  <span class="etiqueta">&lt;title&gt;</span>Ejemplo 17<span class="etiqueta">&lt;/title&gt;</span>
+<span class="etiqueta">&lt;/head&gt;</span>
+<span class="etiqueta">&lt;body&gt;</span>
+  <span class="etiqueta">&lt;input</span> <span class="atributo">type</span>=<span class="valor">"text"</span> <span class="atributo">id</span>=<span class="valor">"inputAlerta"</span> <span class="atributo">placeholder</span>=<span class="valor">"Escribe algo..."</span> <span class="etiqueta">/&gt;</span>
+  <span class="etiqueta">&lt;button</span> <span class="atributo">id</span>=<span class="valor">"btnAlerta"</span><span class="etiqueta">&gt;</span>Mostrar alerta<span class="etiqueta">&lt;/button&gt;</span>
+  <span class="script-tag">&lt;script&gt;</span>
+    <span class="js">document.getElementById('btnAlerta').addEventListener('click', function() {
+      let valor = document.getElementById('inputAlerta').value;
+      if (valor.trim() === '') {
+        alert('El campo está vacío.');
+      } else {
+        alert('Has escrito: ' + valor);
+      }
+    });</span>
+  <span class="script-tag">&lt;/script&gt;</span>
+<span class="etiqueta">&lt;/body&gt;</span>
+<span class="etiqueta">&lt;/html&gt;</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ========================================================== -->
+            <!-- SLIDE 18: Cambiar borde de un div                           -->
+            <!-- ========================================================== -->
+            <div class="slide" data-slide="17">
+                <div class="navegador">
+                    <button data-slide="16">‹</button>
+                    <button class="activo" data-slide="17">›</button>
+                </div>
+                <div class="ejemplo-container">
+                    <div class="columna-izquierda">
+                        <div class="titulo-ejemplo">18. Cambiar borde de un div</div>
+                        <div class="render">
+                            <div class="control">
+                                <div id="divBorde" class="caja-borde">Cambia mi borde</div>
+                                <span class="id-label">(id="divBorde")</span>
+                            </div>
+                            <div class="control" style="display:flex; gap:0.3rem; flex-wrap:wrap;">
+                                <button id="btnBordeRojo">Rojo</button>
+                                <span class="id-label">(id="btnBordeRojo")</span>
+                                <button id="btnBordeAzul">Azul</button>
+                                <span class="id-label">(id="btnBordeAzul")</span>
+                                <button id="btnBordeVerde">Verde</button>
+                                <span class="id-label">(id="btnBordeVerde")</span>
+                                <button id="btnBordeReset">Reset</button>
+                                <span class="id-label">(id="btnBordeReset")</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="columna-derecha">
+                        <div class="titulo-codigo">HTML completo (copia y pega)</div>
+                        <div class="codigo-completo">
+<span class="comentario">&lt;!-- Ejemplo 18: Cambiar borde de un div --&gt;</span>
+<span class="etiqueta">&lt;!DOCTYPE html&gt;</span>
+<span class="etiqueta">&lt;html</span> <span class="atributo">lang</span>=<span class="valor">"es"</span><span class="etiqueta">&gt;</span>
+<span class="etiqueta">&lt;head&gt;</span>
+  <span class="etiqueta">&lt;meta</span> <span class="atributo">charset</span>=<span class="valor">"UTF-8"</span> <span class="etiqueta">/&gt;</span>
+  <span class="etiqueta">&lt;meta</span> <span class="atributo">name</span>=<span class="valor">"viewport"</span> <span class="atributo">content</span>=<span class="valor">"width=device-width, initial-scale=1.0"</span> <span class="etiqueta">/&gt;</span>
+  <span class="etiqueta">&lt;title&gt;</span>Ejemplo 18<span class="etiqueta">&lt;/title&gt;</span>
+  <span class="etiqueta">&lt;style&gt;</span>
+    <span class="js">.caja-borde { padding:0.5rem; border:2px solid #c8d4e0; border-radius:3px; text-align:center; }
+    .borde-rojo { border-color: #b00020; }
+    .borde-azul { border-color: #0a2a4a; }
+    .borde-verde { border-color: #1a6a2a; }</span>
+  <span class="etiqueta">&lt;/style&gt;</span>
+<span class="etiqueta">&lt;/head&gt;</span>
+<span class="etiqueta">&lt;body&gt;</span>
+  <span class="etiqueta">&lt;div</span> <span class="atributo">id</span>=<span class="valor">"divBorde"</span> <span class="atributo">class</span>=<span class="valor">"caja-borde"</span><span class="etiqueta">&gt;</span>Cambia mi borde<span class="etiqueta">&lt;/div&gt;</span>
+  <span class="etiqueta">&lt;button</span> <span class="atributo">id</span>=<span class="valor">"btnBordeRojo"</span><span class="etiqueta">&gt;</span>Rojo<span class="etiqueta">&lt;/button&gt;</span>
+  <span class="etiqueta">&lt;button</span> <span class="atributo">id</span>=<span class="valor">"btnBordeAzul"</span><span class="etiqueta">&gt;</span>Azul<span class="etiqueta">&lt;/button&gt;</span>
+  <span class="etiqueta">&lt;button</span> <span class="atributo">id</span>=<span class="valor">"btnBordeVerde"</span><span class="etiqueta">&gt;</span>Verde<span class="etiqueta">&lt;/button&gt;</span>
+  <span class="etiqueta">&lt;button</span> <span class="atributo">id</span>=<span class="valor">"btnBordeReset"</span><span class="etiqueta">&gt;</span>Reset<span class="etiqueta">&lt;/button&gt;</span>
+  <span class="script-tag">&lt;script&gt;</span>
+    <span class="js">let div = document.getElementById('divBorde');
+    document.getElementById('btnBordeRojo').addEventListener('click', function() {
+      div.className = 'caja-borde borde-rojo';
+    });
+    document.getElementById('btnBordeAzul').addEventListener('click', function() {
+      div.className = 'caja-borde borde-azul';
+    });
+    document.getElementById('btnBordeVerde').addEventListener('click', function() {
+      div.className = 'caja-borde borde-verde';
+    });
+    document.getElementById('btnBordeReset').addEventListener('click', function() {
+      div.className = 'caja-borde';
+    });</span>
+  <span class="script-tag">&lt;/script&gt;</span>
+<span class="etiqueta">&lt;/body&gt;</span>
+<span class="etiqueta">&lt;/html&gt;</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div><!-- /slide-contenedor -->
+    </div><!-- /container -->
+
+    <!-- ============================================================ -->
+    <!-- SCRIPTS (navegador y ejemplos)                               -->
+    <!-- ============================================================ -->
+    <script>
+        // ============================================================
+        // NAVEGADOR DE SLIDES
+        // ============================================================
+        const slides = document.querySelectorAll('.slide');
+        let slideActual = 0;
+        const totalSlides = slides.length;
+
+        function mostrarSlide(index) {
+            if (index < 0) index = totalSlides - 1;
+            if (index >= totalSlides) index = 0;
+            slideActual = index;
+
+            slides.forEach((s, i) => {
+                s.classList.toggle('visible', i === index);
+            });
+
+            document.querySelectorAll('.navegador button[data-slide]').forEach(btn => {
+                const slideIdx = parseInt(btn.getAttribute('data-slide'));
+                if (!isNaN(slideIdx)) {
+                    btn.classList.toggle('activo', slideIdx === index);
+                }
+            });
+        }
+
+        document.querySelectorAll('.navegador button[data-slide]').forEach(btn => {
+            btn.addEventListener('click', function() {
+                const idx = parseInt(this.getAttribute('data-slide'));
+                if (!isNaN(idx)) {
+                    mostrarSlide(idx);
+                }
+            });
+        });
+
+        document.querySelectorAll('.navegador button').forEach(btn => {
+            if (btn.textContent === '‹') {
+                btn.addEventListener('click', function() {
+                    mostrarSlide(slideActual - 1);
+                });
+            } else if (btn.textContent === '›') {
+                btn.addEventListener('click', function() {
+                    mostrarSlide(slideActual + 1);
+                });
+            }
+        });
+
+        mostrarSlide(0);
+
+        // ============================================================
+        // CÓDIGO DE LOS EJEMPLOS (para el renderizado en vivo)
+        // ============================================================
+
+        // 1. Cambiar texto
+        document.getElementById('btnCambiar')?.addEventListener('click', function() {
+            document.getElementById('mensaje').textContent = '¡Texto cambiado!';
+        });
+
+        // 2. Mostrar/Ocultar
+        let elemento = document.getElementById('elementoOculto');
+        let btnToggle = document.getElementById('btnToggle');
+        if (btnToggle) {
+            btnToggle.addEventListener('click', function() {
+                if (elemento.style.display === 'none') {
+                    elemento.style.display = 'block';
+                    btnToggle.textContent = 'Ocultar';
+                } else {
+                    elemento.style.display = 'none';
+                    btnToggle.textContent = 'Mostrar';
+                }
+            });
+        }
+
+        // 3. Contador +1
+        let contador = 0;
+        let displayCont = document.getElementById('contadorNum');
+        document.getElementById('btnSumar')?.addEventListener('click', function() {
+            contador++;
+            displayCont.textContent = contador;
+        });
+
+        // 4. Contador + y -
+        let contador2 = 0;
+        let displayCont2 = document.getElementById('contadorNum2');
+        document.getElementById('btnIncrementar')?.addEventListener('click', function() {
+            contador2++;
+            displayCont2.textContent = contador2;
+        });
+        document.getElementById('btnDecrementar')?.addEventListener('click', function() {
+            contador2--;
+            displayCont2.textContent = contador2;
+        });
+        document.getElementById('btnReiniciar')?.addEventListener('click', function() {
+            contador2 = 0;
+            displayCont2.textContent = contador2;
+        });
+
+        // 5. Escribir y ver
+        let inputSimple = document.getElementById('inputTextoSimple');
+        let resultadoSimple = document.getElementById('resultadoTexto');
+        if (inputSimple) {
+            inputSimple.addEventListener('input', function() {
+                let texto = inputSimple.value;
+                resultadoSimple.textContent = texto ? 'Has escrito: ' + texto : 'Aparecerá aquí';
+            });
+        }
+
+        // 6. Cambiar tamaño de fuente
+        let textoTamano = document.getElementById('textoTamano');
+        document.getElementById('btnGrande')?.addEventListener('click', function() {
+            textoTamano.style.fontSize = '1.8rem';
+        });
+        document.getElementById('btnMediano')?.addEventListener('click', function() {
+            textoTamano.style.fontSize = '1.2rem';
+        });
+        document.getElementById('btnPequeño')?.addEventListener('click', function() {
+            textoTamano.style.fontSize = '0.8rem';
+        });
+
+        // 7. Sumar números
+        document.getElementById('btnSumarNumeros')?.addEventListener('click', function() {
+            let a = parseFloat(document.getElementById('num1').value) || 0;
+            let b = parseFloat(document.getElementById('num2').value) || 0;
+            document.getElementById('resultadoSuma').textContent = 'Resultado: ' + (a + b);
+        });
+
+        // 8. Mostrar fecha
+        document.getElementById('btnFecha')?.addEventListener('click', function() {
+            let ahora = new Date();
+            let fecha = ahora.getDate() + '/' + (ahora.getMonth() + 1) + '/' + ahora.getFullYear();
+            document.getElementById('fechaDisplay').textContent = 'Fecha: ' + fecha;
+        });
+
+        // 9. Cambiar fondo página
+        document.getElementById('btnFondoRojo')?.addEventListener('click', function() {
+            document.body.style.backgroundColor = '#fce4e4';
+        });
+        document.getElementById('btnFondoAzul')?.addEventListener('click', function() {
+            document.body.style.backgroundColor = '#d4e4f7';
+        });
+        document.getElementById('btnFondoVerde')?.addEventListener('click', function() {
+            document.body.style.backgroundColor = '#ddf0dd';
+        });
+        document.getElementById('btnFondoReset')?.addEventListener('click', function() {
+            document.body.style.backgroundColor = '#e8eaed';
+        });
+
+        // 10. Checkbox mostrar/ocultar
+        let checkbox = document.getElementById('chkMostrar');
+        let textoCheck = document.getElementById('textoCheckbox');
+        if (checkbox) {
+            checkbox.addEventListener('change', function() {
+                textoCheck.style.display = checkbox.checked ? 'block' : 'none';
+            });
+        }
+
+        // 11. Cambiar imagen
+        let img = document.getElementById('imagenEjemplo');
+        document.getElementById('btnImagen1')?.addEventListener('click', function() {
+            img.src = 'https://via.placeholder.com/150/ff9999/000000?text=Imagen+1';
+        });
+        document.getElementById('btnImagen2')?.addEventListener('click', function() {
+            img.src = 'https://via.placeholder.com/150/99ccff/000000?text=Imagen+2';
+        });
+
+        // 12. Contar caracteres
+        let textarea = document.getElementById('textareaContar');
+        let contadorCar = document.getElementById('contadorCaracteres');
+        if (textarea) {
+            textarea.addEventListener('input', function() {
+                contadorCar.textContent = 'Caracteres: ' + textarea.value.length;
+            });
+        }
+
+        // 13. Cambiar color con input color
+        let selectorColor = document.getElementById('selectorColor');
+        let textoColor = document.getElementById('textoColor');
+        if (selectorColor) {
+            selectorColor.addEventListener('input', function() {
+                textoColor.style.color = selectorColor.value;
+            });
+        }
+
+        // 14. Agregar a lista
+        document.getElementById('btnAgregarItemLista')?.addEventListener('click', function() {
+            let input = document.getElementById('inputItemLista');
+            let texto = input.value.trim();
+            if (texto) {
+                let li = document.createElement('li');
+                li.textContent = texto;
+                li.style.display = 'flex';
+                li.style.justifyContent = 'space-between';
+                li.style.padding = '0.2rem 0.3rem';
+                li.style.borderBottom = '1px solid #e8ecf0';
+                document.getElementById('listaItems').appendChild(li);
+                input.value = '';
+            }
+        });
+
+        // 15. Eliminar último elemento
+        document.getElementById('btnEliminarUltimo')?.addEventListener('click', function() {
+            let lista = document.getElementById('listaEliminar');
+            if (lista.lastElementChild) {
+                lista.removeChild(lista.lastElementChild);
+            }
+        });
+
+        // 16. Cambiar placeholder
+        let inputPlaceholder = document.getElementById('inputPlaceholder');
+        document.getElementById('btnCambiarPlaceholder1')?.addEventListener('click', function() {
+            inputPlaceholder.placeholder = 'Nuevo placeholder 1';
+        });
+        document.getElementById('btnCambiarPlaceholder2')?.addEventListener('click', function() {
+            inputPlaceholder.placeholder = 'Nuevo placeholder 2';
+        });
+
+        // 17. Alerta con valor
+        document.getElementById('btnAlerta')?.addEventListener('click', function() {
+            let valor = document.getElementById('inputAlerta').value;
+            if (valor.trim() === '') {
+                alert('El campo está vacío.');
+            } else {
+                alert('Has escrito: ' + valor);
+            }
+        });
+
+        // 18. Cambiar borde
+        let divBorde = document.getElementById('divBorde');
+        document.getElementById('btnBordeRojo')?.addEventListener('click', function() {
+            divBorde.className = 'caja-borde borde-rojo';
+        });
+        document.getElementById('btnBordeAzul')?.addEventListener('click', function() {
+            divBorde.className = 'caja-borde borde-azul';
+        });
+        document.getElementById('btnBordeVerde')?.addEventListener('click', function() {
+            divBorde.className = 'caja-borde borde-verde';
+        });
+        document.getElementById('btnBordeReset')?.addEventListener('click', function() {
+            divBorde.className = 'caja-borde';
+        });
+    </script>
+</body>
+</html>

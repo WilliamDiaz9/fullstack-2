@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TecnoGames - Servicio Tecnico de Videojuegos</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Arial, sans-serif;
+            background: #12141c;
+            color: #e6e6e6;
+            line-height: 1.7;
+        }
+
+        header {
+            background: linear-gradient(135deg, #1a1c29, #2b1044);
+            padding: 40px 20px;
+            text-align: center;
+            border-bottom: 4px solid #7c3aed;
+        }
+
+        header h1 {
+            font-size: 40px;
+            color: #ffffff;
+            letter-spacing: 1px;
+        }
+
+        header p {
+            color: #b9b3d9;
+            margin-top: 10px;
+            font-size: 18px;
+        }
+
+        main {
+            max-width: 950px;
+            margin: 0 auto;
+            padding: 30px 20px;
+        }
+
+        section {
+            background: #1c1f2b;
+            border: 1px solid #33364a;
+            border-radius: 10px;
+            padding: 25px 30px;
+            margin-bottom: 30px;
+        }
+
+        section h2 {
+            color: #a78bfa;
+            border-left: 5px solid #7c3aed;
+            padding-left: 12px;
+            margin-bottom: 15px;
+            font-size: 24px;
+        }
+
+        section img {
+            max-width: 100%;
+            height: 260px;
+            width: 100%;
+            object-fit: cover;
+            border-radius: 8px;
+            margin: 15px 0;
+            border: 1px solid #33364a;
+        }
+
+        ul, ol {
+            margin: 10px 0 10px 25px;
+        }
+
+        li {
+            margin-bottom: 6px;
+        }
+
+        footer {
+            background: #0d0e14;
+            padding: 25px 20px;
+            text-align: center;
+            color: #8b8b9e;
+            font-size: 14px;
+            border-top: 1px solid #33364a;
+        }
+
+        footer a {
+            color: #a78bfa;
+        }
+
+        .lista-servicios li strong {
+            color: #ffffff;
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <h1>TecnoGames</h1>
+        <p>Servicio tecnico especializado en consolas y videojuegos</p>
+    </header>
+
+    <main>
+
+        <!-- SECCION 1: HISTORIA -->
+        <section id="historia">
+            <h2>Nuestra Historia</h2>
+            <img src="https://commons.wikimedia.org/wiki/Special:FilePath/PlayStation-SCPH-1000-with-Controller.jpg"
+                 alt="Consola retro, simbolo del inicio de la pasion por los videojuegos">
+            <p>
+                TecnoGames nacio el año 2016 en Santiago de Chile, fundado por un grupo de
+                amigos apasionados por los videojuegos que veian como, una y otra vez, sus
+                consolas y controles fallaban justo en el momento menos indicado. Lo que
+                comenzo como reparaciones informales entre conocidos, se transformo con el
+                tiempo en un taller tecnico especializado, capaz de diagnosticar y reparar
+                fallas complejas en todas las plataformas del mercado.
+            </p>
+            <p>
+                Desde entonces, nuestro compromiso ha sido devolverle la vida a cada equipo
+                con repuestos de calidad, sabiendo que detras de cada consola hay historias,
+                amigos y horas de diversion que no pueden esperar.
+            </p>
+        </section>
+
+        <!-- SECCION 2: UBICACION Y SUCURSALES -->
+        <section id="ubicacion">
+            <h2>Ubicacion y Sucursales</h2>
+            <img src="https://commons.wikimedia.org/wiki/Special:FilePath/Computer%20Shop%20in%20Sheringham%20Norfolk%2C%2029%20February%202016.JPG"
+                 alt="Fachada de un local de servicio tecnico">
+            <p>Actualmente contamos con presencia en la Region Metropolitana, con las siguientes sucursales:</p>
+            <ul>
+                <li>Sucursal Pudahuel (Casa Matriz) - Av. San Pablo, Pudahuel, Santiago</li>
+                <li>Sucursal Providencia - Av. Providencia, Providencia, Santiago</li>
+                <li>Sucursal Maipu - Av. Pajaritos, Maipu, Santiago</li>
+            </ul>
+            <p>Tambien contamos con servicio de retiro y despacho a domicilio para todo Chile.</p>
+        </section>
+
+        <!-- SECCION 3: PRODUCTOS Y SERVICIOS -->
+        <section id="productos-servicios">
+            <h2>Productos y Servicios</h2>
+            <img src="https://commons.wikimedia.org/wiki/Special:FilePath/Soldering-PCB-a.jpg"
+                 alt="Reparacion de placa mediante soldadura, ejemplo de nuestro trabajo tecnico">
+            <p>En TecnoGames ofrecemos un servicio integral para que nunca te quedes sin jugar:</p>
+            <ol class="lista-servicios">
+                <li><strong>Diagnostico gratuito:</strong> revision completa del equipo sin costo.</li>
+                <li><strong>Reparacion de consolas:</strong> PlayStation, Xbox y Nintendo, incluyendo fallas de placa, fuente de poder y lector de discos.</li>
+                <li><strong>Reparacion de controles:</strong> solucion de stick drift, botones y baterias.</li>
+                <li><strong>Mantenimiento preventivo:</strong> limpieza interna, cambio de pasta termica y repaste con PTM7950.</li>
+                <li><strong>Venta de repuestos y accesorios:</strong> joysticks, carcasas, cables y baterias originales y compatibles.</li>
+            </ol>
+        </section>
+
+        <!-- SECCION 4: REFERENCIAS -->
+        <section id="referencias">
+            <h2>Referencias</h2>
+            <p>Si quieres conocer mas sobre el mundo de las reparaciones y el mantenimiento de consolas, te recomendamos visitar los siguientes enlaces:</p>
+            <ul>
+                <li><a href="https://www.ifixit.com/Device/Game_Console" target="_blank">iFixit - Guias de reparacion de consolas</a></li>
+                <li><a href="https://www.playstation.com/es-cl/support/" target="_blank">Soporte oficial PlayStation</a></li>
+                <li><a href="https://support.xbox.com/es-CL" target="_blank">Soporte oficial Xbox</a></li>
+            </ul>
+        </section>
+
+    </main>
+
+    <footer>
+        <p>&copy; 2026 TecnoGames - Servicio Tecnico de Videojuegos. Pudahuel, Santiago, Chile.</p>
+    </footer>
+
+</body>
+</html>

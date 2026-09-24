@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Reloj</title>
+    <style>
+        body {
+            background-color: #212529;
+            text-align: center;
+            padding-top: 60px;
+            font-family: Arial, sans-serif;
+        }
+
+        h1 {
+            color: #f8b31c;
+        }
+
+        p {
+            font-size: 60px;
+            color: #f8b31c;
+            font-family: monospace;
+        }
+
+        .reloj-analogico {
+            width: 220px;
+            height: 220px;
+            border: 8px solid #f8b31c;
+            border-radius: 50%;
+            margin: 0 auto;
+            position: relative;
+            background-color: #2c2f33;
+        }
+
+        .aguja {
+            position: absolute;
+            bottom: 50%;
+            left: 50%;
+            transform-origin: bottom;
+            background-color: #f8b31c;
+        }
+
+        .hora {
+            width: 6px;
+            height: 60px;
+            margin-left: -3px;
+        }
+
+        .minuto {
+            width: 4px;
+            height: 85px;
+            margin-left: -2px;
+        }
+
+        .segundo {
+            width: 2px;
+            height: 95px;
+            margin-left: -1px;
+            background-color: #ffffff;
+        }
+
+        .numero {
+            position: absolute;
+            color: #f8b31c;
+            font-family: Arial, sans-serif;
+            font-weight: bold;
+            font-size: 18px;
+            transform: translate(-50%, -50%);
+        }
+    </style>
+</head>
+<body>
+
+    <h1>DuocUC</h1>
+
+    <p id="hora">00:00:00</p>
+
+    <div class="reloj-analogico">
+        <div class="numero" style="left: 152.5px; top: 36.4px;">1</div>
+        <div class="numero" style="left: 183.6px; top: 67.5px;">2</div>
+        <div class="numero" style="left: 195px; top: 110px;">3</div>
+        <div class="numero" style="left: 183.6px; top: 152.5px;">4</div>
+        <div class="numero" style="left: 152.5px; top: 183.6px;">5</div>
+        <div class="numero" style="left: 110px; top: 195px;">6</div>
+        <div class="numero" style="left: 67.5px; top: 183.6px;">7</div>
+        <div class="numero" style="left: 36.4px; top: 152.5px;">8</div>
+        <div class="numero" style="left: 25px; top: 110px;">9</div>
+        <div class="numero" style="left: 36.4px; top: 67.5px;">10</div>
+        <div class="numero" style="left: 67.5px; top: 36.4px;">11</div>
+        <div class="numero" style="left: 110px; top: 25px;">12</div>
+
+        <div class="aguja hora" id="agujaHora"></div>
+        <div class="aguja minuto" id="agujaMinuto"></div>
+        <div class="aguja segundo" id="agujaSegundo"></div>
+    </div>
+
+    <script>
+        setInterval(function () {
+            let ahora = new Date();
+
+            // reloj digital
+            document.getElementById("hora").innerHTML = ahora.toLocaleTimeString();
+
+            // reloj analogico
+            let horas = ahora.getHours();
+            let minutos = ahora.getMinutes();
+            let segundos = ahora.getSeconds();
+
+            let gradosHora = (horas % 12) * 30 + minutos * 0.5;
+            let gradosMinuto = minutos * 6;
+            let gradosSegundo = segundos * 6;
+
+            document.getElementById("agujaHora").style.transform = "rotate(" + gradosHora + "deg)";
+            document.getElementById("agujaMinuto").style.transform = "rotate(" + gradosMinuto + "deg)";
+            document.getElementById("agujaSegundo").style.transform = "rotate(" + gradosSegundo + "deg)";
+        }, 1000);
+    </script>
+
+</body>
+</html>

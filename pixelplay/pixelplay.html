@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>PixelPlay - Tienda de Videojuegos</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            background-color: #12121c;   /* color de fondo de toda la pagina */
+            color: #e8e8f0;              /* color del texto */
+            font-family: Arial, Helvetica, sans-serif;
+        }
+
+        h1, h2, h3 {
+            color: #ffd166;              /* amarillo para todos los titulos */
+        }
+
+        .hero {
+            background-color: #1e1e35;
+            padding: 60px 20px;          /* 60px arriba/abajo, 20px a los lados */
+            text-align: center;
+            border-bottom: 4px solid #ffd166;
+        }
+
+        .tarjeta-juego {
+            background-color: #1e1e35;
+            border: 2px solid #2e2e4d;
+            border-radius: 12px;         /* esquinas redondeadas */
+            padding: 15px;
+            height: 100%;                /* todas las tarjetas quedan del mismo alto */
+        }
+
+        .precio {
+            color: #06d6a0;
+            font-size: 22px;
+            font-weight: bold;
+        }
+
+        .seccion {
+            padding: 50px 20px;
+        }
+
+        footer {
+            background-color: #000000;
+            padding: 25px;
+            text-align: center;
+        }
+
+        a {
+            color: #77cce1;
+        }
+    </style>
+</head>
+
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <div class="container">
+            <a class="navbar-brand" href="#">PixelPlay</a>
+
+            <!-- Este boton solo aparece en pantallas chicas (el "hamburguesa") -->
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#menu">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <div class="collapse navbar-collapse" id="menu">
+                <ul class="navbar-nav ms-auto">
+                    <!-- href="#catalogo" salta al elemento que tenga id="catalogo" -->
+                    <li class="nav-item"><a class="nav-link" href="#nosotros">Nosotros</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#catalogo">Catalogo</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#sucursales">Sucursales</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#contacto">Contacto</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- ---------- 2. HERO / PORTADA ---------- -->
+    <div class="hero">
+        <h1>PixelPlay</h1>
+        <p class="lead">Videojuegos nuevos, usados y de coleccion para PlayStation, Xbox, Nintendo y PC.</p>
+
+        <!-- span badge = etiqueta pequeña de Bootstrap -->
+        <span class="badge bg-success">Envios a todo Chile</span>
+        <span class="badge bg-warning text-dark">Cambio garantizado</span>
+
+        <br><br>
+        <a href="#catalogo" class="btn btn-warning btn-lg">Ver catalogo</a>
+    </div>
+
+    <!-- ---------- 3. NOSOTROS ---------- -->
+    <div class="seccion container" id="nosotros">
+        <h2>Quienes somos</h2>
+        <p>
+            PixelPlay nacio el año 2026 en Santiago de Chile como un local pequeño de intercambio
+            de juegos usados. Somos una tienda especializada en videojuegos fisicos, consolas
+            y accesorios, con stock revisado uno por uno antes de venderse.
+        </p>
+        <p>
+            Trabajamos con titulos nuevos sellados, usados en buen estado y ediciones de coleccion
+            dificiles de encontrar. Cada juego usado pasa por limpieza y prueba de funcionamiento.
+        </p>
+    </div>
+
+    <div class="seccion container" id="catalogo">
+        <h2>Catalogo destacado</h2>
+        <p>Estos son algunos de nuestros titulos mas vendidos del mes:</p>
+
+        <div class="row g-4">
+
+            <!-- Producto 1 -->
+            <div class="col-12 col-md-4">
+                <div class="tarjeta-juego">
+                    <!-- class="img-fluid" hace que la imagen se achique sola en celular -->
+                    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQiRQBiV0bveMUrFKEpgV075S17QYYWDQ9khQDmPtkz9Q&s=10"
+                         alt="Portada juego de accion" class="img-fluid rounded">
+                    <h3>The Legend Of Zelda : Ocarine Of Time</h3>
+                    <p>Aventura y Accion en mundo abierto. Version fisica sellada para Nintendo Switch 2.</p>
+                    <p class="precio">$69.990</p>
+                    <a href="#contacto" class="btn btn-outline-warning">Consultar</a>
+                </div>
+            </div>
+
+            <!-- Producto 2 -->
+            <div class="col-12 col-md-4">
+                <div class="tarjeta-juego">
+                    <img src="https://th.bing.com/th/id/OIP.KgNHjR3PFqNzrtDW5qqlFgHaEp?w=269&h=180&c=7&r=0&o=7&dpr=1.3&pid=1.7&rm=3"
+                         alt="Portada juego de RPG" class="img-fluid rounded">
+                    <h3>Grand Theft Auto VI</h3>
+                    <p>Juego de accion mundo abierto. Disponible solo version digital para Playstation 5.</p>
+                    <p class="precio">$27.990</p>
+                    <a href="#contacto" class="btn btn-outline-warning">Consultar</a>
+                </div>
+            </div>
+
+            <!-- Producto 3 -->
+            <div class="col-12 col-md-4">
+                <div class="tarjeta-juego">
+                    <img src="https://th.bing.com/th/id/OIP.6FlI5phjQNrQCk8DlRtSNwHaD4?w=326&h=180&c=7&r=0&o=7&dpr=1.3&pid=1.7&rm=3"
+                         alt="Portada juego de lucha" class="img-fluid rounded">
+                    <h3>Naruto Shippuden Ultimate Storm 4</h3>
+                    <p>Aventura y Lucha. Disponible version fisica sellada para Xbox.</p>
+                    <p class="precio">$39.990</p>
+                    <a href="#contacto" class="btn btn-outline-warning">Consultar</a>
+                </div>
+            </div>
+
+            <!-- Producto 4 -->
+            <div class="col-12 col-md-4">
+                <div class="tarjeta-juego">
+                    <img src="https://media.falabella.com/falabellaCL/156541285_01/w=200,h=200,fit=pad"
+                         alt="Control inalambrico" class="img-fluid rounded">
+                    <h3>Control inalambrico</h3>
+                    <p>Compatible con PC y consolas. Bateria recargable de 12 horas.</p>
+                    <p class="precio">$34.990</p>
+                    <a href="#contacto" class="btn btn-outline-warning">Consultar</a>
+                </div>
+            </div>
+
+            <!-- Producto 5 -->
+            <div class="col-12 col-md-4">
+                <div class="tarjeta-juego">
+                    <img src="https://placehold.co/400x250/1e1e35/ffd166?text=Juego+Retro"
+                         alt="Juego retro de coleccion" class="img-fluid rounded">
+                    <h3>Clasicos retro</h3>
+                    <p>Cartuchos y CDs originales de los 90. Probados y con garantia de 30 dias.</p>
+                    <p class="precio">Desde $15.000</p>
+                    <a href="#contacto" class="btn btn-outline-warning">Consultar</a>
+                </div>
+            </div>
+
+            <!-- Producto 6 -->
+            <div class="col-12 col-md-4">
+                <div class="tarjeta-juego">
+                    
+                    <img src="https://placehold.co/400x250/1e1e35/ffd166?text=Tarjeta+de+Regalo"
+                         alt="Tarjeta de regalo" class="img-fluid rounded">
+                    <h3>Gift card PixelPlay</h3>
+                    <p>El regalo seguro. Valida por 6 meses en tienda fisica y por WhatsApp.</p>
+                    <p class="precio">$10.000 / $20.000</p>
+                    <a href="#contacto" class="btn btn-outline-warning">Consultar</a>
+
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- ---------- 5. POR QUE COMPRAR AQUI (lista Bootstrap) ---------- -->
+    <div class="seccion container">
+        <h2>Por que comprar en PixelPlay</h2>
+        <ul class="list-group">
+            <li class="list-group-item">Todos los juegos usados se prueban antes de venderse</li>
+            <li class="list-group-item">Garantia de 30 dias en productos usados</li>
+            <li class="list-group-item">Recibimos tus juegos antiguos como parte de pago</li>
+            <li class="list-group-item">Despacho a todo Chile en 48 horas habiles</li>
+            <li class="list-group-item">Retiro gratis en cualquiera de nuestras sucursales</li>
+        </ul>
+    </div>
+
+    <!-- ---------- 6. SUCURSALES (tabla) ---------- -->
+    <div class="seccion container" id="sucursales">
+        <h2>Sucursales</h2>
+
+        <!-- table-dark y table-striped son clases de Bootstrap -->
+        <table class="table table-dark table-striped">
+            <thead>
+                <tr>
+                    <th>Sucursal</th>
+                    <th>Direccion</th>
+                    <th>Horario</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Santiago Centro</td>
+                    <td>Alameda 1234, local 5</td>
+                    <td>Lun a Sab, 10:00 a 20:00</td>
+                </tr>
+                <tr>
+                    <td>Maipu</td>
+                    <td>Av. Pajaritos 456</td>
+                    <td>Lun a Vie, 11:00 a 19:00</td>
+                </tr>
+                <tr>
+                    <td>Puente Alto</td>
+                    <td>Concha y Toro 789</td>
+                    <td>Mar a Dom, 11:00 a 20:00</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <div class="seccion container" id="contacto">
+        <h2>Contactanos</h2>
+
+        <div class="row">
+            <div class="col-12 col-md-6">
+                <p><strong>WhatsApp:</strong> +56 9 7459 9239</p>
+                <p><strong>Correo:</strong> contacto@pixelplay.cl</p>
+                <p><strong>Instagram:</strong> @pixelplay.cl</p>
+
+                <a href="https://wa.me/56974599239" target="_blank" class="btn btn-success">
+                    Escribenos por WhatsApp
+                </a>
+            </div>
+
+            <div class="col-12 col-md-6">
+                <div class="mb-3">
+                    <label class="form-label">Tu nombre</label>
+                    <input type="text" class="form-control" placeholder="Ej: Juan Perez">
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">Tu correo</label>
+                    <input type="email" class="form-control" placeholder="juan@correo.cl">
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">Que juego buscas?</label>
+                    <textarea class="form-control" rows="3"></textarea>
+                </div>
+                <button class="btn btn-warning">Enviar consulta</button>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <p>PixelPlay 2026 - Santiago de Chile</p>
+        <p>
+            <a href="https://www.playstation.com/es-cl/" target="_blank">PlayStation</a> |
+            <a href="https://www.xbox.com/es-CL" target="_blank">Xbox</a> |
+            <a href="https://www.nintendo.com/es-cl/" target="_blank">Nintendo</a>
+        </p>
+    </footer>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    
+
+</body>
+
+
+</html>

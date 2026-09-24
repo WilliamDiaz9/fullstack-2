@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Noticias y datos curiosos sobre logistica, rutas y buenas practicas de envio.">
+  <meta name="author" content="Axel Contreras, Alexis Encalada, Isidora Carreno">
+  <title>Blogs | ExpressDelivery</title>
+
+  <link rel="icon" type="image/png" href="assets/img/favicon.png">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="assets/css/estilos.css">
+</head>
+<body>
+    <header>
+    <nav class="navbar navbar-expand-lg navbar-ed fixed-top" aria-label="Menu principal">
+      <div class="container">
+
+        <a class="navbar-brand d-flex align-items-center" href="index.html">
+          <img src="assets/img/logo.png" alt="Logotipo de ExpressDelivery" class="logo-ed">
+          Express<span>Delivery</span>
+        </a>
+
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                data-bs-target="#menuPrincipal" aria-controls="menuPrincipal"
+                aria-expanded="false" aria-label="Abrir o cerrar el menu">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="menuPrincipal">
+          <ul class="navbar-nav mx-auto mb-2 mb-lg-0">
+          <li class="nav-item">
+            <a class="nav-link" href="index.html">Home</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="productos.html">Productos</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="nosotros.html">Nosotros</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link activo" href="blogs.html">Blogs</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="contacto.html">Contacto</a>
+          </li>
+          </ul>
+
+          <a href="carrito.html" class="btn-carrito text-decoration-none">
+            Carrito (<span class="contador-carrito">0</span>)
+          </a>
+        </div>
+
+      </div>
+    </nav>
+  </header>
+
+    <div class="container">
+    <div class="text-end small py-2" id="zona-sesion"></div>
+  </div>
+  <main class="container">
+    <section aria-labelledby="titulo-blogs">
+      <h1 id="titulo-blogs" class="titulo-seccion h3 text-center">Noticias importantes</h1>
+
+      <article class="card-blog">
+        <div class="row g-0">
+          <div class="col-lg-6 order-lg-2">
+            <img src="assets/img/blog-1.png" alt="Ilustracion sobre optimizacion de rutas">
+          </div>
+          <div class="col-lg-6 cuerpo-blog order-lg-1">
+            <span class="categoria">Caso curioso #1</span>
+            <h2 class="h4 mt-1">Rutas mas inteligentes, repartidores menos cansados</h2>
+            <p>
+              El 20 por ciento de nuestras rutas presentaba ineficiencias antes de
+              digitalizar la asignacion. Te contamos que descubrimos al medir kilometro
+              por kilometro lo que ocurre en la calle.
+            </p>
+            <a href="blog-detalle-1.html" class="btn btn-ed-outline">Ver caso</a>
+          </div>
+        </div>
+      </article>
+
+      <article class="card-blog">
+        <div class="row g-0">
+          <div class="col-lg-6 order-lg-2">
+            <img src="assets/img/blog-2.png" alt="Ilustracion sobre seguimiento en tiempo real">
+          </div>
+          <div class="col-lg-6 cuerpo-blog order-lg-1">
+            <span class="categoria">Caso curioso #2</span>
+            <h2 class="h4 mt-1">50 llamadas diarias que dejaron de existir</h2>
+            <p>
+              Nuestro call center recibia 50 llamadas al dia con la misma pregunta:
+              donde esta mi paquete. Asi cambio la operacion cuando el cliente pudo
+              responderla solo.
+            </p>
+            <a href="blog-detalle-2.html" class="btn btn-ed-outline">Ver caso</a>
+          </div>
+        </div>
+      </article>
+
+      <article class="card-blog">
+        <div class="row g-0">
+          <div class="col-lg-6 order-lg-2">
+            <img src="assets/img/blog-3.png" alt="Ilustracion sobre embalaje de paquetes">
+          </div>
+          <div class="col-lg-6 cuerpo-blog order-lg-1">
+            <span class="categoria">Dato util</span>
+            <h2 class="h4 mt-1">Como embalar para que tu paquete llegue entero</h2>
+            <p>
+              Tres reglas simples de embalaje que reducen los reclamos por dano:
+              elegir bien la caja, rellenar los espacios vacios y sellar en forma de H.
+            </p>
+            <a href="blog-detalle-1.html" class="btn btn-ed-outline">Ver caso</a>
+          </div>
+        </div>
+      </article>
+
+    </section>
+  </main>
+
+    <footer class="footer-ed">
+    <div class="container">
+      <div class="row">
+
+        <div class="col-12 col-md-4 mb-4">
+          <h5>ExpressDelivery</h5>
+          <p class="small">
+            Mensajeria y reparto expres en la Region Metropolitana desde 2014.
+            18 vehiculos, 22 repartidores y un promedio de 150 entregas diarias.
+          </p>
+        </div>
+
+        <div class="col-6 col-md-2 mb-4">
+          <h5>Tienda</h5>
+          <a href="productos.html">Productos</a>
+          <a href="carrito.html">Mi carrito</a>
+          <a href="registro.html">Registrarme</a>
+          <a href="login.html">Iniciar sesion</a>
+        </div>
+
+        <div class="col-6 col-md-2 mb-4">
+          <h5>Empresa</h5>
+          <a href="nosotros.html">Nosotros</a>
+          <a href="blogs.html">Blogs</a>
+          <a href="contacto.html">Contacto</a>
+        </div>
+
+        <div class="col-12 col-md-4 mb-4">
+          <h5>Contacto</h5>
+          <address class="small mb-2">
+            Av. Libertador Bernardo O'Higgins 1234, Santiago<br>
+            Telefono: +56 2 2345 6789<br>
+            Correo: contacto@expressdelivery.cl
+          </address>
+          <p class="small mb-0">Lunes a sabado, 08:00 a 20:00 horas.</p>
+        </div>
+
+      </div>
+
+      <div class="creditos text-center">
+        <p class="mb-1">
+          Proyecto academico DSY1104 Desarrollo Fullstack II - Duoc UC - Evaluacion Parcial 1.
+        </p>
+        <p class="mb-0">
+          Desarrollado por Axel Contreras, Alexis Encalada e Isidora Carreno.
+        </p>
+      </div>
+    </div>
+  </footer>
+
+      <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="assets/js/datos.js"></script>
+  <script src="assets/js/almacenamiento.js"></script>
+  <script src="assets/js/carrito.js"></script>
+  <script src="assets/js/tienda.js"></script>
+  <script src="assets/js/validaciones.js"></script>
+</body>
+</html>

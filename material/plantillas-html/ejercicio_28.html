@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<title>Ejercicio 28 - outline</title>
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        max-width: 700px;
+        margin: 40px auto;
+        padding: 0 20px;
+        color: #222;
+    }
+    .explicacion {
+        background: #eef2ff;
+        border-left: 4px solid #4338ca;
+        padding: 12px 16px;
+        margin-bottom: 25px;
+        font-size: 15px;
+    }
+    .demo {
+        border: 2px dashed #999;
+        padding: 20px;
+        margin-top: 10px;
+    }
+    h1 {
+        font-size: 22px;
+        color: #4338ca;
+    }
+    .sin-outline { border: 2px solid #4a5568; padding: 15px; margin-bottom: 20px; }
+    .con-outline { border: 2px solid #4a5568; padding: 15px; outline: 3px solid #f6e05e; outline-offset: 5px; }
+</style>
+</head>
+<body>
+
+<h1>Ejercicio 28: outline</h1>
+<div class="explicacion">La propiedad outline es similar al borde pero NO ocupa espacio y se dibuja por fuera. outline-offset lo separa del borde.</div>
+
+<div class="demo">
+<div class="sin-outline">Sin outline</div>
+<div class="con-outline">Con outline amarillo</div>
+</div>
+
+</body>
+</html>

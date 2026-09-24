@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="DuocUC">
+    <title>Reloj</title>
+    <style>
+        body {
+            background-color: #1e1e2f;
+            text-align: center;
+            padding-top: 100x;
+        }
+
+        p {
+            font-size: 200px;
+            color: #f7f3f3;
+            font-family: monospace;
+        }
+    </style>
+</head>
+<body>
+    <img src="https://media2.giphy.com/media/v1.Y2lkPTZjMDliOTUyZDRwZTM0Nms3dHlmNWRneHE3YmVrZ2p5NWZnOTdjNTFyMTFjeWoxeSZlcD12MV9zdGlja2Vyc19zZWFyY2gmY3Q9cw/rWJRwQVItkY4E/200.gif"
+        alt="Imagen alargada"
+        width="1200" height="320">
+
+    <p id="hora">00:00:00</p>
+
+    <script>
+        setInterval(function () {
+            let ahora = new Date();
+            document.getElementById("hora").innerHTML = ahora.toLocaleTimeString();
+        }, 1000);
+    </script>
+
+</body>
+</html>

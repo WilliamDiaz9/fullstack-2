@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+<!-- saved from url=(0241)https://alt-5fe4a347ea17e.blackboard.com/bbcswebdav/internal/courses/2026_2_AL_DSY1104_24620792_PCT/messages/_7366728_1/embedded/Gesti%C3%B3n%20de%20Flota.html?one_hash=195974CEA75C4A91926C50B6FBFBCA31&f_hash=0BEE7DFB6BDE20708E1107BA842C9805 -->
+<html lang="es"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ExpressDelivery - Gestión de Flota</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f5f7fa;
+            color: #1e2a3a;
+            line-height: 1.6;
+            padding: 2rem 1rem;
+        }
+        .container {
+            max-width: 1100px;
+            margin: 0 auto;
+            background-color: #ffffff;
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+            padding: 2rem 2.5rem;
+        }
+        h1, h2, h3, h4 {
+            margin-top: 1.8rem;
+            margin-bottom: 0.8rem;
+            font-weight: 600;
+            letter-spacing: -0.02em;
+        }
+        h1 {
+            font-size: 2.2rem;
+            border-bottom: 3px solid #1e2a3a;
+            padding-bottom: 0.5rem;
+            margin-top: 0;
+        }
+        h2 {
+            font-size: 1.6rem;
+            border-bottom: 1px solid #d0d7e2;
+            padding-bottom: 0.3rem;
+        }
+        h3 {
+            font-size: 1.3rem;
+            margin-top: 1.5rem;
+        }
+        h4 {
+            font-size: 1.1rem;
+            margin-top: 1.2rem;
+            font-weight: 600;
+        }
+        p {
+            margin-bottom: 1rem;
+        }
+        ul, ol {
+            padding-left: 1.8rem;
+            margin-bottom: 1.2rem;
+        }
+        li {
+            margin-bottom: 0.4rem;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1.2rem 0 2rem 0;
+            font-size: 0.95rem;
+        }
+        th {
+            background-color: #eef2f7;
+            font-weight: 600;
+            text-align: left;
+            padding: 0.7rem 0.8rem;
+            border: 1px solid #d0d7e2;
+        }
+        td {
+            padding: 0.7rem 0.8rem;
+            border: 1px solid #d0d7e2;
+            vertical-align: top;
+        }
+        .role-table td:first-child {
+            font-weight: 600;
+        }
+        hr {
+            border: none;
+            border-top: 2px solid #e2e8f0;
+            margin: 2rem 0;
+        }
+        .footer-note {
+            margin-top: 2.5rem;
+            padding-top: 1.5rem;
+            border-top: 1px solid #e2e8f0;
+            font-size: 0.95rem;
+            color: #4a5a6e;
+        }
+        code {
+            background-color: #f0f2f5;
+            padding: 0.2rem 0.4rem;
+            border-radius: 4px;
+            font-size: 0.9rem;
+        }
+        @media (max-width: 768px) {
+            .container {
+                padding: 1.2rem 1.2rem;
+            }
+            h1 {
+                font-size: 1.8rem;
+            }
+            table {
+                font-size: 0.85rem;
+            }
+            th, td {
+                padding: 0.4rem 0.5rem;
+            }
+        }
+        @media (max-width: 480px) {
+            body {
+                padding: 1rem 0.5rem;
+            }
+            .container {
+                padding: 1rem 0.8rem;
+                border-radius: 4px;
+            }
+            h1 {
+                font-size: 1.5rem;
+            }
+            h2 {
+                font-size: 1.3rem;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+
+    <h1>ExpressDelivery - Gestión de Flota</h1>
+
+    <h2>1. Presentación de la empresa</h2>
+    <p><strong>ExpressDelivery</strong> es una empresa de mensajería y reparto exprés que opera en la Región Metropolitana, con más de 10 años de experiencia en el mercado. Fue fundada en 2014 y cuenta con una flota de 18 vehículos (furgonetas, motos y camionetas) y 22 repartidores.</p>
+    <p>La empresa realiza un promedio de 150 entregas diarias para clientes de retail, farmacias y comercio electrónico. El equipo está compuesto por 22 repartidores, 3 supervisores de ruta, 1 jefe de operaciones y 1 administrador.</p>
+    <p>En los últimos dos años, la demanda de mensajería exprés ha crecido un 60%, lo que ha tensionado el sistema manual de gestión de flota. Actualmente, ExpressDelivery utiliza planillas Excel y comunicación telefónica para gestionar la asignación de vehículos, las rutas de reparto, el control de combustible y el seguimiento de envíos. Esto ha provocado una baja eficiencia en las rutas, pérdida de tiempo y una alta rotación de repartidores. La empresa necesita un sistema digital que le permita optimizar la gestión de su flota y mejorar la eficiencia de sus entregas.</p>
+
+    <h2>2. Actores involucrados</h2>
+    <table>
+        <thead>
+            <tr>
+                <th>Actor</th>
+                <th>Rol en el proceso</th>
+                <th>Relación con el sistema actual</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td><strong>Cliente</strong></td>
+                <td>Empresa o persona que envía paquetes a través de ExpressDelivery.</td>
+                <td>Solicita envíos por teléfono o en línea. No tiene visibilidad del estado de su envío.</td>
+            </tr>
+            <tr>
+                <td><strong>Repartidor</strong></td>
+                <td>Realiza las entregas de paquetes.</td>
+                <td>Recibe la ruta en papel y reporta entregas telefónicamente.</td>
+            </tr>
+            <tr>
+                <td><strong>Supervisor de Ruta</strong></td>
+                <td>Coordina la asignación de vehículos y repartidores a las rutas.</td>
+                <td>Utiliza planillas Excel para asignar rutas y controlar entregas.</td>
+            </tr>
+            <tr>
+                <td><strong>Jefe de Operaciones</strong></td>
+                <td>Supervisa la operación general, gestiona la disponibilidad y el rendimiento de la flota.</td>
+                <td>Recibe informes de rutas y costos de forma manual, consolidando la información en Excel.</td>
+            </tr>
+            <tr>
+                <td><strong>Administrador</strong></td>
+                <td>Gestiona las finanzas, contratos y toma decisiones estratégicas.</td>
+                <td>Recibe reportes de operaciones de forma manual, consolidando la información en Excel.</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <h2>3. Descripción de la problemática</h2>
+    <p>A continuación, se describe cómo funciona el proceso HOY, con sus pasos y dificultades.</p>
+
+    <h3>3.1 Proceso actual de asignación de rutas</h3>
+    <ol>
+        <li>El cliente solicita un envío por teléfono o en línea.</li>
+        <li>El supervisor de ruta recibe la solicitud y asigna un repartidor disponible manualmente.</li>
+        <li>El supervisor entrega la ruta en papel al repartidor, con direcciones y horarios.</li>
+        <li>No se optimizan las rutas, lo que provoca desplazamientos innecesarios.</li>
+    </ol>
+
+    <h3>3.2 Proceso actual de seguimiento de entregas</h3>
+    <ol>
+        <li>El repartidor realiza las entregas y anota las firmas en papel.</li>
+        <li>Al finalizar la ruta, el repartidor entrega los comprobantes al supervisor.</li>
+        <li>El supervisor debe ingresar manualmente la información de las entregas en Excel.</li>
+        <li>El cliente no tiene visibilidad del estado de su envío, lo que genera llamadas frecuentes.</li>
+    </ol>
+
+    <h3>3.3 Problemas concretos del proceso actual</h3>
+    <ul>
+        <li><strong>Baja eficiencia en rutas:</strong> El 20% de las rutas presentan ineficiencias debido a la falta de optimización.</li>
+        <li><strong>Pérdida de tiempo:</strong> Los repartidores pierden el 15% de su tiempo en desplazamientos innecesarios.</li>
+        <li><strong>Clientes desinformados:</strong> Los clientes no tienen visibilidad del estado de su envío, lo que genera 50 llamadas diarias al call center.</li>
+        <li><strong>Alta rotación de repartidores:</strong> La falta de un sistema de seguimiento y evaluación provoca que el 25% de los repartidores renuncien al año.</li>
+        <li><strong>Reportes manuales:</strong> El administrador no puede generar reportes automáticos de entregas, rutas o productividad, lo que dificulta la toma de decisiones.</li>
+    </ul>
+
+    <h2>4. Resultados esperados (visión general)</h2>
+    <ul>
+        <li><strong>Clientes</strong> puedan realizar solicitudes de envío en línea y ver el estado de su envío en tiempo real.</li>
+        <li><strong>Supervisores de ruta</strong> puedan gestionar la asignación de rutas de forma optimizada, reduciendo tiempos y costos.</li>
+        <li><strong>Repartidores</strong> puedan recibir rutas digitalmente y reportar entregas desde sus dispositivos móviles.</li>
+        <li><strong>Administrador</strong> pueda generar reportes automáticos de entregas, rutas, productividad y costos, facilitando la toma de decisiones.</li>
+        <li><strong>Sistema de alertas</strong> que notifique automáticamente cuando un envío presente retrasos.</li>
+    </ul>
+
+    <h2>5. Restricciones o condiciones del contexto</h2>
+    <table>
+        <thead>
+            <tr>
+                <th>Tipo de restricción</th>
+                <th>Descripción</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td><strong>Usuarios no técnicos</strong></td>
+                <td>Los repartidores y supervisores tienen un nivel básico de manejo de tecnología. La interfaz debe ser simple, con botones grandes y texto claro.</td>
+            </tr>
+            <tr>
+                <td><strong>Dispositivos disponibles</strong></td>
+                <td>El supervisor usa un computador de escritorio en la oficina. Los repartidores disponen de smartphones para recibir rutas y reportar entregas.</td>
+            </tr>
+            <tr>
+                <td><strong>Conectividad</strong></td>
+                <td>La oficina tiene WiFi estable. Los repartidores cuentan con datos móviles para acceder al sistema durante las entregas. Se requiere que la aplicación funcione bien en dispositivos móviles.</td>
+            </tr>
+            <tr>
+                <td><strong>Privacidad</strong></td>
+                <td>Los datos de los clientes y envíos son confidenciales. Cada cliente solo puede ver la información de sus propios envíos.</td>
+            </tr>
+            <tr>
+                <td><strong>Motor de base de datos</strong></td>
+                <td>Sin preferencia. El equipo puede elegir el que mejor se adapte a su proyecto (ej. MySQL, PostgreSQL).</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <hr>
+
+    <h2>Información de Contexto Adicional</h2>
+    <p><em>Nota: Esta información puede ser utilizada para poblar bases de datos iniciales o para diseñar las interfaces.</em></p>
+
+    <h3>1. Catálogo de Vehículos</h3>
+    <table>
+        <thead>
+            <tr>
+                <th>Patente</th>
+                <th>Tipo</th>
+                <th>Marca</th>
+                <th>Capacidad (kg)</th>
+                <th>Estado</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr><td>AB1234</td><td>Furgoneta</td><td>Ford Transit</td><td>800</td><td>Disponible</td></tr>
+            <tr><td>CD5678</td><td>Moto</td><td>Yamaha</td><td>50</td><td>Disponible</td></tr>
+            <tr><td>EF9012</td><td>Camioneta</td><td>Toyota</td><td>500</td><td>En taller</td></tr>
+            <tr><td>GH3456</td><td>Furgoneta</td><td>Mercedes</td><td>1000</td><td>Disponible</td></tr>
+            <tr><td>IJ7890</td><td>Moto</td><td>Honda</td><td>40</td><td>Disponible</td></tr>
+        </tbody>
+    </table>
+
+    <h3>2. Tipos de Servicios</h3>
+    <table>
+        <thead>
+            <tr>
+                <th>Código</th>
+                <th>Nombre</th>
+                <th>Descripción</th>
+                <th>Precio base (CLP)</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr><td>SE001</td><td>Envío estándar</td><td>Entrega en 24 horas hábiles.</td><td>5.000</td></tr>
+            <tr><td>SE002</td><td>Envío exprés</td><td>Entrega en 4 horas.</td><td>10.000</td></tr>
+            <tr><td>SE003</td><td>Envío urgente</td><td>Entrega en 1 hora.</td><td>15.000</td></tr>
+            <tr><td>SE004</td><td>Envío de gran volumen</td><td>Envío de paquetes de gran tamaño.</td><td>12.000</td></tr>
+        </tbody>
+    </table>
+
+    <h3>3. Ejemplo de Flujo de Envío</h3>
+    <table>
+        <thead>
+            <tr>
+                <th>Estado</th>
+                <th>Descripción para el cliente</th>
+                <th>Acciones posibles</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td><strong>Solicitado</strong></td>
+                <td>Hemos recibido tu solicitud de envío.</td>
+                <td>Ver detalles del envío.</td>
+            </tr>
+            <tr>
+                <td><strong>En ruta</strong></td>
+                <td>Tu envío está en proceso de entrega.</td>
+                <td>Ver ubicación en tiempo real.</td>
+            </tr>
+            <tr>
+                <td><strong>Entregado</strong></td>
+                <td>Tu envío ha sido entregado exitosamente.</td>
+                <td>Ver comprobante de entrega.</td>
+            </tr>
+            <tr>
+                <td><strong>Retrasado</strong></td>
+                <td>Tu envío presenta un retraso.</td>
+                <td>Ver motivo, nuevo tiempo estimado.</td>
+            </tr>
+            <tr>
+                <td><strong>Cancelado</strong></td>
+                <td>El envío fue cancelado.</td>
+                <td>Solicitar nuevo envío.</td>
+            </tr>
+        </tbody>
+    </table>
+
+</div>
+
+
+</body></html>
